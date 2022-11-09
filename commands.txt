@@ -1,0 +1,178 @@
+
+**********************postgresql****************************
+db:pgsql
+password:root
+worked
+PG_HOST=localhost
+PG_PORT=5432
+PG_USER=postgres
+PG_PASSWORD=root
+PG_DB_NAME=interplex
+
+*************************mysql************************************
+db:mysql
+user:root
+pass:root
+
+**********************DATABASE FIRST TIME*************************
+step:1
+***For model creation install lucid***
+npm i @adonisjs/lucid
+node ace configure @adonisjs/lucid
+
+database configure
+--------------------------------------------------------------
+config/database.ts file.
+**************************MODEL,CONTROLLER**********************************
+
+step:2
+node ace make:model Masterproduct -cm
+c=>controller
+m=>model
+
+
+************************** PROJECT MODELS*************************
+
+node ace make:model Masterproduct -cm
+node ace make:model Qasformone -cm
+node ace make:model Qasformtwo -cm
+node ace make:model Config -cm
+node ace make:model Uploadtypes -cm
+node ace make:model Branches -cm
+node ace make:model Units -cm
+node ace make:model Users -cm
+node ace make:model Assurancemedia -cm
+node ace make:model Labelsetting -cm //new
+node ace make:model Mapproductcode -cm //new
+
+node ace make:model Datonecode -m //new
+node ace make:model Dattwocode -m //new
+
+node ace make:model DefaultConfig -cm //new
+node ace make:model Sapimportconfig -cm //new
+
+node ace make:model Printconfig -cm //new
+
+node ace make:model Qasformonedefault -cm //new
+node ace make:model Qasformtwodefault -cm //new
+
+node ace make:model Guiqasformone -cm //new
+node ace make:model Guiqasformtwo -cm //new
+
+node ace make:model GuiHeader -cm //new
+
+node ace make:model Customfilter -cm -r//new
+node ace make:model Customrules -cm -r//new
+
+
+
+CREATED FILES FOR ABOVE COMMANDS ARE
+----------------------------------------------------------------
+model        =>      app\model\filename.ts
+database     =>      database\migrations\12344_filename.ts
+controller   =>      app\Controllers\Http\AssurancemediasController.ts
+
+
+************************SAMPLE MODEL FILE******************
+database     =>      database\migrations\12344_filename.ts
+
+REFER migrations
+
+https://legacy.adonisjs.com/docs/4.1/migrations
+
+import BaseSchema from '@ioc:Adonis/Lucid/Schema'
+
+export default class extends BaseSchema {
+  protected tableName = 'users'
+
+  public async up () {
+    this.schema.createTable(this.tableName, (table) => {
+  table.increments('id')
+      table.string('name').nullable()
+      table.string('branch').nullable()
+      table.string('roletype').nullable()
+      table.string('username').nullable()
+      table.string('password').nullable()
+      table.string('dial_code').nullable()
+      table.string('phone').nullable()
+      table.string('email').nullable()
+      table.string('address').nullable()
+      table.string('status').nullable()
+      table.date('date')
+
+      /**
+       * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
+       */
+      table.timestamp('created_at', { useTz: true })
+      table.timestamp('updated_at', { useTz: true })
+    })
+  }
+
+  public async down () {
+    this.schema.dropTable(this.tableName)
+  }
+}
+
+**************************MIGRATE START*******************
+//CHECK BEFORE RUN BELOW COMMAND
+//DATABASE/CONFIGT.TS
+username AND password host AND database RUNNING....
+
+node ace migration:run
+
+*************************database access controller**********************
+                      ++++Lucid+++++
+
+  import Database from '@ioc:Adonis/Lucid/Database'
+
+                       ++++ORM+++++
+
+  import User from 'App/Models/User'
+  const user = new User()
+
+                    ++++++ACCESS METHODS+++++
+
+    public async  creaeUser(ctx: HttpContextContract) {
+
+          return ctx
+
+      }
+
+***************************ORM***********************
+  import User from 'App/Models/User'
+  const user = new User()
+
+// Assign username and email
+
+user.username = 'virk'
+user.email = 'virk@adonisjs.com'
+
+// Insert to the database
+await user.save()
+
+console.log(user.$isPersisted) // true
+
+**********************ROUTER************************
+
+                  +++++package import++++
+
+import UsersController from 'App/Controllers/Http/UsersController'
+
+                  +++++Route calling++++
+
+Route.get('/', async (ctx) => {
+
+  return new UsersController().creaeUser(ctx)
+
+})
+
+Route.post('/user/create', async (ctx) => {
+  return new UsersController().creaeUser(ctx)
+})
+Route.post('/test', async (ctx) => {
+ return ctx.response.send('success')
+})
+
+
+**********************ACE**************
+node ace list:routes
