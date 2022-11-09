@@ -32,38 +32,11 @@ m=>model
 
 
 ************************** PROJECT MODELS*************************
-
-node ace make:model Masterproduct -cm
-node ace make:model Qasformone -cm
-node ace make:model Qasformtwo -cm
-node ace make:model Config -cm
-node ace make:model Uploadtypes -cm
-node ace make:model Branches -cm
-node ace make:model Units -cm
-node ace make:model Users -cm
-node ace make:model Assurancemedia -cm
-node ace make:model Labelsetting -cm //new
-node ace make:model Mapproductcode -cm //new
-
-node ace make:model Datonecode -m //new
-node ace make:model Dattwocode -m //new
-
-node ace make:model DefaultConfig -cm //new
-node ace make:model Sapimportconfig -cm //new
-
-node ace make:model Printconfig -cm //new
-
-node ace make:model Qasformonedefault -cm //new
-node ace make:model Qasformtwodefault -cm //new
-
-node ace make:model Guiqasformone -cm //new
-node ace make:model Guiqasformtwo -cm //new
-
-node ace make:model GuiHeader -cm //new
-
-node ace make:model Customfilter -cm -r//new
-node ace make:model Customrules -cm -r//new
-
+node ace make:model Company -cm
+node ace make:model Product -cm
+node ace make:model Employee -cm
+node ace make:model Shift -cm
+node ace make:model Branch -cm
 
 
 CREATED FILES FOR ABOVE COMMANDS ARE
