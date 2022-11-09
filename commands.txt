@@ -32,11 +32,17 @@ m=>model
 
 
 ************************** PROJECT MODELS*************************
+
 node ace make:model Company -cm
 node ace make:model Product -cm
 node ace make:model Employee -cm
 node ace make:model Shift -cm
 node ace make:model Branch -cm
+
+node ace make:model Machine -cm
+node ace make:model Machine_activity -cm
+node ace make:model Machine_activity_part_no -cm
+node ace make:model Machine_activity_main -cm
 
 
 CREATED FILES FOR ABOVE COMMANDS ARE
