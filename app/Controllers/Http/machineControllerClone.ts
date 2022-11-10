@@ -34,6 +34,11 @@ console.log(result)
     var shift_id=data.shift_id;
     var emp_id=data.emp_id;
     var machine_client_id=data.machine_client_id
+    var machine_id=data.machine_id
+    var total_count=data.total_count
+    var good_count=data.good_count
+    var bad_count=data.bad_count
+    var ideal_cycle=data.ideal_cycle
     var machine_date=data.machine_data
     var machine_time=data.machine_time
 
@@ -44,6 +49,11 @@ company_id,
 shift_id,
 emp_id,
 machine_client_id,
+machine_id,
+total_count,
+good_count,
+bad_count,
+ideal_cycle,
 machine_date,
 machine_time
 

@@ -20,7 +20,6 @@ export default class MachineActivity extends BaseModel {
   public machine_date: Date
   @column()
   public machine_time: DateTime
-
   @column()
   public machine_active_status: Boolean
   @column()
