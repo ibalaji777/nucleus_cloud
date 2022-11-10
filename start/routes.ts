@@ -19,7 +19,13 @@
 */
 /*eslint-disable*/
 import Route from '@ioc:Adonis/Core/Route'
+import MachinesController from 'App/Controllers/Http/MachinesController'
 
+
+Route.post('/machine_activity', async (ctx) => {
+
+  return new MachinesController().insert(ctx)
+})
 
 
 // // --------------------------?
