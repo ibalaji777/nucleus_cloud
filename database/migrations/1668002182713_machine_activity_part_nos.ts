@@ -14,6 +14,7 @@ export default class extends BaseSchema {
       table.string('machine_client_id')//main tracking
       table.integer('machine_id')//
       table.double('total_count')
+    table.boolean('machine_active_status')
       table.double('good_count')
       table.double('reject_count')
       table.double('ideal_cyle')

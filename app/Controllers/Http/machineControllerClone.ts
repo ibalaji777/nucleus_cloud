@@ -51,7 +51,7 @@ var result=await MachineActivityPartNo.create({
       shift_id,
       emp_id,
       machine_client_id,
-      machine_id,
+      machine_id:parseFloat(machine_id),
       total_count,
       good_count,
       reject_count,
@@ -84,8 +84,6 @@ return result
     if(await this.FN_SEARCH_MACHINE_MAIN({machine_client_id,machine_id}))
     {
     var result=await MachineActivityPartNo.create({
-part_no,
-product_id,
 company_id,
 shift_id,
 emp_id,
