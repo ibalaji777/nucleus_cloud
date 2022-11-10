@@ -71,8 +71,7 @@ return result
 
   public async FN_INSERT_MACHINE_MAIN(data)
   {
-    var part_no=data.part_no;
-    var product_id=data.product_id;
+
     var company_id=data.company_id
     var shift_id=data.shift_id;
     var emp_id=data.emp_id;

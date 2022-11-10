@@ -6,10 +6,6 @@ export default class MachineActivityMain extends BaseModel {
   public id: number
 
   @column()
-  public part_no: String
-  @column()
-  public product_id: Number
-  @column()
   public company_id: Number
   @column()
   public shift_id: Number
