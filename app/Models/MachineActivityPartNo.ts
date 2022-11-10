@@ -33,7 +33,7 @@ export default class MachineActivityPartNo extends BaseModel {
   public good_count: Number
 
   @column()
-  public bad_count: Number
+  public reject_count: Number
 
   @column()
   public ideal_cycle: Number

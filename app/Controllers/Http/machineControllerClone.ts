@@ -12,9 +12,9 @@ export default class MachinesController {
     var machine_id=data.machine_id;
     var machine_client_id=data.machine_client_id;
     var product_id=data.product_id;
-var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id)
-    .where('product_id',product_id);
-console.log(result)
+var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id).where('product_id',product_id);
+if(result.length!=0) return true;
+return false;
   }
 
   public async FN_SEARCH_MACHINE_MAIN(data)
@@ -22,8 +22,8 @@ console.log(result)
     var machine_id=data.machine_id;
     var machine_client_id=data.machine_client_id;
 var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id);
-console.log(result)
-
+if(result.length!=0) return true;
+return false;
   }
 
   public async FN_INSERT_MACHINE_PART_NO(data)
@@ -37,29 +37,33 @@ console.log(result)
     var machine_id=data.machine_id
     var total_count=data.total_count
     var good_count=data.good_count
-    var bad_count=data.bad_count
+    var reject_count=data.reject_count
     var ideal_cycle=data.ideal_cycle
     var machine_date=data.machine_data
     var machine_time=data.machine_time
 
-    var result=await MachineActivityPartNo.create({
-part_no,
-product_id,
-company_id,
-shift_id,
-emp_id,
-machine_client_id,
-machine_id,
-total_count,
-good_count,
-bad_count,
-ideal_cycle,
-machine_date,
-machine_time
+    if(await this.FN_SEARCH_MACHINE_PART_NO({machine_id,product_id,machine_client_id}))
+    {
+var result=await MachineActivityPartNo.create({
+      part_no,
+      product_id,
+      company_id,
+      shift_id,
+      emp_id,
+      machine_client_id,
+      machine_id,
+      total_count,
+      good_count,
+      reject_count,
+      ideal_cycle,
+      machine_date,
+      machine_time
 
 })
 
 return result
+
+    }
 
 
 
@@ -72,10 +76,14 @@ return result
     var company_id=data.company_id
     var shift_id=data.shift_id;
     var emp_id=data.emp_id;
+    var machine_id=data.machine_id
     var machine_client_id=data.machine_client_id
+
     var machine_date=data.machine_data
     var machine_time=data.machine_time
 
+    if(await this.FN_SEARCH_MACHINE_MAIN({machine_client_id,machine_id}))
+    {
     var result=await MachineActivityPartNo.create({
 part_no,
 product_id,
@@ -88,6 +96,7 @@ machine_time
 
 })
 return result
+  }
   }
   public async FN_INSERT_MACHINE_ACTIVITY(data)
   {

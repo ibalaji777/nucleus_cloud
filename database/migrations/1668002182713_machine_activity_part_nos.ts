@@ -15,7 +15,7 @@ export default class extends BaseSchema {
       table.integer('machine_id')//
       table.double('total_count')
       table.double('good_count')
-      table.double('bad_count')
+      table.double('reject_count')
       table.double('ideal_cyle')
       table.date('machine_date')
       table.time('machine_time')
