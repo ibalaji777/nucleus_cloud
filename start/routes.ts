@@ -23,11 +23,11 @@ import MachinesController from 'App/Controllers/Http/MachinesController'
 
 
 Route.post('/machine_activity', async (ctx) => {
-
+  // return ctx.request.all()
   return new MachinesController().insert(ctx)
 })
 
-
+//
 // // --------------------------?
 // Route.get('/qr', async (ctx) => {
 

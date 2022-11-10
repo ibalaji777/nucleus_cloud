@@ -27,7 +27,7 @@ export default class extends BaseSchema {
       //employee
       table.integer('emp_id')
       table.string('emp_name')
-
+      table.double('stroke')
 
 
       /**

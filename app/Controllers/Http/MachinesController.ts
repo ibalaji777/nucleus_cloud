@@ -13,27 +13,27 @@ public async insert(ctx:HttpContextContract)
   var data=ctx.request.input('data')
 
 
-  let rules = {
-    company_id:'required|integer',
-    shift_id:'required|integer',
-    shift_name:'required|string',
-    machine_id:'required|integer',
-    machine_name:'required|string',
-    machine_client_id:'required|integer',
-    machine_date:'required|date',
-    machine_time:'required|string',
-    machine_active_status:'required|boolean',
-    break_type:'required|string',
-    break_reason:'required|string',
-    product_id:'required|integer',
-    product_name:'required|string',
-    emp_id:'required|integer',
-    emp_name:'required|string',
+  // let rules = {
+  //   company_id:'required|integer',
+  //   shift_id:'required|integer',
+  //   shift_name:'required|string',
+  //   machine_id:'required|integer',
+  //   machine_name:'required|string',
+  //   machine_client_id:'required|integer',
+  //   machine_date:'required|date',
+  //   machine_time:'required|string',
+  //   machine_active_status:'required|boolean',
+  //   break_type:'required|string',
+  //   break_reason:'required|string',
+  //   product_id:'required|integer',
+  //   product_name:'required|string',
+  //   emp_id:'required|integer',
+  //   emp_name:'required|string',
 
-  };
-  let validation = new Validator(data, rules );
-  // validation.fails();
-  if(validation.passes()){
+  // };
+  // let validation = new Validator(data, rules );
+  // // validation.fails();
+  // if(validation.passes()){
   var company_id=data.company_id
   var shift_id=data.shift_id
   var shift_name=data.shift_name
@@ -50,6 +50,7 @@ public async insert(ctx:HttpContextContract)
   var product_name=data.product_name
   var emp_id=data.emp_id
   var emp_name=data.emp_name
+  var stroke=data.stroke
 
 var id=await MachineActivity.create({
     company_id,
@@ -67,14 +68,14 @@ var id=await MachineActivity.create({
     product_name,
     emp_id,
     emp_name,
-
+    stroke
  })
 
  ctx.response.send({success:true,data:id})
-}
-ctx.response.send({success:false,data:'',error:validation.console.errors()
+// }
+// ctx.response.send({success:false,data:'',error:validation.console.errors()
 
-})
+// })
 
 }
 

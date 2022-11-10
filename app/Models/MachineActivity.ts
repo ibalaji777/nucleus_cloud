@@ -36,6 +36,9 @@ export default class MachineActivity extends BaseModel {
   @column()
   public emp_name: String
 
+  @column()
+  public stroke: number
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 
