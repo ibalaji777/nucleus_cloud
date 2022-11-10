@@ -7,6 +7,49 @@ let Validator = require('validatorjs');
 export default class MachinesController {
 
 
+  public async FN_INSERT_MACHINE_ACTIVITY(data)
+  {
+
+    var company_id=data.company_id
+    var shift_id=data.shift_id
+    var shift_name=data.shift_name
+    var machine_id=data.machine_id
+    var machine_name=data.machine_name
+    var machine_client_id=data.machine_client_id
+    var machine_date=data.machine_date
+    var machine_time=data.machine_time
+    var machine_active_status=data.machine_active_status
+    var company_id=data.company_id
+    var break_type=data.break_type
+    var break_reason=data.break_reason
+    var product_id=data.product_id
+    var product_name=data.product_name
+    var emp_id=data.emp_id
+    var emp_name=data.emp_name
+    var stroke=data.stroke
+
+  var result=await MachineActivity.create({
+      company_id,
+      shift_id,
+      shift_name,
+      machine_id,
+      machine_name,
+      machine_client_id,
+      machine_date,
+      machine_time,
+      machine_active_status,
+      break_type,
+      break_reason,
+      product_id,
+      product_name,
+      emp_id,
+      emp_name,
+      stroke
+   })
+
+return result
+  }
+
 public async insert(ctx:HttpContextContract)
 {
 
