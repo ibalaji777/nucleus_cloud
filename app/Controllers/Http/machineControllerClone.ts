@@ -106,7 +106,7 @@ return result
     var machine_client_id=data.machine_client_id
     var machine_date=data.machine_date
     var machine_time=data.machine_time
-    var machine_active_status=data.machine_active_status
+    // var machine_active_status=data.machine_active_status
     var company_id=data.company_id
     var break_type=data.break_type
     var break_reason=data.break_reason
@@ -125,7 +125,7 @@ return result
       machine_client_id,
       machine_date,
       machine_time,
-      machine_active_status,
+      // machine_active_status,
       break_type,
       break_reason,
       product_id,

@@ -8,26 +8,26 @@ export default class extends BaseSchema {
 
       table.increments('id')
       //company
-      table.integer('company_id')
+      table.integer('company_id').defaultTo(0)
       //shift
-      table.integer('shift_id')
-      table.string('shift_name')
+      table.integer('shift_id').defaultTo(0)
+      table.string('shift_name').defaultTo("")
       //machine
-      table.integer('machine_id')
-      table.string('machine_name')
-      table.string('machine_client_id')//main tracking
+      table.integer('machine_id').defaultTo(0)
+      table.string('machine_name').defaultTo("")
+      table.string('machine_client_id').defaultTo(0)//main tracking
       table.date('machine_date')
       table.time('machine_time')
-      table.string('machine_active_status')
-      table.string('break_type')
-      table.string('break_reason')
+      // table.string('machine_active_status').defaultTo(0)
+      table.string('break_type').defaultTo("")
+      table.string('break_reason').defaultTo("")
       //product
-      table.integer('product_id')
-      table.string('product_name')
+      table.integer('product_id').defaultTo(0)
+      table.string('product_name').defaultTo("")
       //employee
-      table.integer('emp_id')
-      table.string('emp_name')
-      table.double('stroke')
+      table.integer('emp_id').defaultTo(0)
+      table.string('emp_name').defaultTo(0)
+      table.double('stroke').defaultTo(0)
 
 
       /**

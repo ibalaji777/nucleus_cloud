@@ -21,8 +21,6 @@ export default class MachineActivity extends BaseModel {
   @column()
   public machine_time: DateTime
   @column()
-  public machine_active_status: Boolean
-  @column()
   public break_type: String
   @column()
   public break_reason: String

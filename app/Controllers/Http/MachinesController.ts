@@ -1,7 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Machine from 'App/Models/Machine'
 import MachineActivity from 'App/Models/MachineActivity'
+import MachineActivityMain from 'App/Models/MachineActivityMain';
 import MachineActivityPartNo from 'App/Models/MachineActivityPartNo';
+import moment from 'moment';
+import _ from 'lodash'
 let Validator = require('validatorjs');
 
 
@@ -12,18 +15,23 @@ export default class MachinesController {
     var machine_id=data.machine_id;
     var machine_client_id=data.machine_client_id;
     var product_id=data.product_id;
+    console.log("FN_SEARCH_MACHINE_PART_NO",machine_id,machine_client_id,product_id)
 var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id)
     .where('product_id',product_id);
-console.log(result)
+
+    if(_.isEmpty(result)) return true;
+    return false;
   }
 
   public async FN_SEARCH_MACHINE_MAIN(data)
   {
     var machine_id=data.machine_id;
     var machine_client_id=data.machine_client_id;
+    console.log("FN_SEARCH_MACHINE_MAIN",machine_id,machine_client_id)
 var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id);
 console.log(result)
-
+if(_.isEmpty(result)) return true;
+return false;
   }
 
   public async FN_INSERT_MACHINE_PART_NO(data)
@@ -37,12 +45,11 @@ console.log(result)
     var machine_id=data.machine_id
     var machine_date=data.machine_data
     var machine_time=data.machine_time
-
     var good_count=data.good_count;
     var reject_count=data.reject_count;
     var ideal_cycle=data.ideal_cycle
 
-
+if(await this.FN_SEARCH_MACHINE_PART_NO(data)){
     var result=await MachineActivityPartNo.create({
       good_count,
       reject_count,
@@ -54,40 +61,41 @@ shift_id,
 emp_id,
 machine_client_id,
 machine_id,
-machine_date,
-machine_time
+machine_date:moment(machine_date).format('YYYY-MM-DD'),
+machine_time,
+
 
 })
 
 return result
 
-
+}
 
   }
 
   public async FN_INSERT_MACHINE_MAIN(data)
   {
-    var part_no=data.part_no;
-    var product_id=data.product_id;
+
     var company_id=data.company_id
     var shift_id=data.shift_id;
     var emp_id=data.emp_id;
     var machine_client_id=data.machine_client_id
     var machine_date=data.machine_data
     var machine_time=data.machine_time
+    var machine_active_status=data.machine_active_status;
 
-    var result=await MachineActivityPartNo.create({
-part_no,
-product_id,
+    if(await this.FN_SEARCH_MACHINE_MAIN(data)){
+    var result=await MachineActivityMain.create({
 company_id,
 shift_id,
 emp_id,
 machine_client_id,
-machine_date,
-machine_time
-
+machine_date:moment(machine_date).format('YYYY-MM-DD'),
+machine_time,
+machine_active_status
 })
 return result
+    }
   }
   public async FN_INSERT_MACHINE_ACTIVITY(data)
   {
@@ -100,7 +108,6 @@ return result
     var machine_client_id=data.machine_client_id
     var machine_date=data.machine_date
     var machine_time=data.machine_time
-    var machine_active_status=data.machine_active_status
     var company_id=data.company_id
     var break_type=data.break_type
     var break_reason=data.break_reason
@@ -119,7 +126,6 @@ return result
       machine_client_id,
       machine_date,
       machine_time,
-      machine_active_status,
       break_type,
       break_reason,
       product_id,
