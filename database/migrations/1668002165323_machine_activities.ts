@@ -18,7 +18,7 @@ export default class extends BaseSchema {
       table.string('machine_client_id').defaultTo(0)//main tracking
       table.date('machine_date')
       table.time('machine_time')
-      // table.string('machine_active_status').defaultTo(0)
+      table.string('machine_active_status').defaultTo('OFF')
       table.string('break_type').defaultTo("")
       table.string('break_reason').defaultTo("")
       //product

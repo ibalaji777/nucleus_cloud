@@ -15,9 +15,13 @@ export default class MachinesController {
     var machine_id=data.machine_id;
     var machine_client_id=data.machine_client_id;
     var product_id=data.product_id;
+    // console.log(data)
     console.log("FN_SEARCH_MACHINE_PART_NO",machine_id,machine_client_id,product_id)
-var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id)
-    .where('product_id',product_id);
+var result=await MachineActivityPartNo.
+query()
+.where('machine_id',machine_id)
+.andWhere('machine_client_id',machine_client_id)
+.andWhere('product_id',product_id);
 
     if(_.isEmpty(result)) return true;
     return false;
@@ -27,7 +31,7 @@ var result=await MachineActivityPartNo.query().where('machine_id',machine_id)   
   {
     var machine_id=data.machine_id;
     var machine_client_id=data.machine_client_id;
-    console.log("FN_SEARCH_MACHINE_MAIN",machine_id,machine_client_id)
+    // console.log("FN_SEARCH_MACHINE_MAIN",machine_id,machine_client_id)
 var result=await MachineActivityPartNo.query().where('machine_id',machine_id)    .andWhere('machine_client_id',machine_client_id);
 console.log(result)
 if(_.isEmpty(result)) return true;
@@ -82,7 +86,7 @@ return result
     var machine_client_id=data.machine_client_id
     var machine_date=data.machine_data
     var machine_time=data.machine_time
-    var machine_active_status=data.machine_active_status;
+    var is_closed=data.is_closed;
 
     if(await this.FN_SEARCH_MACHINE_MAIN(data)){
     var result=await MachineActivityMain.create({
@@ -92,7 +96,7 @@ emp_id,
 machine_client_id,
 machine_date:moment(machine_date).format('YYYY-MM-DD'),
 machine_time,
-machine_active_status
+is_closed
 })
 return result
     }
@@ -116,6 +120,8 @@ return result
     var emp_id=data.emp_id
     var emp_name=data.emp_name
     var stroke=data.stroke
+    var machine_active_status=data.machine_active_status;
+
 
   var result=await MachineActivity.create({
       company_id,
@@ -123,6 +129,7 @@ return result
       shift_name,
       machine_id,
       machine_name,
+      machine_active_status,
       machine_client_id,
       machine_date,
       machine_time,

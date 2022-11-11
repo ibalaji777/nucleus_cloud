@@ -11,7 +11,8 @@ export default class extends BaseSchema {
       table.string('emp_id').defaultTo(0)//main tracking
       table.string('machine_client_id').defaultTo(0)//main tracking
       table.integer('machine_id').defaultTo(0)//
-      table.boolean('machine_active_status').defaultTo(false)
+      // table.boolean('machine_active_status').defaultTo(false)
+      table.boolean('is_closed').defaultTo(false)
       table.date('machine_date')
       table.time('machine_time')
 
