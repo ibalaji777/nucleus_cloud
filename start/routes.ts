@@ -19,14 +19,24 @@
 */
 /*eslint-disable*/
 import Route from '@ioc:Adonis/Core/Route'
+import View from '@ioc:Adonis/Core/View'
 import MachinesController from 'App/Controllers/Http/MachinesController'
 
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
+// / A typical route handler
+Route.get('/',  ({ view }) => {
+  return view.render('index',{name:'hello world',hello:'hello'})
+//  return html;
+})
 Route.post('/machine_activity', async (ctx) => {
   // return ctx.request.all()
   return new MachinesController().insert(ctx)
 })
-
+// // Route.get('qr ',async(ctx)=>{
+// //   return 'ok'
+// //     return new WhatsappsController().qrcode(ctx)
+// //      })
 //
 // // --------------------------?
 // Route.get('/qr', async (ctx) => {
