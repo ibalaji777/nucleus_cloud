@@ -14,6 +14,8 @@ export default class Machine extends BaseModel {
   @column()
   public name: number
   @column()
+  public group: string
+  @column()
   public hours: Number
   @column()
   public description: String

@@ -90,7 +90,7 @@ if($vm.downtime.type=='')
   $vm.$alert("Please Select the  Type")
   return ;
 }
-
+this.downtime.group=$vm.$route.params.group||"";
 var prepare={
 ...this.downtime,
 company_id:$vm.$store.state.setup.selected_company.id

@@ -336,6 +336,7 @@ other_detail,
         var branch=data.branch;
         var code=data.code;
         var name=data.name;
+        var group=data.group;
         var hours=data.hours;
         var description=data.description;
         var other=data.other;
@@ -346,6 +347,7 @@ other_detail,
     branch,
     name,
     hours,
+    group,
     description,
     other
     })
@@ -449,7 +451,52 @@ var name=data.name;
               }
 
 
+///select-----------------------------
+public async GET_MACHINES(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Machine.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
+public async GET_BRANCHES(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Branch.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
+public async GET_GROUPS(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Group.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
 
+public async GET_BREAK(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Break.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
+
+public async GET_DOWNTIME(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Downtime.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
+
+public async GET_SHIFT(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Shift.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
     }
 
 

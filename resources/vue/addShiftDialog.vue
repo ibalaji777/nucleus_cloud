@@ -151,6 +151,7 @@ if($vm.shifts.name=='')
   return ;
 }
 
+this.shifts.group=$vm.$route.params.group||"";
 var prepare={
 ...this.shifts,
 company_id:$vm.$store.state.setup.selected_company.id

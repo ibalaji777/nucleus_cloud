@@ -161,7 +161,7 @@ if($vm.breaks.hours=='')
   $vm.$alert("Please Enter the Hours")
   return ;
 }
-
+this.breaks.group=$vm.$route.params.group||'';
 var prepare={
 ...this.breaks,
 company_id:$vm.$store.state.setup.selected_company.id

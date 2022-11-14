@@ -5,6 +5,7 @@ import  Home from '../../vue/Home.vue'
 import  login from '../../vue/login.vue'
 import  signup from '../../vue/signup.vue'
 import  dashboard from '../../vue/dashboard.vue'
+import  groupDashboard from '../../vue/groupDashboard.vue'
 Vue.use(VueRouter)
 
 const  routes= [
@@ -16,6 +17,15 @@ const  routes= [
       component: dashboard//page('engine.vue')
 
     },
+    {
+      // ****************website(select index)*******************
+
+      path: '/groupdashboard',
+      name: 'groupdashboard',
+      component: groupDashboard//page('engine.vue')
+
+    },
+
     {
       // ****************website(select index)*******************
 

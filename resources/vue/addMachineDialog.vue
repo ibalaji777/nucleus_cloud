@@ -53,6 +53,7 @@ branch:'',
 machine:{
 code:'',
 name:'',
+group:'',
 hours:8,
 description:'',
 other:''
@@ -77,7 +78,7 @@ if($vm.machine.hours=='')
   $vm.$alert("Please Enter the Hours")
   return ;
 }
-
+this.machine.group=$vm.$route.params.group||"";
 var prepare={
 ...this.machine,
 company_id:$vm.$store.state.setup.selected_company.id

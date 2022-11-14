@@ -34,27 +34,45 @@ Emp Role
 </div>
 </div>
 
-<h2 @click="$store.commit('dialog',{key:'addBranchDialog',value:true})" style="color:white;padding:10px"> Branches
-
-  <v-icon style="color:white">fa-plus</v-icon>
-</h2>
-
+<!-- {{$store.state.db}} -->
+<h2  style="color:white;padding:10px"> Branches</h2>
 <div style="display:flex">
-<div class="nucleus_widget">
-Chennai
-</div>
-
-<div class="nucleus_widget">
-Bangalore
+<div v-for="(item,index) in $store.state.db.branches" :key="'branch'+index" class="nucleus_widget">
+{{item.name}}
 </div>
 </div>
 
+
+<h2  style="color:white;padding:10px"> Group</h2>
+<div style="display:flex">
+<div @click="$router.push({name:'groupdashboard',params:{group:item.name}})" v-for="(item,index) in $store.state.db.groups" :key="'branch'+index" class="nucleus_widget">
+{{item.name}}
+</div>
+</div>
+<h2  style="color:white;padding:10px"> Machine</h2>
+<div style="display:flex">
+<div v-for="(item,index) in $store.state.db.machines" :key="'branch'+index" class="nucleus_widget">
+{{item.name}}
+</div>
+</div>
   </div>
 </template>
 
 <script>
 export default {
 
+mounted(){
+var $vm=this;
+
+$vm.$store.dispatch('GET_MACHINES')
+$vm.$store.dispatch('GET_BRANCHES')
+$vm.$store.dispatch('GET_GROUPS')
+$vm.$store.dispatch('GET_BREAK')
+$vm.$store.dispatch('GET_DOWNTIME')
+$vm.$store.dispatch('GET_SHIFT')
+
+
+}
 }
 </script>
 <style lang="scss">

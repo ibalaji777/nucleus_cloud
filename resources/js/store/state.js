@@ -11,6 +11,18 @@ dialog:{
   addProductsDialog:false,
   addEmpRoleDialog:false
 },
+
+db:{
+//ok
+  machines:[],
+  branches:[],
+  groups:[],
+  //
+  downtime:[],
+  break:[],
+  shift:[]
+
+},
 setup:{
   uiTimeFormat:"hh:mm a",
   bgTimeFormat:"HH:mm",
