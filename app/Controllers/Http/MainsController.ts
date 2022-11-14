@@ -3,11 +3,36 @@ import Branch from 'App/Models/Branch'
 import Break from 'App/Models/Break';
 import Company from 'App/Models/Company';
 import Employee from 'App/Models/Employee';
+import Emprole from 'App/Models/Emprole';
+import Group from 'App/Models/Group';
 import Machine from 'App/Models/Machine';
 import Product from 'App/Models/Product';
 import Shift from 'App/Models/Shift';
 import _ from 'lodash'
 export default class MainsController {
+
+  public async isGroupFound(data){
+    var company_id=data.company_id;
+    var name=data.name;
+    var isFound=await Group.query().where('company_id',company_id).andWhere('name',name)
+    if(_.isEmpty(isFound)){
+    return false;
+    }
+    return true;
+  }
+
+
+  public async isEmpRoleFound(data){
+    var company_id=data.company_id;
+    var name=data.name;
+    var isFound=await Emprole.query().where('company_id',company_id).andWhere('name',name)
+    if(_.isEmpty(isFound)){
+    return false;
+    }
+    return true;
+  }
+
+
 
   public async isBranchFound(data){
     var company_id=data.company_id;
@@ -301,13 +326,15 @@ other
         var data=ctx.request.input('data')
         var company_id=data.company_id;
         var branch=data.branch;
+        var code=data.code;
         var name=data.name;
         var hours=data.hours;
         var description=data.description;
         var other=data.other;
-        if(!await this.isProductFound({company_id,part_no,material_code})){
+    if(!await this.isMachinFound({company_id,name})){
     var result=await   Machine.create({
     company_id,
+    code,
     branch,
     name,
     hours,
@@ -328,6 +355,61 @@ other
           data:''
         })
         }
+
+
+        public async CREATE_GROUP(ctx:HttpContextContract){
+          var data=ctx.request.input('data')
+var company_id=data.company_id;
+var name=data.name;
+          var description=data.description;
+          if(!await this.isGroupFound({company_id,name})){
+      var result=await   Group.create({
+      company_id,
+      name,
+      description
+      })
+
+          if(result.$isPersisted)
+          return ctx.response.send({
+            success:true,
+            msg:'Created Successfully',
+            data:result
+          })
+          }
+          return ctx.response.send({
+            success:false,
+            msg:'Already exist',
+            data:''
+          })
+          }
+
+          public async CREATE_EMPROLE(ctx:HttpContextContract){
+            var data=ctx.request.input('data')
+            var company_id=data.company_id;
+            var name=data.name;
+            var description=data.description;
+            if(!await this.isEmpRoleFound({company_id,name})){
+        var result=await   Machine.create({
+        company_id,
+        name,
+        description,
+       })
+
+            if(result.$isPersisted)
+            return ctx.response.send({
+              success:true,
+              msg:'Created Successfully',
+              data:result
+            })
+            }
+            return ctx.response.send({
+              success:false,
+              msg:'Already exist',
+              data:''
+            })
+            }
+
+
 
     }
 

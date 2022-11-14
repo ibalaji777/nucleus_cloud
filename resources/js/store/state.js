@@ -2,9 +2,19 @@ const state={
 
 dialog:{
   addBranchDialog:false,
+  addEmployeeDialog:false,
+  addShiftDialog:false,
+  addBreaksDialog:false,
+  addMachineDialog:false,
+  addDownTimeDialog:false,
+  addGroupDialog:false,
+  addProductsDialog:false,
 },
 setup:{
-
+  uiTimeFormat:"hh:mm a",
+  bgTimeFormat:"HH:mm",
+  uiDateFormat:"DD-MM-YYYY",
+  bgDateFormat:"YYYY-MM-DD",
   selected_company:{
 
     id:1,

@@ -1,25 +1,16 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Machine extends BaseModel {
+export default class Emprole extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public company_id: number
+  public company_id:Number
   @column()
-  public code: String
+  public name:String
   @column()
-  public branch: String
-  @column()
-  public name: number
-  @column()
-  public hours: Number
-  @column()
-  public description: String
-  @column()
-  public other: String
-
+  public description:String
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

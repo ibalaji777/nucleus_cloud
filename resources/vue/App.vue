@@ -7,6 +7,14 @@
 
 
 <add-branch-dialog></add-branch-dialog>
+<add-employee-dialog></add-employee-dialog>
+<add-shift-dialog></add-shift-dialog>
+<add-breaks-dialog></add-breaks-dialog>
+<add-machine-dialog></add-machine-dialog>
+<add-down-time-dialog></add-down-time-dialog>
+<add-group-dialog></add-group-dialog>
+<add-product-dialog></add-product-dialog>
+
 </v-app>
 </template>
 

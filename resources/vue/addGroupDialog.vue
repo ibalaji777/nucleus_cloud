@@ -2,21 +2,18 @@
 <v-app>
   <v-row justify="center">
     <v-dialog
-      v-model="$store.state.dialog.addBranchDialog"
+      v-model="$store.state.dialog.addGroupDialog"
       persistent
       max-width="600px"
     >
 
       <v-card>
         <v-card-title>
-          <span class="text-h5">Branch</span>
+          <span class="text-h5">group</span>
         </v-card-title>
         <v-card-text>
-
-  <v-text-field v-model="branch.name" label="Branch"></v-text-field>
-
-
-
+  <v-text-field v-model="group.name" label="Name(*)"></v-text-field>
+  <v-text-field v-model="group.description" label="Description"></v-text-field>
 
           <small>*indicates required field</small>
         </v-card-text>
@@ -25,7 +22,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="$store.commit('dialog',{key:'addBranchDialog',value:false})"
+            @click="$store.commit('dialog',{key:'addGroupDialog',value:false})"
           >
             Close
           </v-btn>
@@ -43,21 +40,34 @@
   </v-app>
 </template>
 <script>
+import moment  from  'moment'
+
 export default {
 data(){
   return {
-branch:{
-  company_id:'',
-  name:''
+
+
+group:{
+company_id:'',
+name:'',
+description:'',
 }
   }
 },
 methods:{
  async submit(){
     var $vm=this;
-var prepare={...$vm.branch,company_id:$vm.$store.state.setup.selected_company.id}
-var result=await $vm.$store.dispatch('CREATE_BRANCH',prepare)
-$vm.$alert(result.msg)
+if($vm.group.name=='')
+{
+  $vm.$alert("Please Enter the Name")
+  return ;
+}
+
+var prepare={...this.group,
+company_id:$vm.$store.state.setup.selected_company.id
+}
+var result=await $vm.$store.dispatch('CREATE_GROUP',prepare)
+ $vm.$alert(result.msg)
 
   }
 }

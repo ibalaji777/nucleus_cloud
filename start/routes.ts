@@ -36,6 +36,12 @@ Route.post('/create_employee',(ctx)=>{
   Route.post('/create_product',(ctx)=>{
     return new  MainsController().CREATE_PRODUCT(ctx)
     })
+Route.post('/create_group',(ctx)=>{
+return new  MainsController().CREATE_GROUP(ctx)
+})
+Route.post('/create_emprole',(ctx)=>{
+return new  MainsController().CREATE_EMPROLE(ctx)
+})
 }).prefix('/api')
 Route.get('/',  ({ view }) => {
   return view.render('index',{name:'hello world',hello:'hello'})

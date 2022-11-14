@@ -1,29 +1,31 @@
 <template>
   <div class="bgGradient">
-{{$store.state.dialog.addBranchDialog}}
+<!-- {{$store.state.dialog}} -->
 <div style="display:flex;;flex-wrap:wrap">
 
-<div class="nucleus_widget">
+<div @click="$store.commit('dialog',{key:'addBranchDialog',value:true})"  class="nucleus_widget">
+Branches
+</div>
+<div @click="$store.commit('dialog',{key:'addEmployeeDialog',value:true})"  class="nucleus_widget">
 Users
 </div>
-<div class="nucleus_widget">
+<div @click="$store.commit('dialog',{key:'addMachineDialog',value:true})"  class="nucleus_widget">
 Machines
 </div>
-<div class="nucleus_widget">
+<div @click="$store.commit('dialog',{key:'addBreaksDialog',value:true})"  class="nucleus_widget">
 Break Times
 </div>
-<div class="nucleus_widget">
+<div @click="$store.commit('dialog',{key:'addDownTimeDialog',value:true})"  class="nucleus_widget">
 DownTime
 </div>
-<div class="nucleus_widget">
-
+<div @click="$store.commit('dialog',{key:'addGroupDialog',value:true})"  class="nucleus_widget">
 Group
 </div>
-<div class="nucleus_widget">
+<div @click="$store.commit('dialog',{key:'addProductsDialog',value:true})"  class="nucleus_widget">
 Products
 </div>
 
-<div class="nucleus_widget">
+<div @click="$store.commit('dialog',{key:'addShiftDialog',value:true})"  class="nucleus_widget">
 Shifts
 </div>
 </div>

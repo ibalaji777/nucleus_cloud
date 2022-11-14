@@ -39,8 +39,10 @@ node ace make:model Employee -cm
 node ace make:model Shift -cm
 node ace make:model Branch -cm
 node ace make:model Break -cm
-
 node ace make:model Downtime -cm
+
+node ace make:model Group -cm
+node ace make:model Emprole -cm
 
 
 node ace make:model Machine -cm
