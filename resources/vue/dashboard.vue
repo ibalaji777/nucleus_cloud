@@ -1,7 +1,7 @@
 <template>
   <div class="bgGradient">
-
-<div style="display:flex;">
+{{$store.state.dialog.addBranchDialog}}
+<div style="display:flex;;flex-wrap:wrap">
 
 <div class="nucleus_widget">
 Users
@@ -28,6 +28,20 @@ Shifts
 </div>
 </div>
 
+<h2 @click="$store.commit('dialog',{key:'addBranchDialog',value:true})" style="color:white;padding:10px"> Branches
+
+  <v-icon style="color:white">fa-plus</v-icon>
+</h2>
+
+<div style="display:flex">
+<div class="nucleus_widget">
+Chennai
+</div>
+
+<div class="nucleus_widget">
+Bangalore
+</div>
+</div>
 
   </div>
 </template>
@@ -42,7 +56,7 @@ export default {
 .nucleus_widget{
   display:flex;
   height:60px;
-  width:25vw;
+  min-width:15vw;
   background:white;
   justify-content:center;
   align-items:center;

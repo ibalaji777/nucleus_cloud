@@ -1,16 +1,22 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Branch extends BaseModel {
+export default class Break extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+  @column()
+  public company_id: number
+  @column()
+  public name: String
+  @column()
+  public group: String
+  @column()
+  public description: String
 
   @column()
-  public company_id:Number
-
+  public start_time: String
   @column()
-  public name:String
-
+  public end_time: String
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

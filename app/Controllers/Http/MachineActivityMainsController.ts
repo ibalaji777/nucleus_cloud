@@ -1,3 +1,9 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Branch from 'App/Models/Branch'
+import _ from 'lodash'
+export default class MachineActivityMainsController {
 
-export default class MachineActivityMainsController {}
+
+
+
+}

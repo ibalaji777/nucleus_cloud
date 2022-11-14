@@ -1,10 +1,13 @@
 <!-- resources/vue/App.vue -->
 
 <template>
-<div>
+<v-app>
   <router-view></router-view>
-</div>
 
+
+
+<add-branch-dialog></add-branch-dialog>
+</v-app>
 </template>
 
 <script>
