@@ -83,7 +83,7 @@ var prepare={
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_MACHINE',prepare)
- $vm.$alert(result.msg)
+ $vm.$alert(result.data.msg)
 
   }
 }

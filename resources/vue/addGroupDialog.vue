@@ -9,7 +9,7 @@
 
       <v-card>
         <v-card-title>
-          <span class="text-h5">group</span>
+          <span class="text-h5">GROUP</span>
         </v-card-title>
         <v-card-text>
   <v-text-field v-model="group.name" label="Name(*)"></v-text-field>
@@ -67,7 +67,7 @@ var prepare={...this.group,
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_GROUP',prepare)
- $vm.$alert(result.msg)
+ $vm.$alert(result.data.msg)
 
   }
 }

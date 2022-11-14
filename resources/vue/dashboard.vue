@@ -28,6 +28,10 @@ Products
 <div @click="$store.commit('dialog',{key:'addShiftDialog',value:true})"  class="nucleus_widget">
 Shifts
 </div>
+
+<div @click="$store.commit('dialog',{key:'addEmpRoleDialog',value:true})"  class="nucleus_widget">
+Emp Role
+</div>
 </div>
 
 <h2 @click="$store.commit('dialog',{key:'addBranchDialog',value:true})" style="color:white;padding:10px"> Branches

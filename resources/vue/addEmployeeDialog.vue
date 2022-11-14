@@ -52,6 +52,7 @@ export default {
 data(){
   return {
 employee:{
+  company_id:'',
   name:'',
   email:'',
   dialcode:'91',
@@ -85,10 +86,13 @@ if($vm.employee.email=='')
   $vm.$alert("Please Enter the Email")
   return ;
 }
-var prepare={company_id:$vm.$store.state.setup.selected_company.id,
-...this.employee}
+// console.log("prepareww",$vm.employee)
+
+var prepare={
+...this.employee,company_id:$vm.$store.state.setup.selected_company.id}
+// console.log("prepare",prepare)
 var result=await $vm.$store.dispatch('CREATE_EMPLOYEE',prepare)
-$vm.$alert(result.msg)
+$vm.$alert(result.data.msg)
 
   }
 }

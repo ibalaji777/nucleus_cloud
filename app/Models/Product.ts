@@ -20,8 +20,6 @@ export default class Product extends BaseModel {
   public  vendor_name:string
   @column()
   public other_detail:string
-  @column()
-  public  other:string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

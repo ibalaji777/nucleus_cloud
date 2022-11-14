@@ -9,6 +9,7 @@ dialog:{
   addDownTimeDialog:false,
   addGroupDialog:false,
   addProductsDialog:false,
+  addEmpRoleDialog:false
 },
 setup:{
   uiTimeFormat:"hh:mm a",
@@ -16,7 +17,6 @@ setup:{
   uiDateFormat:"DD-MM-YYYY",
   bgDateFormat:"YYYY-MM-DD",
   selected_company:{
-
     id:1,
     phone:'88888888',
     username:'admin',

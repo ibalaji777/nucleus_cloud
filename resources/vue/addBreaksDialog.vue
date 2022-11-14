@@ -166,8 +166,8 @@ var prepare={
 ...this.breaks,
 company_id:$vm.$store.state.setup.selected_company.id
 }
-var result=await $vm.$store.dispatch('CREATE_breaks',prepare)
- $vm.$alert(result.msg)
+var result=await $vm.$store.dispatch('CREATE_BREAK',prepare)
+ $vm.$alert(result.data.msg)
 
   }
 }

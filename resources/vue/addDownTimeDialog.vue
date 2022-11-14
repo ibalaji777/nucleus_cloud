@@ -9,7 +9,7 @@
 
       <v-card>
         <v-card-title>
-          <span class="text-h5">downtime</span>
+          <span class="text-h5">DOWN TIME</span>
         </v-card-title>
         <v-card-text>
   <v-text-field v-model="downtime.name" label="Name(*)"></v-text-field>
@@ -49,16 +49,7 @@
 </template>
 <script>
 import moment  from  'moment'
-// var types=[
-// {
-//   title:'Break',
-//   value:'break'
-// },
-// {
-//   title:'Default',
-//   value:'default'
-// }
-// ]
+
 
 export default {
 data(){
@@ -89,19 +80,14 @@ type:'default'
 methods:{
  async submit(){
     var $vm=this;
-if($vm.downtime.code=='')
-{
-  $vm.$alert("Please Enter the Code")
-  return ;
-}
 if($vm.downtime.name=='')
 {
   $vm.$alert("Please Enter the  Name")
   return ;
 }
-if($vm.downtime.hours=='')
+if($vm.downtime.type=='')
 {
-  $vm.$alert("Please Enter the Hours")
+  $vm.$alert("Please Select the  Type")
   return ;
 }
 
@@ -109,8 +95,8 @@ var prepare={
 ...this.downtime,
 company_id:$vm.$store.state.setup.selected_company.id
 }
-var result=await $vm.$store.dispatch('CREATE_downtime',prepare)
- $vm.$alert(result.msg)
+var result=await $vm.$store.dispatch('CREATE_DOWN_TIME',prepare)
+ $vm.$alert(result.data.msg)
 
   }
 }

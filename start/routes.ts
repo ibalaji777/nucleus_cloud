@@ -18,7 +18,10 @@ import MainsController from 'App/Controllers/Http/MainsController'
 //machine part no k
 
 Route.group(() => {
-Route.post('/create_branch',(ctx)=>{
+  Route.post('/create_machine',(ctx)=>{
+    return new  MainsController().CREATE_MACHINE(ctx)
+    })
+  Route.post('/create_branch',(ctx)=>{
 return new  MainsController().CREATE_BRANCH(ctx)
 })
 Route.post('/create_company',(ctx)=>{
@@ -42,6 +45,10 @@ return new  MainsController().CREATE_GROUP(ctx)
 Route.post('/create_emprole',(ctx)=>{
 return new  MainsController().CREATE_EMPROLE(ctx)
 })
+Route.post('/create_down_time',(ctx)=>{
+  return new  MainsController().CREATE_DOWNTIME(ctx)
+  })
+
 }).prefix('/api')
 Route.get('/',  ({ view }) => {
   return view.render('index',{name:'hello world',hello:'hello'})

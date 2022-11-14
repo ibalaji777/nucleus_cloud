@@ -14,7 +14,7 @@
 <add-down-time-dialog></add-down-time-dialog>
 <add-group-dialog></add-group-dialog>
 <add-product-dialog></add-product-dialog>
-
+<add-emp-role-dialog></add-emp-role-dialog>
 </v-app>
 </template>
 

@@ -2,6 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Branch from 'App/Models/Branch'
 import Break from 'App/Models/Break';
 import Company from 'App/Models/Company';
+import Downtime from 'App/Models/Downtime';
 import Employee from 'App/Models/Employee';
 import Emprole from 'App/Models/Emprole';
 import Group from 'App/Models/Group';
@@ -32,6 +33,15 @@ export default class MainsController {
     return true;
   }
 
+  public async isDownTimeFound(data){
+    var company_id=data.company_id;
+    var name=data.name;
+    var isFound=await Downtime.query().where('company_id',company_id).andWhere('name',name)
+    if(_.isEmpty(isFound)){
+    return false;
+    }
+    return true;
+  }
 
 
   public async isBranchFound(data){
@@ -87,7 +97,7 @@ export default class MainsController {
     var company_id=data.company_id;
     var phone=data.phone;
     var email=data.email
-    var isFound=await Shift.query().where('company_id',company_id).andWhere('phone',phone)
+    var isFound=await Employee.query().where('company_id',company_id).andWhere('phone',phone)
     .orWhere('company_id',company_id).andWhere('email',email)
     if(_.isEmpty(isFound)){
     return false;
@@ -293,7 +303,6 @@ other
       var customer_name=data.customer_name;
       var vendor_name=data.vendor_name;
       var other_detail=data.other_detail;
-      var other=data.other;
       if(!await this.isProductFound({company_id,part_no,material_code})){
   var result=await   Product.create({
   company_id,
@@ -304,7 +313,6 @@ material_code,
 customer_name,
 vendor_name,
 other_detail,
-other
   })
 
       if(result.$isPersisted)
@@ -389,7 +397,7 @@ var name=data.name;
             var name=data.name;
             var description=data.description;
             if(!await this.isEmpRoleFound({company_id,name})){
-        var result=await   Machine.create({
+        var result=await   Emprole.create({
         company_id,
         name,
         description,
@@ -408,6 +416,37 @@ var name=data.name;
               data:''
             })
             }
+
+
+            public async CREATE_DOWNTIME(ctx:HttpContextContract){
+              var data=ctx.request.input('data')
+              var company_id=data.company_id;
+              var name=data.name;
+              var description=data.description;
+              var group=data.group;
+              var type=data.type;
+              if(!await this.isDownTimeFound({company_id,name})){
+          var result=await   Downtime.create({
+          company_id,
+          name,
+          description,
+          group,
+          type
+         })
+
+              if(result.$isPersisted)
+              return ctx.response.send({
+                success:true,
+                msg:'Created Successfully',
+                data:result
+              })
+              }
+              return ctx.response.send({
+                success:false,
+                msg:'Already exist',
+                data:''
+              })
+              }
 
 
 

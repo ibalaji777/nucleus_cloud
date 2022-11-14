@@ -55,9 +55,10 @@ branch:{
 methods:{
  async submit(){
     var $vm=this;
+    console.log("create branch")
 var prepare={...$vm.branch,company_id:$vm.$store.state.setup.selected_company.id}
 var result=await $vm.$store.dispatch('CREATE_BRANCH',prepare)
-$vm.$alert(result.msg)
+$vm.$alert(result.data.msg)
 
   }
 }

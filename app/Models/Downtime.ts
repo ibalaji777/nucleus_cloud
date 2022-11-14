@@ -15,7 +15,7 @@ export default class Downtime extends BaseModel {
   @column()
   description: Number
   @column()
-  group:Number
+  group:String
   @column()
   type:String
 

@@ -9,7 +9,7 @@
 
       <v-card>
         <v-card-title>
-          <span class="text-h5">shifts</span>
+          <span class="text-h5">SHIFT</span>
         </v-card-title>
         <v-card-text>
   <v-text-field v-model="shifts.name" label="Name(*)"></v-text-field>
@@ -155,8 +155,8 @@ var prepare={
 ...this.shifts,
 company_id:$vm.$store.state.setup.selected_company.id
 }
-var result=await $vm.$store.dispatch('CREATE_shifts',prepare)
- $vm.$alert(result.msg)
+var result=await $vm.$store.dispatch('CREATE_SHIFT',prepare)
+ $vm.$alert(result.data.msg)
 
   }
 }

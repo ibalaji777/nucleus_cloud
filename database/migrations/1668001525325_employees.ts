@@ -7,15 +7,15 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.integer('company_id')
-      table.string('branch')
-      table.string('name')
-      table.string('email')
-      table.string('dialcode')
-      table.string('phone')
-      table.string('role')
-      table.string('idcard')
-      table.string('other')
+      table.integer('company_id').defaultTo(0)
+      table.string('branch').defaultTo('')
+      table.string('name').defaultTo('')
+      table.string('email').defaultTo('')
+      table.string('dialcode').defaultTo('')
+      table.string('phone').defaultTo('')
+      table.string('role').defaultTo('')
+      table.string('idcard').defaultTo('')
+      table.string('other').defaultTo('')
 
 
       /**

@@ -61,7 +61,7 @@ material_code:'',
 customer_name:'',
 vendor_name:'',
 other_detail:'',
-other:{}//jsonb
+
 }
   }
 },
@@ -81,8 +81,8 @@ if($vm.product.part_no=='')
 var prepare={...this.product,
 company_id:$vm.$store.state.setup.selected_company.id
 }
-var result=await $vm.$store.dispatch('CREATE_product',prepare)
- $vm.$alert(result.msg)
+var result=await $vm.$store.dispatch('CREATE_PRODUCT',prepare)
+ $vm.$alert(result.data.msg)
 
   }
 }
