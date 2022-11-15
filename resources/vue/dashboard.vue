@@ -47,6 +47,7 @@ Emp Role
 <div style="display:flex">
 <div @click="$router.push({name:'groupdashboard',params:{group:item.name}})" v-for="(item,index) in $store.state.db.groups" :key="'branch'+index" class="nucleus_widget">
 {{item.name}}
+   <div style="margin-top:10px">{{item.group}}</div>
 </div>
 </div>
 <h2  style="color:white;padding:10px"> Machine</h2>

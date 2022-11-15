@@ -20,6 +20,8 @@ var apiGetDownTime=api+'get_downtime';
 var apiGetBreak=api+'get_break';
 var apiGetShift=api+'get_shift';
 
+var apiSignupCompany=api+'company_signup';
+var apiSigninCompany=api+'company_signin';
 
 
 // var apiCreateBranch=api+'create_branch';
@@ -167,6 +169,13 @@ GET_SHIFT(context){
 })
 
 }
+,
+async SIGNUP_COMPANY(context,payload){
+  return await axios.post(apiSignupCompany,{data:payload})
+  },
+  async SIGNIN_COMPANY(context,payload){
+    return await axios.post(apiSigninCompany,{data:payload})
+    },
 
 
 

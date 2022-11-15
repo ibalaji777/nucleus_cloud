@@ -1,23 +1,23 @@
 <template>
-  <div class="bgGradient">
+  <div class="bgGradient" style="position:relative">
 
 <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:10px;width:350px;background:white;text-align:center">
 
 <h2 style="padding:10px;text-align:center">Login</h2>
-<v-text-field dense outlined label="Username" >
+<v-text-field dense outlined label="PHONE/EMAIL" v-model="company.username">
 
 </v-text-field>
 
-<v-text-field dense outlined label="Password">
+<v-text-field type="password" dense outlined label="PASSWORD" v-model="company.password">
 
 </v-text-field>
 
-<v-btn>
+<v-btn @click="submit" color="primary">
 Login
 </v-btn>
 <br>
 
-<h5 style="margin-top:15px">Create New Account</h5>
+<h5 @click="$router.push('/company_signup')" style="margin-top:15px">Create New Account</h5>
 
 
 </div>
@@ -28,7 +28,31 @@ Login
 
 <script>
 export default {
+data(){
+  return {
+    company:{
+    username:'',
+    password:''
+    }
+  }
+},
+methods:{
+  async  submit(){
+var $vm=this;
+if($vm.company.username==''){
+$vm.$alert("Your Username is Empty,Please Fill")
+  return ;
+}
+if($vm.company.password==''){
+$vm.$alert("Your Password is Empty,Please Fill")
+  return ;
+}
 
+var result=await $vm.$store.dispatch('SIGNIN_COMPANY',this.company)
+$vm.$alert(result.data.msg)
+  }
+
+}
 }
 </script>
 <style lang="scss">

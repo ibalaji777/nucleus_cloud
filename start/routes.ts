@@ -1,4 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
+import CompaniesController from 'App/Controllers/Http/CompaniesController'
 import MachinesController from 'App/Controllers/Http/MachinesController'
 import MainsController from 'App/Controllers/Http/MainsController'
 
@@ -66,6 +67,13 @@ Route.post('/get_break',(ctx)=>{
     Route.post('/get_shift',(ctx)=>{
       return new  MainsController().GET_SHIFT(ctx)
       })
+      Route.post('/company_signup',(ctx)=>{
+        return new  CompaniesController().SIGNUP_COMPANY(ctx)
+        })
+        Route.post('/company_signin',(ctx)=>{
+          return new  CompaniesController().SIGNIN_COMPANY(ctx)
+          })
+
 }).prefix('/api')
 Route.get('/',  ({ view }) => {
   return view.render('index',{name:'hello world',hello:'hello'})

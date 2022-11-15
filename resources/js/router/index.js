@@ -10,29 +10,32 @@ Vue.use(VueRouter)
 
 const  routes= [
     {
-      // ****************website(select index)*******************
 
       path: '/',
       name: 'index',
-      component: dashboard//page('engine.vue')
+      component: dashboard
 
     },
     {
-      // ****************website(select index)*******************
 
       path: '/groupdashboard',
       name: 'groupdashboard',
-      component: groupDashboard//page('engine.vue')
+      component: groupDashboard
 
     },
 
     {
-      // ****************website(select index)*******************
 
-      path: '/signup',
-      name: 'signup',
-      component: login//page('engine.vue')
+      path: '/company_signup',
+      name: 'company_signup',
+      component: signup
 
+    },
+    {
+
+      path: '/company_signin',
+      name: 'company_signin',
+      component: login
     },
     // {
     //   path: '/about',
