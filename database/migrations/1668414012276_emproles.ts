@@ -9,6 +9,7 @@ export default class extends BaseSchema {
 
       table.integer('company_id').defaultTo(0)
       table.string('name').defaultTo('')
+      table.string('type').defaultTo('')
       table.string('description').defaultTo('')
 
       /**

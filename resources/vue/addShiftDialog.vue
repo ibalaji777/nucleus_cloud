@@ -1,6 +1,5 @@
 <template>
-<v-app>
-  <v-row justify="center">
+<div>
     <v-dialog
       v-model="$store.state.dialog.addShiftDialog"
       persistent
@@ -121,8 +120,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
-  </v-app>
+  </div>
 </template>
 <script>
 import moment  from  'moment'

@@ -19,6 +19,10 @@ import MainsController from 'App/Controllers/Http/MainsController'
 //machine part no k
 
 Route.group(() => {
+
+  Route.get('/socket1',(ctx)=>{
+    return new  MainsController().socket_one(ctx)
+    })
   Route.post('/create_machine',(ctx)=>{
     return new  MainsController().CREATE_MACHINE(ctx)
     })
@@ -60,19 +64,26 @@ return new  MainsController().GET_GROUPS(ctx)
 })
 Route.post('/get_break',(ctx)=>{
   return new  MainsController().GET_BREAK(ctx)
+})
+Route.post('/get_downtime',(ctx)=>{
+return new  MainsController().GET_DOWNTIME(ctx)
+})
+Route.post('/get_shift',(ctx)=>{
+return new  MainsController().GET_SHIFT(ctx)
+})
+Route.post('/company_signup',(ctx)=>{
+return new  CompaniesController().SIGNUP_COMPANY(ctx)
+})
+Route.post('/company_signin',(ctx)=>{
+return new  CompaniesController().SIGNIN_COMPANY(ctx)
+})
+
+Route.post('/get_employee',(ctx)=>{
+return new  MainsController().GET_EMPLOYEES(ctx)
+})
+Route.post('/get_emprole',(ctx)=>{
+  return new  MainsController().GET_EMPROLE(ctx)
   })
-  Route.post('/get_downtime',(ctx)=>{
-    return new  MainsController().GET_DOWNTIME(ctx)
-    })
-    Route.post('/get_shift',(ctx)=>{
-      return new  MainsController().GET_SHIFT(ctx)
-      })
-      Route.post('/company_signup',(ctx)=>{
-        return new  CompaniesController().SIGNUP_COMPANY(ctx)
-        })
-        Route.post('/company_signin',(ctx)=>{
-          return new  CompaniesController().SIGNIN_COMPANY(ctx)
-          })
 
 }).prefix('/api')
 Route.get('/',  ({ view }) => {

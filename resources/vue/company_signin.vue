@@ -49,6 +49,14 @@ $vm.$alert("Your Password is Empty,Please Fill")
 }
 
 var result=await $vm.$store.dispatch('SIGNIN_COMPANY',this.company)
+
+if(result.data.success){
+await $vm.$store.commit("COMPANY_LOGIN",result.data.data)
+$vm.$nextTick(()=>{
+$vm.$router.push({name:'company_dashboard'})
+})
+}
+
 $vm.$alert(result.data.msg)
   }
 

@@ -1,6 +1,6 @@
 <template>
-<v-app>
-  <v-row justify="center">
+<div>
+
     <v-dialog
       v-model="$store.state.dialog.addEmpRoleDialog"
       persistent
@@ -9,9 +9,14 @@
 
       <v-card>
         <v-card-title>
-          <span class="text-h5">empRole</span>
+          <span class="text-h5">Employee Role</span>
         </v-card-title>
         <v-card-text>
+<v-select
+v-model="empRole.type"
+  :items="employeeType"
+></v-select>
+
   <v-text-field v-model="empRole.name" label="Name(*)"></v-text-field>
   <v-text-field v-model="empRole.description" label="Description"></v-text-field>
 
@@ -36,8 +41,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
-  </v-app>
+  </div>
 </template>
 <script>
 import moment  from  'moment'
@@ -45,12 +49,12 @@ import moment  from  'moment'
 export default {
 data(){
   return {
-
-
+employeeType:['OPERATOR','SUPERVISOR'],
 empRole:{
 company_id:'',
 name:'',
 description:'',
+type:'OPERATOR'
 }
   }
 },

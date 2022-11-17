@@ -1,11 +1,7 @@
 <template>
-<div>
-    <v-dialog
-      v-model="$store.state.dialog.addEmployeeDialog"
-      persistent
-      max-width="600px"
-    >
+  <div style="display:flex">
 
+<div style="width:50vw;padding:10px;">
       <v-card>
         <v-card-title>
           <span class="text-h5">Employee</span>
@@ -17,7 +13,7 @@
   <v-text-field v-model="employee.dialcode" label="dialcode(*)"></v-text-field>
   <v-text-field v-model="employee.phone" label="phone(*)"></v-text-field>
   <v-text-field v-model="employee.password" label="password(*)"></v-text-field>
-  <v-select v-model="employee.role" :items="employeeRole"></v-select>
+  <v-select     v-model="employee.role" :items="employeeRole"></v-select>
   <v-text-field v-model="employee.idcard" label="idcard"></v-text-field>
   <v-text-field v-model="employee.other" label="other"></v-text-field>
 
@@ -43,13 +39,57 @@
           </v-btn>
         </v-card-actions>
       </v-card>
-    </v-dialog>
+      </div>
+<div style="width:50vw;padding:10px">
+{{selectedMachine}}
+<machines-widget v-model="selectedMachine"></machines-widget>
+<div>
+  <v-btn @click="addMachine" color="primary"
+  >Submit</v-btn>
+</div>
+<div style="text-align: center;
+    display: flex;
+    justify-content: center;margin-top:10px">
+  <v-card style="width:60vw">
+    <h4 style="margin:0;padding:0;margin:5px;">MACHINE EVENT</h4>
+
+    <v-card-title>
+      <v-text-field
+        v-model="machineSearch"
+        append-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
+    <v-data-table
+      :headers="headerMachine"
+      :items="machines"
+      :search="machineSearch"
+       ></v-data-table>
+  </v-card>
+</div>
+</div>
+
   </div>
 </template>
+
 <script>
 export default {
 data(){
   return {
+    machineSearch:'',
+    headerMachine:[
+{ text: 'Code', value: 'code' },
+{ text: 'Name', value: 'name' },
+{ text: 'Group', value: 'group' },
+{ text: 'Type', value: 'type' },
+{ text: 'Description', value: 'description' },
+{ text: 'Other', value: 'other' },
+],
+    machines:[],
+    selectedMachine:{},
+    data:{},
   employeeRole:['SUPERVISOR','OPERATOR'],
 employee:{
   company_id:'',
@@ -66,7 +106,32 @@ employee:{
 }
   }
 },
+mounted(){
+var $vm=this
+if(!_.isEmpty($vm.$route.params.data)){
+$vm.employee={...$vm.$route.params.data}
+}
+
+$vm.machines=$vm.employee.config.machines||[]
+},
 methods:{
+  addMachine(){
+    var $vm=this;
+if(!_.isEmpty($vm.selectedMachine))
+{
+if(!_.some($vm.machines,(e)=>e.code==$vm.selectedMachine.code)){
+$vm.machines.push($vm.selectedMachine)
+}else{
+  $vm.$alert("Already Exist")
+}
+}else{
+
+  $vm.$alert("Please Select a Machine")
+}
+
+
+
+  },
  async submit(){
     var $vm=this;
 if($vm.employee.name=='')

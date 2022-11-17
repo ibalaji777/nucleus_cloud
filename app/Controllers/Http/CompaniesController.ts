@@ -60,7 +60,7 @@ active_status
       var password=data.password;
 
 
-      var login=await Company.query().where('email',username).orWhere('phone',username).first();
+      var login=await Company.query().select("*").where('email',username).orWhere('phone',username).first();
 
 if(!_.isEmpty(login)){
 
@@ -68,7 +68,7 @@ if(!_.isEmpty(login)){
     return ctx.response.send({
       success:true,
       msg:'Logged Successfully',
-      data:_.omit(login,'password')
+      data:login
     })
       }
 

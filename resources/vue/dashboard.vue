@@ -1,14 +1,22 @@
 <template>
   <div class="bgGradient">
 <!-- {{$store.state.dialog}} -->
+
+<div @click="logout" style="text-align:right;padding:10px">
+  Logout
+</div>
+
 <div style="display:flex;;flex-wrap:wrap">
 
 <div @click="$store.commit('dialog',{key:'addBranchDialog',value:true})"  class="nucleus_widget">
 Branches
 </div>
-<div @click="$store.commit('dialog',{key:'addEmployeeDialog',value:true})"  class="nucleus_widget">
+<div @click="$router.push({name:'main_users'})"  class="nucleus_widget">
 Users
 </div>
+<!-- <div @click="$store.commit('dialog',{key:'addEmployeeDialog',value:true})"  class="nucleus_widget">
+Users
+</div> -->
 <div @click="$store.commit('dialog',{key:'addMachineDialog',value:true})"  class="nucleus_widget">
 Machines
 </div>
@@ -64,15 +72,24 @@ export default {
 
 mounted(){
 var $vm=this;
-
 $vm.$store.dispatch('GET_MACHINES')
 $vm.$store.dispatch('GET_BRANCHES')
 $vm.$store.dispatch('GET_GROUPS')
 $vm.$store.dispatch('GET_BREAK')
 $vm.$store.dispatch('GET_DOWNTIME')
 $vm.$store.dispatch('GET_SHIFT')
+$vm.$store.dispatch('GET_EMPLOYEE')
+$vm.$store.dispatch('GET_EMPROLE')
 
+}
+,
+methods:{
+logout(){
+var $vm=this;
 
+$vm.$store.commit('COMPANY_LOGOUT')
+$vm.$router.push({name:'company_signin'})
+}
 }
 }
 </script>

@@ -18,11 +18,15 @@ export default class Employee extends BaseModel {
   @column()
   public phone:string
   @column()
+  public password:string
+  @column()
   public role:string
   @column()
   public idcard:string
   @column()
   public other:string
+  @column()
+  public config:JSON
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

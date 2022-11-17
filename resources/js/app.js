@@ -14,7 +14,7 @@ import addMachineDialog from '../vue/addMachineDialog.vue'
 import addDownTimeDialog from '../vue/addDownTimeDialog.vue'
 import addProductDialog from '../vue/addProductDialog.vue'
 import addEmpRoleDialog from '../vue/addEmpRoleDialog.vue'
-
+import machinesWidget from '../vue/machinesWidget.vue'
 
 import addGroupDialog from '../vue/addGroupDialog.vue'
 import VueSimpleAlert from "vue-simple-alert";
@@ -28,6 +28,9 @@ Vue.component('addShiftDialog',addShiftDialog)
 Vue.component('addBreaksDialog',addBreaksDialog)
 Vue.component('addMachineDialog',addMachineDialog)
 Vue.component('addDownTimeDialog',addDownTimeDialog)
+
+//widgets
+Vue.component('machinesWidget',machinesWidget)
 
 
 const app = new Vue({

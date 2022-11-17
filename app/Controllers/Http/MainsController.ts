@@ -10,7 +10,15 @@ import Machine from 'App/Models/Machine';
 import Product from 'App/Models/Product';
 import Shift from 'App/Models/Shift';
 import _ from 'lodash'
+
+import Ws from 'App/Services/Ws'
+
 export default class MainsController {
+
+
+  public async socket_one(ctx:HttpContextContract){
+    Ws.io.emit('socket1', { username: 'virk' })
+  }
 
   public async isGroupFound(data){
     var company_id=data.company_id;
@@ -255,6 +263,59 @@ public async CREATE_COMPANY(ctx:HttpContextContract){
   })
   }
 
+
+  public async UPDATE_EMPLOYEE(ctx:HttpContextContract){
+    var data=ctx.request.input('data')
+    var id=data.id;
+
+    var company_id=data.company_id;
+    var branch=data.branch;
+    var name=data.name;
+    var email=data.email;
+    var dialcode=data.dialcode;
+    var phone=data.phone;
+    var password=data.password;
+    var role=data.role;
+    var type=data.type;
+    var idcard=data.idcard;
+    var other=data.other;
+    var config=data.config;
+    const emp = await Employee.findOrFail(id)
+    if(!_.isEmpty(emp)){
+var result=await emp.
+    merge({
+      company_id,
+      branch,
+      name,
+      email,
+      password,
+      dialcode,
+      phone,
+      role,
+      idcard,
+      other,
+      config
+      })
+    .save()
+    if(result.$isPersisted)
+    return ctx.response.send({
+      success:true,
+      msg:'Created Successfully',
+      data:result
+    })
+
+  }
+
+
+
+    return ctx.response.send({
+      success:false,
+      msg:'Already exist',
+      data:''
+    })
+      }
+
+
   public async CREATE_EMPLOYEE(ctx:HttpContextContract){
     var data=ctx.request.input('data')
     var company_id=data.company_id;
@@ -263,20 +324,24 @@ public async CREATE_COMPANY(ctx:HttpContextContract){
     var email=data.email;
     var dialcode=data.dialcode;
     var phone=data.phone;
+    var password=data.password;
     var role=data.role;
     var idcard=data.idcard;
     var other=data.other;
+    var config=data.config;
     if(!await this.isEmployeeFound({company_id,phone,email})){
 var result=await   Employee.create({
 company_id,
 branch,
 name,
 email,
+password,
 dialcode,
 phone,
 role,
 idcard,
-other
+other,
+config
 })
 
     if(result.$isPersisted)
@@ -291,7 +356,7 @@ other
       msg:'Already exist',
       data:''
     })
-    }
+      }
 
     public async CREATE_PRODUCT(ctx:HttpContextContract){
       var data=ctx.request.input('data')
@@ -397,10 +462,12 @@ var name=data.name;
             var data=ctx.request.input('data')
             var company_id=data.company_id;
             var name=data.name;
+            var type=data.type;
             var description=data.description;
             if(!await this.isEmpRoleFound({company_id,name})){
         var result=await   Emprole.create({
         company_id,
+        type,
         name,
         description,
        })
@@ -497,7 +564,61 @@ var company_id=data.company_id;
 var get=await Shift.query().where('company_id',company_id);
   return ctx.response.send(get)
 }
-    }
+
+
+public async GET_SINGLE_MACHINE(ctx:HttpContextContract){
+  var data=ctx.request.input('data')
+  var email=data.email;
+  var code=data.code;//machine code
+  var getCompany=await Company.query().where('email',email).orWhere('phone',data.phone).first();
+if(!_.isEmpty(getCompany))
+{
+  var company_id=getCompany?.id
+  var machine=await Machine.query().where('company_id',company_id).andWhere('code',code);
+  if(!_.isEmpty(machine))
+{ var shifts_rt=await Shift.query().where('company_id',company_id).andWhere('group',machine.group)
+  var breaks_rt=await Break.query().where('company_id',company_id).andWhere('group',machine.group)
+  var downtime_rt=await Downtime.query().where('company_id',company_id).andWhere('group',machine.group)
+}
+return ctx.response.send({
+  machine,
+  shift:shifts_rt,
+  break:breaks_rt,
+  downtime:downtime_rt
+})
+}
+return ctx.response.send({
+  machine:{},
+  shift:[],
+  break:[],
+  downtime:[]
+
+})
+
+
+
+}
+
+
+
+public async GET_EMPLOYEES(ctx:HttpContextContract){
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var employee=await Employee.query().where('company_id',company_id);
+return ctx.response.send(employee)
+}
+
+
+public async GET_EMPROLE(ctx:HttpContextContract){
+  var data=ctx.request.input('data')
+  var company_id=data.company_id;
+  var emprole=await Emprole.query().where('company_id',company_id);
+  return ctx.response.send(emprole)
+  }
+
+
+
+}
 
 
 

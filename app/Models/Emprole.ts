@@ -10,6 +10,8 @@ export default class Emprole extends BaseModel {
   @column()
   public name:String
   @column()
+  public type:String
+  @column()
   public description:String
 
   @column.dateTime({ autoCreate: true })

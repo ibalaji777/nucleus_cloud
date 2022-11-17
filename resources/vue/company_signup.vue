@@ -74,6 +74,11 @@ $vm.$alert("Your Company Name is Empty,Please Fill")
 }
 
 var result=await $vm.$store.dispatch('SIGNUP_COMPANY',this.company)
+
+if(result.data.success)
+{
+  $vm.$router.push({name:"company_signin"})
+}
 $vm.$alert(result.data.msg)
   }
 }

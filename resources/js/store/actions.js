@@ -15,11 +15,11 @@ var apiCreateEmpRole=api+'create_emprole';
 var apiGetMachine=api+'get_machine';
 var apiGetBranches=api+'get_branch';
 var apiGetGroup=api+'get_group';
-
+var apiGetEmployee=api+'get_employee'
 var apiGetDownTime=api+'get_downtime';
 var apiGetBreak=api+'get_break';
 var apiGetShift=api+'get_shift';
-
+var apiGetEmpRole=api+'get_emprole'
 var apiSignupCompany=api+'company_signup';
 var apiSigninCompany=api+'company_signin';
 
@@ -63,8 +63,11 @@ return result
       ,
       async CREATE_EMPLOYEE(context,payload){
         console.log("employee",payload)
-        return await axios.post(apiCreateEmployee,{data:payload})
-        }
+        var result=await axios.post(apiCreateEmployee,{data:payload})
+        actions.GET_EMPLOYEE(context)
+         return result
+
+      }
         ,
 
           async CREATE_PRODUCT(context,payload){
@@ -105,6 +108,18 @@ actions.CREATE_GROUP(context)
       })
 
       },
+
+      GET_EMPROLE(context){
+        return new Promise((resolve,reject)=>{
+        var company_id=context.state.setup.selected_company.id
+        return axios.post(apiGetEmpRole,{data:{company_id}})
+        .then((data)=>{
+          context.commit('GET_EMPROLE',data.data)
+          resolve(data.data)
+        })
+        .catch((data)=>reject(data))
+      })
+    },
 
       GET_BRANCHES(context){
         return new Promise((resolve,reject)=>{
@@ -178,6 +193,17 @@ async SIGNUP_COMPANY(context,payload){
     },
 
 
+    GET_EMPLOYEE(context){
+      return new Promise((resolve,reject)=>{
+      var company_id=context.state.setup.selected_company.id
+      return axios.post(apiGetEmployee,{data:{company_id}})
+      .then((data)=>{
+        context.commit('GET_EMPLOYEE',data.data)
+        resolve(data.data)
+      })
+      .catch((data)=>reject(data))
+    })
+  }
 
 
 

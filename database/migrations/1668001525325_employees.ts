@@ -13,10 +13,11 @@ export default class extends BaseSchema {
       table.string('email').defaultTo('')
       table.string('dialcode').defaultTo('')
       table.string('phone').defaultTo('')
+      table.string('password').defaultTo('')
       table.string('role').defaultTo('')
       table.string('idcard').defaultTo('')
       table.string('other').defaultTo('')
-
+      table.jsonb('config').defaultTo("{}")
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

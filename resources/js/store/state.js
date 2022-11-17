@@ -20,7 +20,9 @@ db:{
   //
   downtime:[],
   break:[],
-  shift:[]
+  shift:[],
+  employees:[],
+  emprole:[]
 
 },
 setup:{
@@ -29,11 +31,11 @@ setup:{
   uiDateFormat:"DD-MM-YYYY",
   bgDateFormat:"YYYY-MM-DD",
   selected_company:{
-    id:1,
+    id:'',
     phone:'88888888',
-    username:'admin',
-    password:'admin',
-    company:'isat software solutions'
+    email:'admin',
+    // password:'admin',
+    company_name:'isat software solutions'
 
   }
 
