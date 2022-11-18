@@ -102,11 +102,10 @@ export default class MainsController {
   }
 
   public async isEmployeeFound(data){
-    var company_id=data.company_id;
     var phone=data.phone;
     var email=data.email
-    var isFound=await Employee.query().where('company_id',company_id).andWhere('phone',phone)
-    .orWhere('company_id',company_id).andWhere('email',email)
+    var isFound=await Employee.query().where('phone',phone)
+    .orWhere('email',email)
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -276,7 +275,6 @@ public async CREATE_COMPANY(ctx:HttpContextContract){
     var phone=data.phone;
     var password=data.password;
     var role=data.role;
-    var type=data.type;
     var idcard=data.idcard;
     var other=data.other;
     var config=data.config;
@@ -315,6 +313,28 @@ var result=await emp.
     })
       }
 
+      public async EMPLOYEE_SIGNIN(ctx:HttpContextContract){
+        var data=ctx.request.input('data')
+        var username=data.username;
+        var password=data.password;
+
+var emp=await Employee.query()
+.where('email',username).andWhere("password",password)
+.orWhere('phone',username).andWhere('password',password).first()
+        if(!_.isEmpty(emp)){
+        return ctx.response.send({
+          success:true,
+          msg:'Logged Successfully',
+          data:emp
+        })
+      }
+
+        return ctx.response.send({
+          success:false,
+          msg:'Failed to Login',
+          data:''
+        })
+          }
 
   public async CREATE_EMPLOYEE(ctx:HttpContextContract){
     var data=ctx.request.input('data')
@@ -329,7 +349,7 @@ var result=await emp.
     var idcard=data.idcard;
     var other=data.other;
     var config=data.config;
-    if(!await this.isEmployeeFound({company_id,phone,email})){
+    if(!await this.isEmployeeFound({phone,email})){
 var result=await   Employee.create({
 company_id,
 branch,

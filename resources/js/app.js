@@ -33,6 +33,8 @@ Vue.component('addDownTimeDialog',addDownTimeDialog)
 Vue.component('machinesWidget',machinesWidget)
 
 
+
+
 const app = new Vue({
   vuetify,
   router,

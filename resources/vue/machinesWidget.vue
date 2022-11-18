@@ -1,5 +1,5 @@
 <template>
- <v-select @change="change" return-object item-text="name" :items="$store.state.db.machines"></v-select>
+ <v-select   label="Select Machine" @change="change" return-object item-text="name" :items="$store.state.db.machines"></v-select>
  </template>
 
 <script>

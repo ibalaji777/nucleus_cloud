@@ -12,6 +12,8 @@ var apiCreateProduct=api+'create_product';
 var apiCreateGroup=api+'create_group';
 var apiCreateEmpRole=api+'create_emprole';
 
+var apiUpdateEmployee=api+'update_employee';
+
 var apiGetMachine=api+'get_machine';
 var apiGetBranches=api+'get_branch';
 var apiGetGroup=api+'get_group';
@@ -64,6 +66,13 @@ return result
       async CREATE_EMPLOYEE(context,payload){
         console.log("employee",payload)
         var result=await axios.post(apiCreateEmployee,{data:payload})
+        actions.GET_EMPLOYEE(context)
+         return result
+
+      },
+      async UPDATE_EMPLOYEE(context,payload){
+        console.log("update employee",payload)
+        var result=await axios.post(apiUpdateEmployee,{data:payload})
         actions.GET_EMPLOYEE(context)
          return result
 

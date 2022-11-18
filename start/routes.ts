@@ -2,7 +2,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import CompaniesController from 'App/Controllers/Http/CompaniesController'
 import MachinesController from 'App/Controllers/Http/MachinesController'
 import MainsController from 'App/Controllers/Http/MainsController'
-
+import Mail from '@ioc:Adonis/Addons/Mail'
 //branch k
 //company k
 //shift k
@@ -18,6 +18,15 @@ import MainsController from 'App/Controllers/Http/MainsController'
 //machine main  k
 //machine part no k
 
+Route.get('/mail',async (ctx)=>{
+  await Mail.send((message) => {
+    message
+      .from('inucleusedgei@gmail.com')
+      .to('ibalaji39@gmail.com')
+      .subject('Welcome Onboard!')
+      .htmlView('emails/welcome', {  })
+  })
+  })
 Route.group(() => {
 
   Route.get('/socket1',(ctx)=>{
@@ -53,6 +62,10 @@ return new  MainsController().CREATE_EMPROLE(ctx)
 Route.post('/create_down_time',(ctx)=>{
   return new  MainsController().CREATE_DOWNTIME(ctx)
   })
+  Route.post('/update_employee',(ctx)=>{
+    return new  MainsController().UPDATE_EMPLOYEE(ctx)
+    })
+
   Route.post('/get_machine',(ctx)=>{
     return new  MainsController().GET_MACHINES(ctx)
     })
@@ -84,6 +97,11 @@ return new  MainsController().GET_EMPLOYEES(ctx)
 Route.post('/get_emprole',(ctx)=>{
   return new  MainsController().GET_EMPROLE(ctx)
   })
+
+  Route.post('/employee_signin',(ctx)=>{
+    return new  MainsController().EMPLOYEE_SIGNIN(ctx)
+    })
+
 
 }).prefix('/api')
 Route.get('/',  ({ view }) => {

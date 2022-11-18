@@ -1,5 +1,16 @@
 <template>
-  <div style="display:flex">
+<div>
+  <div style="display:flex;justify-content:flex-end;padding:10px">
+
+          <v-btn
+            color="blue darken-1"
+            text
+@click="updateEmployee"
+          >
+            Save
+          </v-btn>
+</div>
+   <div style="display:flex">
 
 <div style="width:50vw;padding:10px;">
       <v-card>
@@ -8,14 +19,14 @@
         </v-card-title>
         <v-card-text>
 
-  <v-text-field v-model="employee.name" label="Name(*)"></v-text-field>
-  <v-text-field v-model="employee.email" label="email(*)"></v-text-field>
-  <v-text-field v-model="employee.dialcode" label="dialcode(*)"></v-text-field>
-  <v-text-field v-model="employee.phone" label="phone(*)"></v-text-field>
-  <v-text-field v-model="employee.password" label="password(*)"></v-text-field>
-  <v-select     v-model="employee.role" :items="employeeRole"></v-select>
-  <v-text-field v-model="employee.idcard" label="idcard"></v-text-field>
-  <v-text-field v-model="employee.other" label="other"></v-text-field>
+  <v-text-field dense v-model="employee.name" label="Name(*)"></v-text-field>
+  <v-text-field dense v-model="employee.email" label="email(*)"></v-text-field>
+  <v-text-field dense v-model="employee.dialcode" label="dialcode(*)"></v-text-field>
+  <v-text-field dense v-model="employee.phone" label="phone(*)"></v-text-field>
+  <v-text-field dense v-model="employee.password" label="password(*)"></v-text-field>
+  <v-select  v-model="employee.role" :items="employeeRole"></v-select>
+  <v-text-field dense v-model="employee.idcard" label="idcard"></v-text-field>
+  <v-text-field dense v-model="employee.other" label="other"></v-text-field>
 
 
 
@@ -23,29 +34,16 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="$store.commit('dialog',{key:'addEmployeeDialog',value:false})"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-@click="submit"
-          >
-            Save
-          </v-btn>
+
         </v-card-actions>
       </v-card>
       </div>
 <div style="width:50vw;padding:10px">
-{{selectedMachine}}
+<!-- {{selectedMachine}} -->
 <machines-widget v-model="selectedMachine"></machines-widget>
 <div>
   <v-btn @click="addMachine" color="primary"
-  >Submit</v-btn>
+  >ADD</v-btn>
 </div>
 <div style="text-align: center;
     display: flex;
@@ -54,7 +52,7 @@
     <h4 style="margin:0;padding:0;margin:5px;">MACHINE EVENT</h4>
 
     <v-card-title>
-      <v-text-field
+      <v-text-field dense
         v-model="machineSearch"
         append-icon="mdi-magnify"
         label="Search"
@@ -68,6 +66,7 @@
       :search="machineSearch"
        ></v-data-table>
   </v-card>
+</div>
 </div>
 </div>
 
@@ -106,6 +105,7 @@ employee:{
 }
   }
 },
+
 mounted(){
 var $vm=this
 if(!_.isEmpty($vm.$route.params.data)){
@@ -115,24 +115,7 @@ $vm.employee={...$vm.$route.params.data}
 $vm.machines=$vm.employee.config.machines||[]
 },
 methods:{
-  addMachine(){
-    var $vm=this;
-if(!_.isEmpty($vm.selectedMachine))
-{
-if(!_.some($vm.machines,(e)=>e.code==$vm.selectedMachine.code)){
-$vm.machines.push($vm.selectedMachine)
-}else{
-  $vm.$alert("Already Exist")
-}
-}else{
-
-  $vm.$alert("Please Select a Machine")
-}
-
-
-
-  },
- async submit(){
+   async updateEmployee(){
     var $vm=this;
 if($vm.employee.name=='')
 {
@@ -160,15 +143,33 @@ if($vm.employee.password=='')
   return ;
 }
 
-// console.log("prepareww",$vm.employee)
-
 var prepare={
 ...this.employee,company_id:$vm.$store.state.setup.selected_company.id}
-// console.log("prepare",prepare)
-var result=await $vm.$store.dispatch('CREATE_EMPLOYEE',prepare)
+prepare['config']["machines"]=$vm.machines
+
+var result=await $vm.$store.dispatch('UPDATE_EMPLOYEE',prepare)
+
 $vm.$alert(result.data.msg)
 
-  }
+  },
+  addMachine(){
+    var $vm=this;
+if(!_.isEmpty($vm.selectedMachine))
+{
+if(!_.some($vm.machines,(e)=>e.code==$vm.selectedMachine.code)){
+$vm.machines.push($vm.selectedMachine)
+}else{
+  $vm.$alert("Already Exist")
+}
+}else{
+
+  $vm.$alert("Please Select a Machine")
+}
+
+
+
+  },
+
 }
 }
 </script>
