@@ -32,6 +32,10 @@ Route.group(() => {
   Route.get('/socket1',(ctx)=>{
     return new  MainsController().socket_one(ctx)
     })
+    Route.post('/machine_login',(ctx)=>{
+      return new  MainsController().MACHINE_LOGIN(ctx)
+      })
+
   Route.post('/create_machine',(ctx)=>{
     return new  MainsController().CREATE_MACHINE(ctx)
     })

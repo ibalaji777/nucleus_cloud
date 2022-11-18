@@ -10,8 +10,9 @@ import Machine from 'App/Models/Machine';
 import Product from 'App/Models/Product';
 import Shift from 'App/Models/Shift';
 import _ from 'lodash'
-
+import Mail from '@ioc:Adonis/Addons/Mail'
 import Ws from 'App/Services/Ws'
+import { WITH_CTX } from '@vue/compiler-core';
 
 export default class MainsController {
 
@@ -636,6 +637,42 @@ public async GET_EMPROLE(ctx:HttpContextContract){
   return ctx.response.send(emprole)
   }
 
+  public async MACHINE_LOGIN(ctx:HttpContextContract){
+    var data=ctx.request.input('data')
+    var company_username=data.company_username;
+    var machine_code=data.machine_code;
+    var getCompany=await Company.query().where('email',company_username).orWhere('phone',company_username).first()
+    if(!_.isEmpty(getCompany)){
+    var company_id=getCompany?.id
+    var getMachine=await Machine.query().where('company_id',company_id).where('code',machine_code).first()
+    if(!_.isEmpty(getMachine)){
+      var getBreaks=await Break.query().where('company_id',company_id).andWhere('group',getMachine.group)
+      var getShift=await Shift.query().where('company_id',company_id).andWhere('group',getMachine.group)
+      var getDownTime=await Downtime.query().where('company_id',company_id).andWhere('group',getMachine.group)
+
+      return ctx.response.send({
+        success:true,
+        msg:'Successfully Logged',
+        data:{
+          machine:getMachine,
+          breaks:getBreaks,
+          shift:getShift,
+          down_time:getDownTime,
+          company:{
+            id:company_id,
+            name:getCompany?.name,
+            email:getCompany?.email
+          }
+        },
+      })
+    }
+    }
+    return ctx.response.send({
+      success:false,
+      msg:'Machine Not Found',
+      data:''
+    })
+    }
 
 
 }

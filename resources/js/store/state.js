@@ -9,7 +9,8 @@ dialog:{
   addDownTimeDialog:false,
   addGroupDialog:false,
   addProductsDialog:false,
-  addEmpRoleDialog:false
+  addEmpRoleDialog:false,
+  machinDetailDialog:false,
 },
 
 db:{
@@ -23,6 +24,17 @@ db:{
   shift:[],
   employees:[],
   emprole:[]
+
+},
+//while clicked in ui then it display
+eventMachineDetail:{
+  company_id:'',
+  code:'',
+  branch:'',
+  name:'',
+  group:'',
+  hours:'',
+  description:''
 
 },
 setup:{

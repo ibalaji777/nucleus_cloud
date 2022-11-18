@@ -60,7 +60,7 @@ Emp Role
 </div>
 <h2  style="color:white;padding:10px"> Machine</h2>
 <div style="display:flex">
-<div v-for="(item,index) in $store.state.db.machines" :key="'branch'+index" class="nucleus_widget">
+<div @click="machineDialog(item)" v-for="(item,index) in $store.state.db.machines" :key="'branch'+index" class="nucleus_widget">
 {{item.name}}
 </div>
 </div>
@@ -84,6 +84,13 @@ $vm.$store.dispatch('GET_EMPROLE')
 }
 ,
 methods:{
+machineDialog(data){
+var $vm=this;
+
+$vm.$store.commit('EVENT_MACHINE_DETAIL',data)
+$vm.$store.commit('dialog',{key:'machinDetailDialog',value:true})
+
+},
 logout(){
 var $vm=this;
 

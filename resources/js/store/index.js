@@ -12,9 +12,9 @@ const vuexLocal = new VuexPersistence({
 setup:{
   selected_company:{
     id:state.setup.selected_company.id,
-    phone:state.setup.selected_company.id,
-    email:state.setup.selected_company.id,
-    company_name:state.setup.selected_company.id
+    phone:state.setup.selected_company.phone,
+    email:state.setup.selected_company.email,
+    company_name:state.setup.selected_company.company_name
   }
 }
 

@@ -51,6 +51,16 @@ GET_EMPLOYEE(state,result){
 GET_EMPROLE(state,result){
   if(Array.isArray(result))
   state.db.emprole=result;
+},
+EVENT_MACHINE_DETAIL(state,result){
+state.eventMachineDetail.id=result.id||""
+state.eventMachineDetail.company_id=result.company_id||""
+state.eventMachineDetail.code=result.code||""
+state.eventMachineDetail.branch=result.branch||""
+state.eventMachineDetail.name=result.name||""
+state.eventMachineDetail.group=result.group||""
+state.eventMachineDetail.hours=result.hours||""
+state.eventMachineDetail.description=result.description||""
 }
 
 }

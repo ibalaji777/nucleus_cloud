@@ -15,6 +15,7 @@
 <add-group-dialog></add-group-dialog>
 <add-product-dialog></add-product-dialog>
 <add-emp-role-dialog></add-emp-role-dialog>
+<machin-detail-dialog></machin-detail-dialog>
 </v-app>
 </template>
 
