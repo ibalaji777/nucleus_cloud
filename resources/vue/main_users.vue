@@ -16,7 +16,7 @@ Role
 <div style="text-align: center;
     display: flex;
     justify-content: center;margin-top:10px">
-  <v-card style="width:60vw">
+  <v-card style="width:80vw">
     <h4 style="margin:0;padding:0;margin:5px;">EMPLOYEE</h4>
 
     <v-card-title>
@@ -75,6 +75,7 @@ headerRole:[
 ],
 headerEmployee:[
 { text: 'Name', value: 'name' },
+{ text: 'Branch', value: 'branch' },
 { text: 'Email', value: 'email' },
 { text: 'Phone', value: 'phone' },
 { text: 'Password', value: 'password' },
@@ -87,8 +88,8 @@ headerEmployee:[
 },
 mounted(){
   var $vm=this;
-  $vm.$store.dispatch('GET_EMPLOYEE')
-  // $vm.$store.dispatch('GET_EMPROLE')
+     $vm.$store.dispatch("GET_EMPLOYEE");
+    $vm.$store.dispatch("GET_BRANCHES");
 },
 methods:{
   selectRow(data){

@@ -46,8 +46,8 @@
 <script>
 import moment  from  'moment'
 
-export default {
-data(){
+function initialState(){
+
   return {
 
 
@@ -63,6 +63,10 @@ other_detail:'',
 
 }
   }
+}
+export default {
+data(){
+  return initialState()
 },
 methods:{
  async submit(){
@@ -81,7 +85,12 @@ var prepare={...this.product,
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_PRODUCT',prepare)
- $vm.$alert(result.data.msg)
+
+if(result.data.success){
+
+  $vm.product=initialState().product;
+}
+$vm.$alert(result.data.msg)
 
   }
 }

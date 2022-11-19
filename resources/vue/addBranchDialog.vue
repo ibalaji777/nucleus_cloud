@@ -42,14 +42,18 @@
   </div>
 </template>
 <script>
-export default {
-data(){
+
+function initialState(){
   return {
 branch:{
   company_id:'',
   name:''
 }
   }
+}
+export default {
+data(){
+  return initialState();
 },
 methods:{
  async submit(){
@@ -57,6 +61,10 @@ methods:{
     console.log("create branch")
 var prepare={...$vm.branch,company_id:$vm.$store.state.setup.selected_company.id}
 var result=await $vm.$store.dispatch('CREATE_BRANCH',prepare)
+
+if(result.data.success){
+  $vm.branch=initialState().branch
+}
 $vm.$alert(result.data.msg)
 
   }

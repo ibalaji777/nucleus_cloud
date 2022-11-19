@@ -608,6 +608,13 @@ var company_id=data.company_id;
 var get=await Shift.query().where('company_id',company_id);
   return ctx.response.send(get)
 }
+public async GET_PRODUCTS(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var get=await Product.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
 
 
 public async GET_SINGLE_MACHINE(ctx:HttpContextContract){

@@ -115,12 +115,12 @@ export default {
   mounted() {
     var $vm = this;
     $vm.$store.dispatch("GET_MACHINES");
-    $vm.$store.dispatch("GET_BRANCHES");
     $vm.$store.dispatch("GET_GROUPS");
     $vm.$store.dispatch("GET_BREAK");
     $vm.$store.dispatch("GET_DOWNTIME");
     $vm.$store.dispatch("GET_SHIFT");
     $vm.$store.dispatch("GET_EMPLOYEE");
+    $vm.$store.dispatch("GET_BRANCHES");
     $vm.$store.dispatch("GET_EMPROLE");
   },
   methods: {

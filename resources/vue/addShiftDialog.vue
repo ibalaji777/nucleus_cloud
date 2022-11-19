@@ -124,21 +124,22 @@
 </template>
 <script>
 import moment  from  'moment'
-export default {
-data(){
+ function initialState($vm){
   return {
 end_time_modal:'',
 start_time_modal:'',
-
-
 shifts:{
 company_id:'',
 name:'',
 group:'',
-start_time:moment().format(this.$store.state.setup.bgTimeFormat),
-end_time:moment().format(this.$store.state.setup.bgTimeFormat)
+start_time:moment().format($vm.$store.state.setup.bgTimeFormat),
+end_time:moment().format($vm.$store.state.setup.bgTimeFormat)
 }
   }
+ }
+export default {
+data(){
+  return initialState(this)
 },
 methods:{
  async submit(){
@@ -155,6 +156,9 @@ var prepare={
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_SHIFT',prepare)
+ if(result.data.success){
+  $vm.shifts=initialState(this).shifts
+ }
  $vm.$alert(result.data.msg)
 
   }

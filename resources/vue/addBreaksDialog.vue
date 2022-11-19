@@ -124,22 +124,24 @@
 </template>
 <script>
 import moment  from  'moment'
-export default {
-data(){
+
+function initialState($vm){
   return {
 end_time_modal:'',
 start_time_modal:'',
-
-
 breaks:{
 company_id:'',
 name:'',
 group:'',
 description:'',
-start_time:moment().format(this.$store.state.setup.bgTimeFormat),
-end_time:moment().format(this.$store.state.setup.bgTimeFormat)
+start_time:moment().format($vm.$store.state.setup.bgTimeFormat),
+end_time:moment().format($vm.$store.state.setup.bgTimeFormat)
 }
   }
+}
+export default {
+data(){
+  return initialState(this)
 },
 methods:{
  async submit(){
@@ -165,7 +167,10 @@ var prepare={
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_BREAK',prepare)
- $vm.$alert(result.data.msg)
+if(result.data.success){
+  this.breaks=initialState(this).breaks
+}
+$vm.$alert(result.data.msg)
 
   }
 }

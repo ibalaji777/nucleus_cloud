@@ -43,9 +43,9 @@
   </div>
 </template>
 <script>
-export default {
-data(){
-  return {
+
+function initialState(){
+return {
 company_id:'',
 branch:'',
 machine:{
@@ -57,6 +57,10 @@ description:'',
 other:''
 }
   }
+}
+export default {
+data(){
+  return initialState()
 },
 methods:{
  async submit(){
@@ -82,7 +86,10 @@ var prepare={
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_MACHINE',prepare)
- $vm.$alert(result.data.msg)
+if(result.data.success){
+$vm.machine=initialState().machine
+}
+$vm.$alert(result.data.msg)
 
   }
 }

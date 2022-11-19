@@ -49,19 +49,18 @@
 <script>
 import moment  from  'moment'
 
-
-export default {
-data(){
+function initialState($vm){
   return {
     types:[
+{
+  title:'Default',
+  value:'default'
+},
 {
   title:'Break',
   value:'break'
 },
-{
-  title:'Default',
-  value:'default'
-}
+
 ],
 end_time_modal:'',
 start_time_modal:'',
@@ -75,6 +74,11 @@ description:'',
 type:'default'
 }
   }
+}
+
+export default {
+data(){
+  return initialState(this)
 },
 methods:{
  async submit(){
@@ -95,7 +99,10 @@ var prepare={
 company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_DOWN_TIME',prepare)
- $vm.$alert(result.data.msg)
+if(result.data.success){
+ this.downtime=initialState(this).downtime
+}
+$vm.$alert(result.data.msg)
 
   }
 }

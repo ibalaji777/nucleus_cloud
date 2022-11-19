@@ -88,6 +88,10 @@ return new  MainsController().GET_DOWNTIME(ctx)
 Route.post('/get_shift',(ctx)=>{
 return new  MainsController().GET_SHIFT(ctx)
 })
+Route.post('/get_products',(ctx)=>{
+  return new  MainsController().GET_PRODUCTS(ctx)
+  })
+
 Route.post('/company_signup',(ctx)=>{
 return new  CompaniesController().SIGNUP_COMPANY(ctx)
 })

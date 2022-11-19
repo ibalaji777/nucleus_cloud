@@ -13,13 +13,14 @@
         <v-card-text>
 
   <v-text-field v-model="employee.name" label="Name(*)"></v-text-field>
-  <v-text-field v-model="employee.email" label="email(*)"></v-text-field>
-  <v-text-field v-model="employee.dialcode" label="dialcode(*)"></v-text-field>
-  <v-text-field v-model="employee.phone" label="phone(*)"></v-text-field>
-  <v-text-field v-model="employee.password" label="password(*)"></v-text-field>
+  <v-select label="Branch" item-text="name" item-value="value"  v-model="employee.branch" :items="$store.state.db.branches"></v-select>
+  <v-text-field v-model="employee.email" label="Email(*)"></v-text-field>
+  <v-text-field v-model="employee.dialcode" label="Dialcode(*)"></v-text-field>
+  <v-text-field v-model="employee.phone" label="Phone(*)"></v-text-field>
+  <v-text-field v-model="employee.password" label="Password(*)"></v-text-field>
   <v-select v-model="employee.role" :items="employeeRole"></v-select>
-  <v-text-field v-model="employee.idcard" label="idcard"></v-text-field>
-  <v-text-field v-model="employee.other" label="other"></v-text-field>
+  <v-text-field v-model="employee.idcard" label="Id card"></v-text-field>
+  <v-text-field v-model="employee.other" label="Other"></v-text-field>
 
 
 
@@ -47,10 +48,9 @@
   </div>
 </template>
 <script>
-export default {
-data(){
+function initialState(){
   return {
-  employeeRole:['SUPERVISOR','OPERATOR'],
+employeeRole:['SUPERVISOR','OPERATOR','LOADER'],
 employee:{
   company_id:'',
   branch:'',
@@ -65,6 +65,11 @@ employee:{
   config:"{}"
 }
   }
+}
+
+export default {
+data(){
+  return initialState()
 },
 methods:{
  async submit(){
@@ -101,6 +106,7 @@ var prepare={
 ...this.employee,company_id:$vm.$store.state.setup.selected_company.id}
 // console.log("prepare",prepare)
 var result=await $vm.$store.dispatch('CREATE_EMPLOYEE',prepare)
+if(result.data.success) $vm.employee=initialState().employee;
 $vm.$alert(result.data.msg)
 
   }
