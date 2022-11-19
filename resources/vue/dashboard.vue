@@ -1,8 +1,15 @@
 <template>
   <div class="bgGradient">
-    <!-- {{$store.state.dialog}} -->
-
+<div class="menubar">
+<div @click="defaultMenuBar=item.name" :class="{selectedNavbar:defaultMenuBar==item.name}" v-for="(item,index) in menubar" :key="'menubar'+index">
+{{item.title}}
+</div>
+<div style="display:flex;flex:1"></div>
     <div @click="logout" style="text-align: right; padding: 10px">Logout</div>
+
+</div>
+<div style="height:20px;background:white"></div>
+
 
     <div style="display: flex; flex-wrap: wrap">
       <div
@@ -71,7 +78,7 @@ Emp Role
     </div>
 
     <!-- {{$store.state.db}} -->
-    <h2 style="color: white; padding: 10px">Branches</h2>
+    <h2 style="padding: 10px">Branches</h2>
     <div style="display: flex">
       <div
         v-for="(item, index) in $store.state.db.branches"
@@ -82,7 +89,7 @@ Emp Role
       </div>
     </div>
 
-    <h2 style="color: white; padding: 10px">Group</h2>
+    <h2 style="padding: 10px">Group</h2>
     <div style="display: flex">
       <div
         @click="
@@ -96,7 +103,7 @@ Emp Role
         <div style="margin-top: 10px">{{ item.group }}</div>
       </div>
     </div>
-    <h2 style="color: white; padding: 10px">Machine</h2>
+    <h2 style="padding: 10px">Machine</h2>
     <div style="display: flex">
       <div
         @click="machineDialog(item)"
@@ -111,7 +118,40 @@ Emp Role
 </template>
 
 <script>
+
 export default {
+  data(){
+  return {
+    defaultMenuBar:'dashboard',
+    menubar:[
+      {
+        title:'Dashboard',
+        name:'dashboard'
+      },
+
+{
+        title:'Branch',
+        name:'branch'
+      },
+            {
+        title:'Machine',
+        name:'machine'
+
+      },
+      {
+        title:'Product',
+        name:'product'
+
+      },
+      {
+        title:'Group',
+        name:'group'
+
+      },
+
+    ]
+  }
+},
   mounted() {
     var $vm = this;
     $vm.$store.dispatch("GET_MACHINES");
@@ -140,6 +180,10 @@ export default {
 };
 </script>
 <style lang="scss">
+
+.selectedNavbar{
+  background: white !important;
+}
 .nucleus_widget {
   display: flex;
   height: 60px;
@@ -148,5 +192,16 @@ export default {
   justify-content: center;
   align-items: center;
   margin: 2px;
+}
+.menubar{
+  display:flex;
+  // padding:2px;
+  background: lightgrey;
+}
+.menubar div{
+padding: 10px 11px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 </style>
