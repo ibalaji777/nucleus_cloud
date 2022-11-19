@@ -105,6 +105,9 @@ Route.post('/get_emprole',(ctx)=>{
   Route.post('/employee_signin',(ctx)=>{
     return new  MainsController().EMPLOYEE_SIGNIN(ctx)
     })
+    Route.post('/machine_employee_signin',(ctx)=>{
+      return new  MainsController().MACHINE_EMPLOYEE_SIGNIN(ctx)
+      })
 
 
 }).prefix('/api')

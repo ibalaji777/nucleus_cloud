@@ -337,6 +337,29 @@ var emp=await Employee.query()
         })
           }
 
+          public async MACHINE_EMPLOYEE_SIGNIN(ctx:HttpContextContract){
+            var data=ctx.request.input('data')
+            var username=data.username;
+            var password=data.password;
+
+    var emp=await Employee.query()
+    .where('email',username).andWhere("password",password)
+    .orWhere('phone',username).andWhere('password',password).first()
+   delete emp['password']
+            if(!_.isEmpty(emp)){
+            return ctx.response.send({
+              success:true,
+              msg:'Logged Successfully',
+              data:emp
+            })
+          }
+
+            return ctx.response.send({
+              success:false,
+              msg:'Failed to Login',
+              data:''
+            })
+              }
   public async CREATE_EMPLOYEE(ctx:HttpContextContract){
     var data=ctx.request.input('data')
     var company_id=data.company_id;
