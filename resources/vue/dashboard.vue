@@ -5,12 +5,11 @@
 {{item.title}}
 </div>
 <div style="display:flex;flex:1"></div>
-    <div @click="logout" style="text-align: right; padding: 10px">Logout</div>
-
+<div @click="logout" style="text-align: right; padding: 10px">Logout</div>
 </div>
 <div style="height:20px;background:white"></div>
 
-
+<div v-if="defaultMenuBar=='dashboard'">
     <div style="display: flex; flex-wrap: wrap">
       <div
         @click="
@@ -113,6 +112,20 @@ Emp Role
       >
         {{ item.name }}
       </div>
+    </div>
+    </div>
+
+    <div v-if="defaultMenuBar=='branch'">
+          <main-branch></main-branch>
+    </div>
+    <div v-if="defaultMenuBar=='machine'">
+          <main-machine></main-machine>
+    </div>
+    <div v-if="defaultMenuBar=='product'">
+          <main-product></main-product>
+    </div>
+    <div v-if="defaultMenuBar=='group'">
+          <main-group></main-group>
     </div>
   </div>
 </template>

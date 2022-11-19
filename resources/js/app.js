@@ -18,6 +18,12 @@ import machinesWidget from '../vue/machinesWidget.vue'
 
 import machinDetailDialog from '../vue/machinDetailDialog.vue'
 
+import mainMachine from '../vue/mainMachine.vue'
+import mainGroup from '../vue/mainGroup.vue'
+import mainProduct from '../vue/mainProduct.vue'
+import mainBranch from '../vue/mainBranch.vue'
+
+
 import addGroupDialog from '../vue/addGroupDialog.vue'
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert);
@@ -31,6 +37,13 @@ Vue.component('addBreaksDialog',addBreaksDialog)
 Vue.component('addMachineDialog',addMachineDialog)
 Vue.component('addDownTimeDialog',addDownTimeDialog)
 Vue.component('machinDetailDialog',machinDetailDialog)
+
+Vue.component('mainMachine',mainMachine)
+Vue.component('mainGroup',mainGroup)
+Vue.component('mainProduct',mainProduct)
+Vue.component('mainBranch',mainBranch)
+
+
 //widgets
 Vue.component('machinesWidget',machinesWidget)
 
