@@ -1,19 +1,19 @@
 <template>
   <div>
+    <!-- eslint-disable -->
 <div style="display:flex;margin-top:20px">
 <div style="width:50vw;display:flex;justify-content:center">
-<div style="width:47vw;background:white">
-  adsf
+<div class="cardRow" style="padding:15px">
+  <add-branch></add-branch>
 </div>
 </div>
 <div style="width:50vw;display:flex;justify-content:center">
-<div style="width:47vw;background:white">
+<div class="cardRow">
 <div style="text-align: center;
     display: flex;
     justify-content: center;margin-top:10px">
-  <v-card style="width:60vw">
+    <div style="padding:15px">
     <h4>Branches</h4>
-    <v-card-title>
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
@@ -21,14 +21,20 @@
         single-line
         hide-details
       ></v-text-field>
-    </v-card-title>
     <v-data-table
-      :headers="downtimeHeader"
-      :items="groupedDownTime"
+    dense
+    height="45vh"
+  fixed-header
+      :headers="branchHeader"
+      :items="$store.state.db.branches"
       :search="search"
-    ></v-data-table>
-  </v-card>
+    >
+    <template v-slot:item.action="{item}">
+      <v-icon @click="removeItem(item)">fa-trash</v-icon>
+    </template>
 
+    </v-data-table>
+</div>
 </div>
 </div>
 </div>
@@ -40,11 +46,28 @@ export default {
 
   data(){
     return {
-        machineHeader:[
-{ text: 'Branch', value: 'name' },
+      search:'',
+        branchHeader:[
+{ text: 'Branch Name', value: 'name' },
+{ text: 'Action', value: 'action' },
   ],
 
+    }
+  },
+  methods:{
+    removeItem(item){
+  var $vm=this;
+  $vm.$confirm('Do You Want to Delete?')
+  .then(()=>{
+   $vm.$store.dispatch("REMOVE_BRANCH",item)
+    })
     }
   }
 }
 </script>
+<style lang="scss">
+    .cardRow{
+min-height: 75vh;width:47vw;background:white;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+  }
+</style>

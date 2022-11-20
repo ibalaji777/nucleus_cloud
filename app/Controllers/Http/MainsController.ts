@@ -704,6 +704,165 @@ public async GET_EMPROLE(ctx:HttpContextContract){
     })
     }
 
+    public async REMOVE_BRANCH(ctx:HttpContextContract){
+      var data=ctx.request.input('data')
+      var id=data.id;
+try {
+  const result = await Branch.findOrFail(id)
+  await result.delete()
+
+  return ctx.response.send({
+    success:true,
+    msg:'Successfully Deleted',
+    data:'',
+  })
+} catch (error) {
+  return ctx.response.send({
+    success:false,
+    msg:'Failed to Delete',
+    data:'',
+  })
+}
+
+      }
+      public async REMOVE_MACHINE(ctx:HttpContextContract){
+        var data=ctx.request.input('data')
+        var id=data.id;
+  try {
+    const result = await Machine.findOrFail(id)
+    await result.delete()
+
+    return ctx.response.send({
+      success:true,
+      msg:'Successfully Deleted',
+      data:'',
+    })
+  } catch (error) {
+    return ctx.response.send({
+      success:false,
+      msg:'Failed to Delete',
+      data:'',
+    })
+  }
+
+        }
+
+      public async REMOVE_PRODUCT(ctx:HttpContextContract){
+        var data=ctx.request.input('data')
+        var id=data.id;
+  try {
+    const result = await Product.findOrFail(id)
+    await result.delete()
+
+    return ctx.response.send({
+      success:true,
+      msg:'Successfully Deleted',
+      data:'',
+    })
+  } catch (error) {
+    return ctx.response.send({
+      success:false,
+      msg:'Failed to Delete',
+      data:'',
+    })
+  }
+
+        }
+
+
+        public async REMOVE_EMPLOYEE(ctx:HttpContextContract){
+          var data=ctx.request.input('data')
+          var id=data.id;
+    try {
+      const result = await Employee.findOrFail(id)
+      await result.delete()
+
+      return ctx.response.send({
+        success:true,
+        msg:'Successfully Deleted',
+        data:'',
+      })
+    } catch (error) {
+      return ctx.response.send({
+        success:false,
+        msg:'Failed to Delete',
+        data:'',
+      })
+    }
+
+          }
+
+
+          public async REMOVE_DOWNTIME(ctx:HttpContextContract){
+            var data=ctx.request.input('data')
+            var id=data.id;
+      try {
+        const result = await Downtime.findOrFail(id)
+        await result.delete()
+
+        return ctx.response.send({
+          success:true,
+          msg:'Successfully Deleted',
+          data:'',
+        })
+      } catch (error) {
+        return ctx.response.send({
+          success:false,
+          msg:'Failed to Delete',
+          data:'',
+        })
+      }
+
+            }
+
+
+
+            public async REMOVE_SHIFT(ctx:HttpContextContract){
+              var data=ctx.request.input('data')
+              var id=data.id;
+        try {
+          const result = await Shift.findOrFail(id)
+          await result.delete()
+
+          return ctx.response.send({
+            success:true,
+            msg:'Successfully Deleted',
+            data:'',
+          })
+        } catch (error) {
+          return ctx.response.send({
+            success:false,
+            msg:'Failed to Delete',
+            data:'',
+          })
+        }
+
+              }
+
+
+
+              public async REMOVE_BREAK(ctx:HttpContextContract){
+                var data=ctx.request.input('data')
+                var id=data.id;
+          try {
+            const result = await Break.findOrFail(id)
+            await result.delete()
+
+            return ctx.response.send({
+              success:true,
+              msg:'Successfully Deleted',
+              data:'',
+            })
+          } catch (error) {
+            return ctx.response.send({
+              success:false,
+              msg:'Failed to Delete',
+              data:'',
+            })
+          }
+
+                }
+
 
 }
 

@@ -15,18 +15,29 @@ import addDownTimeDialog from '../vue/addDownTimeDialog.vue'
 import addProductDialog from '../vue/addProductDialog.vue'
 import addEmpRoleDialog from '../vue/addEmpRoleDialog.vue'
 import machinesWidget from '../vue/machinesWidget.vue'
-
+import addBranch from '../vue/addBranch.vue'
 import machinDetailDialog from '../vue/machinDetailDialog.vue'
 
 import mainMachine from '../vue/mainMachine.vue'
 import mainGroup from '../vue/mainGroup.vue'
 import mainProduct from '../vue/mainProduct.vue'
-import mainBranch from '../vue/mainBranch.vue'
 
+import mainBranch from '../vue/mainBranch.vue'
+import addMachine from '../vue/addMachine.vue'
+import addProduct from '../vue/addProduct.vue'
+import addGroup from '../vue/addGroup.vue'
 
 import addGroupDialog from '../vue/addGroupDialog.vue'
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert);
+
+Vue.component('addBranch',addBranch)
+Vue.component('addMachine',addMachine)
+Vue.component('addProduct',addProduct)
+Vue.component('addGroup',addGroup)
+// Vue.component('addDowntime',addDowntime)
+// Vue.component('addBreak',addBreak)
+
 Vue.component('addEmpRoleDialog',addEmpRoleDialog)
 Vue.component('addProductDialog',addProductDialog)
 Vue.component('addGroupDialog',addGroupDialog)

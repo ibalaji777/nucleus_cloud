@@ -174,7 +174,8 @@ export default {
     $vm.$store.dispatch("GET_SHIFT");
     $vm.$store.dispatch("GET_EMPLOYEE");
     $vm.$store.dispatch("GET_BRANCHES");
-    $vm.$store.dispatch("GET_EMPROLE");
+    $vm.$store.dispatch("GET_EMPROLE")
+    $vm.$store.dispatch("GET_PRODUCTS");
   },
   methods: {
     machineDialog(data) {
@@ -216,5 +217,6 @@ padding: 10px 11px;
     font-size: 12px;
     text-transform: uppercase;
     font-weight: 500;
+    cursor: pointer;
 }
 </style>

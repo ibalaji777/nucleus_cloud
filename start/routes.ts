@@ -112,7 +112,29 @@ Route.post('/get_emprole',(ctx)=>{
     Route.post('/machine_employee_signin',(ctx)=>{
       return new  MainsController().MACHINE_EMPLOYEE_SIGNIN(ctx)
       })
+Route.post('/remove_branch',(ctx)=>{
+return new  MainsController().REMOVE_BRANCH(ctx)
+})
+Route.post('/remove_machine',(ctx)=>{
+  return new  MainsController().REMOVE_MACHINE(ctx)
 
+})
+
+Route.post('/remove_product',(ctx)=>{
+return new  MainsController().REMOVE_PRODUCT(ctx)
+})
+Route.post('/remove_employee',(ctx)=>{
+  return new  MainsController().REMOVE_EMPLOYEE(ctx)
+  })
+Route.post('/remove_downtime',(ctx)=>{
+return new  MainsController().GET_DOWNTIME(ctx)
+})
+Route.post('/remove_shift',(ctx)=>{
+return new  MainsController().REMOVE_SHIFT(ctx)
+})
+Route.post('/remove_break',(ctx)=>{
+  return new  MainsController().REMOVE_BREAK(ctx)
+  })
 
 }).prefix('/api')
 Route.get('/',  ({ view }) => {

@@ -61,6 +61,10 @@ state.eventMachineDetail.name=result.name||""
 state.eventMachineDetail.group=result.group||""
 state.eventMachineDetail.hours=result.hours||""
 state.eventMachineDetail.description=result.description||""
+},
+GET_PRODUCTS(state,payload){
+if(Array.isArray(payload))
+  state.db.products=payload
 }
 
 }

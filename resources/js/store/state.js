@@ -1,4 +1,6 @@
+import * as header from './headers'
 const state={
+headers:header.headers,
 
 dialog:{
   addBranchDialog:false,
@@ -23,7 +25,8 @@ db:{
   break:[],
   shift:[],
   employees:[],
-  emprole:[]
+  emprole:[],
+  products:[],
 
 },
 //while clicked in ui then it display

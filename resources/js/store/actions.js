@@ -18,12 +18,22 @@ var apiGetMachine=api+'get_machine';
 var apiGetBranches=api+'get_branch';
 var apiGetGroup=api+'get_group';
 var apiGetEmployee=api+'get_employee'
+var apiGetProducts=api+'get_products'
 var apiGetDownTime=api+'get_downtime';
 var apiGetBreak=api+'get_break';
 var apiGetShift=api+'get_shift';
 var apiGetEmpRole=api+'get_emprole'
 var apiSignupCompany=api+'company_signup';
 var apiSigninCompany=api+'company_signin';
+
+var apiRemoveBranch=api+'remove_branch';
+var apiRemoveProduct=api+'remove_product';
+var apiRemoveEmployee=api+'remove_employee';
+var apiRemoveDownTime=api+'remove_downtime';
+var apiRemoveShift=api+'remove_shift';
+var apiRemoveBreak=api+'remove_break';
+var apiRemoveMachine=api+'remove_machine';
+
 
 
 // var apiCreateBranch=api+'create_branch';
@@ -212,10 +222,55 @@ async SIGNUP_COMPANY(context,payload){
       })
       .catch((data)=>reject(data))
     })
-  }
+  },
+  GET_PRODUCTS(context){
+    //MUTATION IS PENDING
+    return new Promise((resolve,reject)=>{
+    var company_id=context.state.setup.selected_company.id
+    return axios.post(apiGetProducts,{data:{company_id}})
+    .then((data)=>{
+      context.commit('GET_PRODUCTS',data.data)
+      resolve(data.data)
+    })
+    .catch((data)=>reject(data))
+  })
+}
+,
+async REMOVE_BRANCH(context,payload){
+  var result= await axios.post(apiRemoveBranch,{data:payload})
+  actions.GET_BRANCHES(context)
 
+  return result;
+},
+async REMOVE_PRODUCT(context,payload){
+  var result= await axios.post(apiRemoveProduct,{data:payload})
+  actions.GET_PRODUCTS(context)
 
-
+  return result;
+},
+async REMOVE_EMPLOYEE(context,payload){
+var result= await axios.post(apiRemoveEmployee,{data:payload})
+actions.GET_EMPLOYEE(context)
+return result;
+},  async REMOVE_DOWNTIME(context,payload){
+  var result= await axios.post(apiRemoveDownTime,{data:payload})
+  actions.GET_DOWNTIME(context)
+  return result;
+},  async REMOVE_SHIFT(context,payload){
+  var result= await axios.post(apiRemoveShift,{data:payload})
+  actions.GET_SHIFT(context)
+  return result;
+},
+async REMOVE_BREAK(context,payload){
+  var result= await axios.post(apiRemoveBreak,{data:payload})
+  actions.GET_BREAK(context)
+  return result;
+},
+async REMOVE_MACHINE(context,payload){
+  var result= await axios.post(apiRemoveMachine,{data:payload})
+  actions.GET_MACHINES(context)
+  return result;
+},
 }
 
 export default actions;
