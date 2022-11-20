@@ -4,7 +4,7 @@
 <div style="display:flex;margin-top:20px">
 <div style="width:50vw;display:flex;justify-content:center">
 <div class="cardRow" style="padding:15px">
-  <add-branch></add-branch>
+  <add-group></add-group>
 </div>
 </div>
 <div style="width:50vw;display:flex;justify-content:center">
@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;margin-top:10px">
     <div style="padding:15px">
-    <h4>Branches</h4>
+    <h4>Group</h4>
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
@@ -25,8 +25,8 @@
     dense
     height="45vh"
   fixed-header
-      :headers="branchHeader"
-      :items="$store.state.db.branches"
+      :headers="$store.state.headers.group"
+      :items="$store.state.db.groups"
       :search="search"
     >
     <template v-slot:item.action="{item}">
@@ -47,10 +47,7 @@ export default {
   data(){
     return {
       search:'',
-        branchHeader:[
-{ text: 'Branch Name', value: 'name' },
-{ text: 'Action', value: 'action' },
-  ],
+
 
     }
   },
@@ -59,7 +56,7 @@ export default {
   var $vm=this;
   $vm.$confirm('Do You Want to Delete?')
   .then(()=>{
-   $vm.$store.dispatch("REMOVE_BRANCH",item)
+   $vm.$store.dispatch("REMOVE_GROUP",item)
     })
     }
   }

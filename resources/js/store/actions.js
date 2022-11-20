@@ -29,6 +29,7 @@ var apiSigninCompany=api+'company_signin';
 var apiRemoveBranch=api+'remove_branch';
 var apiRemoveProduct=api+'remove_product';
 var apiRemoveEmployee=api+'remove_employee';
+var apiRemoveGroup=api+'apiRemoveGroup';
 var apiRemoveDownTime=api+'remove_downtime';
 var apiRemoveShift=api+'remove_shift';
 var apiRemoveBreak=api+'remove_break';
@@ -248,6 +249,11 @@ async REMOVE_PRODUCT(context,payload){
 
   return result;
 },
+async REMOVE_GROUP(context,payload){
+  var result= await axios.post(apiRemoveGroup,{data:payload})
+  actions.GET_GROUPS(context)
+  return result;
+  },
 async REMOVE_EMPLOYEE(context,payload){
 var result= await axios.post(apiRemoveEmployee,{data:payload})
 actions.GET_EMPLOYEE(context)

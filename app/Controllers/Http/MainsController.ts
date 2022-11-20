@@ -725,6 +725,29 @@ try {
 }
 
       }
+
+      public async REMOVE_GROUP(ctx:HttpContextContract){
+        var data=ctx.request.input('data')
+        var id=data.id;
+  try {
+    const result = await Branch.findOrFail(id)
+    await result.delete()
+
+    return ctx.response.send({
+      success:true,
+      msg:'Successfully Deleted',
+      data:'',
+    })
+  } catch (error) {
+    return ctx.response.send({
+      success:false,
+      msg:'Failed to Delete',
+      data:'',
+    })
+  }
+
+        }
+
       public async REMOVE_MACHINE(ctx:HttpContextContract){
         var data=ctx.request.input('data')
         var id=data.id;

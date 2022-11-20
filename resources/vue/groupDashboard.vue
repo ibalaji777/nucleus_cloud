@@ -52,10 +52,16 @@ Machine {{groupedMachine.length}}
       ></v-text-field>
     </v-card-title>
     <v-data-table
-      :headers="machineHeader"
+      :headers="$store.state.headers.machines"
       :items="groupedMachine"
       :search="search"
-    ></v-data-table>
+    >
+        <template v-slot:item.action="{item}">
+      <v-icon @click="removeMachine(item)">fa-trash</v-icon>
+    </template>
+
+
+    </v-data-table>
   </v-card>
 
 </div>
@@ -76,7 +82,7 @@ Machine {{groupedMachine.length}}
       ></v-text-field>
     </v-card-title>
     <v-data-table
-      :headers="shiftHeader"
+      :headers="$store.state.headers.shifts"
       :items="groupedShift"
       :search="search"
     >
@@ -86,7 +92,9 @@ Machine {{groupedMachine.length}}
  <template v-slot:item.end_time="{ item }">
       {{ item.end_time |timeFormat}}
     </template>
-
+ <template v-slot:item.action="{ item }">
+<v-icon @click="removeShift(item)">fa-trash</v-icon>
+    </template>
     </v-data-table>
   </v-card>
 
@@ -107,7 +115,7 @@ Machine {{groupedMachine.length}}
       ></v-text-field>
     </v-card-title>
     <v-data-table
-      :headers="breakHeader"
+      :headers="$store.state.headers.breaks"
       :items="groupedBreak"
       :search="search"
     >
@@ -117,6 +125,9 @@ Machine {{groupedMachine.length}}
   </template>
  <template v-slot:item.end_time="{ item }">
       {{ item.end_time |timeFormat}}
+    </template>
+ <template v-slot:item.action="{ item }">
+<v-icon @click="removeBreak(item)">fa-trash</v-icon>
     </template>
 
 
@@ -139,10 +150,14 @@ Machine {{groupedMachine.length}}
       ></v-text-field>
     </v-card-title>
     <v-data-table
-      :headers="downtimeHeader"
+      :headers="$store.state.headers.downtime"
       :items="groupedDownTime"
       :search="search"
-    ></v-data-table>
+    >
+     <template v-slot:item.action="{ item }">
+<v-icon @click="removeDowntime(item)">fa-trash</v-icon>
+    </template>
+    </v-data-table>
   </v-card>
 
 </div>
@@ -163,13 +178,13 @@ data(){
   return{
   group:'',
   search:'',
-  machineHeader:[
-{ text: 'Code', value: 'code' },
-{ text: 'Name', value: 'name' },
-{ text: 'Hours', value: 'hours' },
-{ text: 'Description', value: 'description' },
-{ text: 'other', value: 'other' },
-  ],
+//   machineHeader:[
+// { text: 'Code', value: 'code' },
+// { text: 'Name', value: 'name' },
+// { text: 'Hours', value: 'hours' },
+// { text: 'Description', value: 'description' },
+// { text: 'other', value: 'other' },
+//   ],
 shiftHeader:[
 { text: 'Name', value: 'name' },
 { text: 'Group', value: 'group' },
@@ -193,6 +208,40 @@ breakHeader:[
   ]
 
   }
+},
+methods:{
+   removeDowntime(item){
+var $vm=this;
+  $vm.$confirm('Do You Want to Delete?')
+  .then(()=>{
+   $vm.$store.dispatch("REMOVE_DOWNTIME",item)
+    })
+
+},
+removeBreak(item){
+var $vm=this;
+  $vm.$confirm('Do You Want to Delete?')
+  .then(()=>{
+   $vm.$store.dispatch("REMOVE_BREAK",item)
+    })
+
+},
+  removeShift(item){
+var $vm=this;
+  $vm.$confirm('Do You Want to Delete?')
+  .then(()=>{
+   $vm.$store.dispatch("REMOVE_SHIFT",item)
+    })
+
+},
+removeMachine(item){
+
+    var $vm=this;
+  $vm.$confirm('Do You Want to Delete?')
+  .then(()=>{
+   $vm.$store.dispatch("REMOVE_MACHINE",item)
+    })
+}
 },
 mounted(){
 var $vm=this;
