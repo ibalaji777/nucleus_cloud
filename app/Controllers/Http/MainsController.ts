@@ -18,7 +18,11 @@ export default class MainsController {
 
 
   public async socket_one(ctx:HttpContextContract){
+console.log("socket1 trigeered")
     Ws.io.emit('socket1', { username: 'virk' })
+    Ws.io.emit('machine1', { username: 'virk' })
+
+
   }
 
   public async isGroupFound(data){
