@@ -12,7 +12,62 @@ let Validator = require('validatorjs');
 
 export default class MachinesController {
 
+  public async CLOSE_SHIFT(ctx:HttpContextContract)
+  {
+  var data=ctx.request.input('data')
+  var machine_id=data.machine_id;
+  var machine_client_id=data.machine_client_id;
+  var end_time=data.end_time;
+  var  MACHINE_RUNNED_MAIN=data.MACHINE_RUNNED_MAIN,
+  var  MACHINE_RUNNED_PART_NO=data.MACHINE_RUNNED_PART_NO
 
+async function load(){
+  for(var i=0;i<MACHINE_RUNNED_MAIN.length;i++){
+    const { id }: { id: Number } =MACHINE_RUNNED_MAIN[i]
+    const machineMain: any = await MachineActivityMain.find(id)
+    if (machineMain) {
+      machineMain.is_closed = true
+      await machineMain.save()
+      await Promise.resolve(i);
+    }
+
+
+  }
+
+
+
+
+  for(var i=0;i<MACHINE_RUNNED_PART_NO.length;i++){
+    const { id,
+      total_count,
+      good_count,
+      reject_count }: { id: Number,
+        total_count:Number,
+        good_count:Number,
+        reject_count:Number  } =MACHINE_RUNNED_PART_NO[i]
+    const machinePartNo: any = await MachineActivityPartNo.find(id)
+    if (machinePartNo) {
+      machinePartNo.total_count = total_count
+      machinePartNo.good_count = good_count
+      machinePartNo.reject_count = reject_count
+      machinePartNo.ideal_cycle = ideal_cycle
+      await machinePartNo.save()
+       await Promise.resolve(i);
+    }
+
+  }
+}
+
+var loaded=await load()
+return {
+  success:true,
+  msg:'',
+  data:loaded
+}
+
+
+
+  }
 public async GET_MACHINE_STATUS_BY_DATE(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')

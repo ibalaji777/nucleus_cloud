@@ -152,7 +152,9 @@ Route.post('/remove_break',(ctx)=>{
   Route.post('/get_machine_running_activity',(ctx)=>{
     return new  MachinesController().GET_MACHINE_RUNNING_ACTIVITY(ctx)
   })
-
+  Route.post('/close_shift',(ctx)=>{
+    return new  MachinesController().CLOSE_SHIFT(ctx)
+  })
 }).prefix('/api')
 Route.get('/',  ({ view }) => {
   return view.render('index',{name:'hello world',hello:'hello'})
