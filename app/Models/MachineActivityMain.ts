@@ -15,8 +15,8 @@ export default class MachineActivityMain extends BaseModel {
   public machine_client_id: String
   @column()
   public machine_id: Number
-  @column()
-  public machine_active_status:Boolean
+  // @column()
+  // public machine_active_status:Boolean
   @column()
   public machine_date: Date
   @column()

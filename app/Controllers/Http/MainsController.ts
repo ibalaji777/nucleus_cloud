@@ -10,9 +10,9 @@ import Machine from 'App/Models/Machine';
 import Product from 'App/Models/Product';
 import Shift from 'App/Models/Shift';
 import _ from 'lodash'
-import Mail from '@ioc:Adonis/Addons/Mail'
+// import Mail from '@ioc:Adonis/Addons/Mail'
 import Ws from 'App/Services/Ws'
-import { WITH_CTX } from '@vue/compiler-core';
+// import { WITH_CTX } from '@vue/compiler-core';
 
 export default class MainsController {
 

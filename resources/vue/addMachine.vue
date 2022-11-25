@@ -3,7 +3,7 @@
    <span class="text-h5">Machine</span>
   <v-text-field v-model="machine.code" label="Machine code(*)"></v-text-field>
   <v-text-field v-model="machine.name" label="Name(*)"></v-text-field>
-  <v-text-field v-model="machine.hours" label="hours(*)"></v-text-field>
+  <v-text-field type="number" v-model="machine.hours" label="hours(*)"></v-text-field>
   <v-text-field v-model="machine.description" label="description"></v-text-field>
   <v-text-field v-model="machine.other" label="other"></v-text-field>
 

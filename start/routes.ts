@@ -139,6 +139,20 @@ Route.post('/remove_break',(ctx)=>{
   return new  MainsController().REMOVE_BREAK(ctx)
   })
 
+  Route.post('/get_machines_main_status_by_date',(ctx)=>{
+    return new  MachinesController().GET_MACHINE_STATUS_BY_DATE(ctx)
+  })
+
+ Route.post('/get_machine_running_part_no',(ctx)=>{
+    return new  MachinesController().GET_MACHINE_RUNNING_PART_NO(ctx)
+  })
+  Route.post('/get_machine_running_main',(ctx)=>{
+    return new  MachinesController().GET_MACHINE_RUNNING_MAIN(ctx)
+  })
+  Route.post('/get_machine_running_activity',(ctx)=>{
+    return new  MachinesController().GET_MACHINE_RUNNING_ACTIVITY(ctx)
+  })
+
 }).prefix('/api')
 Route.get('/',  ({ view }) => {
   return view.render('index',{name:'hello world',hello:'hello'})

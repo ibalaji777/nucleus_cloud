@@ -91,7 +91,9 @@ return result
         ,
 
           async CREATE_PRODUCT(context,payload){
-            return await axios.post(apiCreateProduct,{data:payload})
+            var result= await axios.post(apiCreateProduct,{data:payload})
+            actions.GET_PRODUCTS(context)
+            return result
             }
 ,
 //pending.....

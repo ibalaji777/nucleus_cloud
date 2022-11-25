@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import  Home from '../../vue/Home.vue'
 import  company_signup from '../../vue/company_signup.vue'
 import  company_signin from '../../vue/company_signin'
-import  dashboard from '../../vue/dashboard.vue'
+import  company_dashboard from '../../vue/company_dashboard.vue'
 import  groupDashboard from '../../vue/groupDashboard.vue'
 import mainUsers from '../../vue/main_users.vue'
 import store from '../store/index.js'
@@ -16,7 +16,7 @@ const  routes= [
 
       path: '/',
       name: 'index',
-      component: dashboard,
+      component: company_dashboard,
       meta: {
         auth: true
         }
@@ -44,7 +44,7 @@ const  routes= [
 
       path: '/company_dashboard',
       name: 'company_dashboard',
-      component: dashboard,
+      component: company_dashboard,
       meta: {
         auth: true
         }
