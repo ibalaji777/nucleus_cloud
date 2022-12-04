@@ -49,12 +49,12 @@ Users
       >
         DownTime
       </div>
-      <div
+      <!-- <div
         @click="$store.commit('dialog', { key: 'addGroupDialog', value: true })"
         class="nucleus_widget"
       >
         Group
-      </div>
+      </div> -->
       <div
         @click="
           $store.commit('dialog', { key: 'addProductsDialog', value: true })
@@ -88,7 +88,7 @@ Emp Role
       </div>
     </div>
 
-    <h2 style="padding: 10px">Group</h2>
+    <!-- <h2 style="padding: 10px">Group</h2>
     <div style="display: flex">
       <div
         @click="
@@ -101,7 +101,7 @@ Emp Role
         {{ item.name }}
         <div style="margin-top: 10px">{{ item.group }}</div>
       </div>
-    </div>
+    </div> -->
     <h2 style="padding: 10px">Machine</h2>
     <div style="display: flex">
       <div
@@ -156,11 +156,11 @@ export default {
         name:'product'
 
       },
-      {
-        title:'Group',
-        name:'group'
+      // {
+      //   title:'Group',
+      //   name:'group'
 
-      },
+      // },
 
     ]
   }

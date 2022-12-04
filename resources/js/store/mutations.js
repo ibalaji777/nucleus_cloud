@@ -65,6 +65,9 @@ state.eventMachineDetail.description=result.description||""
 GET_PRODUCTS(state,payload){
 if(Array.isArray(payload))
   state.db.products=payload
+},
+SELECTED_BRANCH(state,payload){
+ state.setup.selected_branch=payload;
 }
 
 }

@@ -10,10 +10,11 @@ export default class extends BaseSchema {
       table.string('branch').defaultTo('')
       table.string('name').defaultTo('')
       table.string('part_no').defaultTo('')
-      table.string('material_code').defaultTo('')
+      // table.string('material_code').defaultTo('')
       table.string('customer_name').defaultTo('')
       table.string('vendor_name').defaultTo('')
       table.string('other_detail').defaultTo('')
+      table.string('ideal_cyle_time').defaultTo('')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

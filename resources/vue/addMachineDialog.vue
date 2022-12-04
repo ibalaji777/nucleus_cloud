@@ -11,12 +11,12 @@
           <span class="text-h5">machine</span>
         </v-card-title>
         <v-card-text>
-  <v-text-field v-model="machine.code" label="Machine code(*)"></v-text-field>
-  <v-text-field v-model="machine.name" label="Name(*)"></v-text-field>
-  <v-text-field v-model="machine.hours" label="hours(*)"></v-text-field>
-  <v-text-field v-model="machine.description" label="description"></v-text-field>
-  <v-text-field v-model="machine.other" label="other"></v-text-field>
-
+ <v-text-field v-model="machine.code" label="Machine code(*)"></v-text-field>
+ <v-text-field v-model="machine.name" label="Name(*)"></v-text-field>
+ <v-text-field v-model="machine.username" label="Username(*)"></v-text-field>
+ <v-text-field v-model="machine.password" label="Password(*)"></v-text-field>
+ <v-text-field v-model="machine.description" label="Description(Optional)"></v-text-field>
+ <v-text-field v-model="machine.other" label="Other(Optional)"></v-text-field>
 
 
           <small>*indicates required field</small>
@@ -54,7 +54,9 @@ name:'',
 group:'',
 hours:8,
 description:'',
-other:''
+other:'',
+username:'',
+password:'',
 }
   }
 }
@@ -75,12 +77,18 @@ if($vm.machine.name=='')
   $vm.$alert("Please Enter the  Name")
   return ;
 }
-if($vm.machine.hours=='')
+if($vm.machine.username=='')
 {
-  $vm.$alert("Please Enter the Hours")
+  $vm.$alert("Please Enter the Username")
   return ;
 }
-this.machine.group=$vm.$route.params.group||"";
+if($vm.machine.password=='')
+{
+  $vm.$alert("Please Enter the Password")
+  return ;
+}
+
+// this.machine.group=$vm.$route.params.group||"";
 var prepare={
 ...this.machine,
 company_id:$vm.$store.state.setup.selected_company.id

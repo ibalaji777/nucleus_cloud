@@ -91,7 +91,9 @@ return result
         ,
 
           async CREATE_PRODUCT(context,payload){
-            var result= await axios.post(apiCreateProduct,{data:payload})
+
+            var branch=context.state.setup.selected_branch;
+            var result= await axios.post(apiCreateProduct,{data:{...payload,branch}})
             actions.GET_PRODUCTS(context)
             return result
             }

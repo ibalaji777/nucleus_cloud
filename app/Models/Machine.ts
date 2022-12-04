@@ -15,12 +15,16 @@ export default class Machine extends BaseModel {
   public name: number
   @column()
   public group: string
-  @column()
-  public hours: Number
+  // @column()
+  // public hours: Number
   @column()
   public description: String
   @column()
   public other: String
+  @column()
+  public username: String
+  @column()
+  public password: String
 
 
   @column.dateTime({ autoCreate: true })

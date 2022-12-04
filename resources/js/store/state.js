@@ -45,6 +45,7 @@ setup:{
   bgTimeFormat:"HH:mm",
   uiDateFormat:"DD-MM-YYYY",
   bgDateFormat:"YYYY-MM-DD",
+  selected_branch:'',
   selected_company:{
     id:'',
     phone:'88888888',
