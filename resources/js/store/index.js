@@ -10,6 +10,7 @@ const vuexLocal = new VuexPersistence({
   reducer:(state)=>{
     return{
 setup:{
+  selected_branch:state.setup.selected_branch,
   selected_company:{
     id:state.setup.selected_company.id,
     phone:state.setup.selected_company.phone,

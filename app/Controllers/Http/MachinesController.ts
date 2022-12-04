@@ -94,7 +94,7 @@ var machine_client_id=data.machine_client_id;
 var machine_id=data.machine_id;
 var result=await Database
 .from('machine_activity_part_nos')
- .select("machine_activity_part_nos.*","products.name as product_name","products.part_no as part_no","products.material_code as material_code","products.vendor_name as vendor_name","products.customer_name as customer_name","products.other_detail as other_detail")
+ .select("machine_activity_part_nos.*","products.name as product_name","products.part_no as part_no","products.vendor_name as vendor_name","products.customer_name as customer_name","products.other_detail as other_detail")
  .where('machine_activity_part_nos.machine_id',machine_id)//new branch
  .where('machine_activity_part_nos.machine_client_id',machine_client_id)//new branch
  .leftJoin('products','products.id','=','machine_activity_part_nos.product_id')
@@ -183,8 +183,10 @@ return false;
     var emp_id=data.emp_id;
     var machine_client_id=data.machine_client_id
     var machine_id=data.machine_id
-    var machine_date=data.machine_data
+    var machine_date=data.machine_date
     var machine_time=data.machine_time
+    var machine_date_time=data.machine_date_time
+
     var good_count=data.good_count;
     var reject_count=data.reject_count;
     var ideal_cycle=data.ideal_cycle
@@ -201,8 +203,9 @@ shift_id,
 emp_id,
 machine_client_id,
 machine_id,
-machine_date:moment(machine_date).format('YYYY-MM-DD'),
+machine_date,
 machine_time,
+machine_date_time
 
 
 })
@@ -221,9 +224,10 @@ return result
     var machine_id=data.machine_id;
     var emp_id=data.emp_id;
     var machine_client_id=data.machine_client_id
-    var machine_date=data.machine_data
+    var machine_date=data.machine_date
     var machine_time=data.machine_time
     var is_closed=data.is_closed;
+    var machine_date_time=data.machine_date_time
 
    var check= await this.IS_FOUND_MACHINE_MAIN_STAUTS({machine_client_id,machine_id})
 
@@ -235,8 +239,9 @@ shift_id,
 machine_id,
 emp_id,
 machine_client_id,
-machine_date:moment(machine_date).format('YYYY-MM-DD'),
+machine_date,
 machine_time,
+machine_date_time,
 is_closed
 })
 return result
@@ -262,6 +267,7 @@ return result
     var emp_name=data.emp_name
     var stroke=data.stroke
     var machine_active_status=data.machine_active_status;
+    var machine_date_time=data.machine_date_time
 
 
   var result=await MachineActivity.create({
@@ -274,6 +280,7 @@ return result
       machine_client_id,
       machine_date,
       machine_time,
+      machine_date_time,
       break_type,
       break_reason,
       product_id,
@@ -301,6 +308,8 @@ public async insert(ctx:HttpContextContract)
   var machine_client_id=data.machine_client_id
   var machine_date=data.machine_date
   var machine_time=data.machine_time
+  var machine_date_time=data.machine_date_time
+
   var machine_active_status=data.machine_active_status
   var company_id=data.company_id
   var break_type=data.break_type
@@ -327,7 +336,8 @@ var id=await MachineActivity.create({
     product_name,
     emp_id,
     emp_name,
-    stroke
+    stroke,
+    machine_date_time
  })
 
  ctx.response.send({success:true,data:id})

@@ -12,6 +12,7 @@ import Shift from 'App/Models/Shift';
 import _ from 'lodash'
 // import Mail from '@ioc:Adonis/Addons/Mail'
 import Ws from 'App/Services/Ws'
+import MachinePrePlanning from 'App/Models/MachinePrePlanning';
 // import { WITH_CTX } from '@vue/compiler-core';
 
 export default class MainsController {
@@ -120,11 +121,9 @@ console.log("socket1 trigeered")
   public async isProductFound(data){
     var company_id=data.company_id;
     var part_no=data.part_no;
-    var material_code=data.material_code;
 
 
-    var isFound=await Product.query().where('company_id',company_id).andWhere('part_no',part_no)
-    .orWhere('company_id',company_id).andWhere('material_code',material_code)
+    var isFound=await Product.query().where('company_id',company_id).andWhere('part_no',part_no);
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -133,7 +132,9 @@ console.log("socket1 trigeered")
   public async isMachinFound(data){
     var company_id=data.company_id;
     var name=data.name;
+    var username=data.username;
     var isFound=await Machine.query().where('company_id',company_id).andWhere('name',name)
+    .orWhere('company_id',company_id).andWhere('username',username)
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -149,6 +150,7 @@ console.log("socket1 trigeered")
     var start_time=data.start_time;
     var end_time=data.end_time;
     var group=data.group;
+    var branch=data.branch;
     if(!await this.isBreakFound({company_id,name,group})){
     var result=await   Break.create({
       company_id,
@@ -156,7 +158,8 @@ console.log("socket1 trigeered")
       group,
       description,
       start_time,
-      end_time
+      end_time,
+      branch
     })
 
     if(result.$isPersisted)
@@ -180,13 +183,15 @@ console.log("socket1 trigeered")
     var start_time=data.start_time;
     var end_time=data.end_time;
     var group=data.group;
+    var branch=data.branch;
     if(!await this.isShiftFound({company_id,name,group})){
     var result=await   Shift.create({
       company_id,
       name,
       group,
       start_time,
-      end_time
+      end_time,
+      branch
     })
 
     if(result.$isPersisted)
@@ -406,26 +411,55 @@ config
     })
       }
 
+      public async CREATE_MACHINE_PLANNING(ctx:HttpContextContract){
+        var data=ctx.request.input('data')
+        var company_id=data.company_id;
+        var machine_id=data.machine_id;
+        var subject=data.subject;
+        var description=data.description;
+    var result=await  MachinePrePlanning.create({
+    company_id,
+    machine_id,
+    subject,
+    description
+
+
+    })
+
+        if(result.$isPersisted)
+        return ctx.response.send({
+          success:true,
+          msg:'Created Successfully',
+          data:result
+        })
+        }
+
+
     public async CREATE_PRODUCT(ctx:HttpContextContract){
       var data=ctx.request.input('data')
       var company_id=data.company_id;
       var branch=data.branch;
       var name=data.name;
       var part_no=data.part_no;
-      var material_code=data.material_code;
       var customer_name=data.customer_name;
       var vendor_name=data.vendor_name;
       var other_detail=data.other_detail;
-      if(!await this.isProductFound({company_id,part_no,material_code})){
+      var ideal_cyle_time=data.ideal_cyle_time;
+      var target_oee=data.target_oee;
+      var production_per_stroke=data.production_per_stroke;
+      if(!await this.isProductFound({company_id,part_no})){
   var result=await   Product.create({
   company_id,
   branch,
   name,
 part_no,
-material_code,
 customer_name,
 vendor_name,
 other_detail,
+ideal_cyle_time,
+target_oee,
+production_per_stroke
+
   })
 
       if(result.$isPersisted)
@@ -450,16 +484,18 @@ other_detail,
         var code=data.code;
         var name=data.name;
         var group=data.group;
-        var hours=data.hours;
         var description=data.description;
         var other=data.other;
-    if(!await this.isMachinFound({company_id,name})){
+        var username=data.username;
+        var password=data.password;
+    if(!await this.isMachinFound({company_id,name,username})){
     var result=await   Machine.create({
     company_id,
     code,
     branch,
     name,
-    hours,
+    username,
+    password,
     group,
     description,
     other
@@ -541,14 +577,16 @@ var name=data.name;
               var name=data.name;
               var description=data.description;
               var group=data.group;
-              var type=data.type;
+              // var type=data.type;
+              var branch=data.branch;
               if(!await this.isDownTimeFound({company_id,name})){
           var result=await   Downtime.create({
           company_id,
           name,
           description,
           group,
-          type
+          branch
+          // type
          })
 
               if(result.$isPersisted)
@@ -586,6 +624,15 @@ public async GET_GROUPS(ctx:HttpContextContract)
 var data=ctx.request.input('data')
 var company_id=data.company_id;
 var get=await Group.query().where('company_id',company_id);
+  return ctx.response.send(get)
+}
+
+public async GET_MACHINE_PRE_PLANNING(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var company_id=data.company_id;
+var machine_id=data.machine_id;
+var get=await MachinePrePlanning.query().where('company_id',company_id).where('machine_id',machine_id);
   return ctx.response.send(get)
 }
 
@@ -673,16 +720,18 @@ public async GET_EMPROLE(ctx:HttpContextContract){
 
   public async MACHINE_LOGIN(ctx:HttpContextContract){
     var data=ctx.request.input('data')
-    var company_username=data.company_username;
-    var machine_code=data.machine_code;
-    var getCompany=await Company.query().where('email',company_username).orWhere('phone',company_username).first()
-    if(!_.isEmpty(getCompany)){
-    var company_id=getCompany?.id
-    var getMachine=await Machine.query().where('company_id',company_id).where('code',machine_code).first()
-    if(!_.isEmpty(getMachine)){
-      var getBreaks=await Break.query().where('company_id',company_id).andWhere('group',getMachine.group)
-      var getShift=await Shift.query().where('company_id',company_id).andWhere('group',getMachine.group)
-      var getDownTime=await Downtime.query().where('company_id',company_id).andWhere('group',getMachine.group)
+    var username=data.username;
+    var password=data.password;
+
+    var getMachine=await Machine.query().where('username',username).where('password',password).first()
+     if(!_.isEmpty(getMachine)){
+      var company_id=getMachine?.company_id;
+      var branch=getMachine?.branch;
+      var getCompany=await Company.query().where('id',company_id).first()
+
+      var getBreaks=await Break.query().where('company_id',company_id).andWhere('branch',branch)
+      var getShift=await Shift.query().where('company_id',company_id).andWhere('branch',branch)
+      var getDownTime=await Downtime.query().where('company_id',company_id).andWhere('branch',branch)
 
       return ctx.response.send({
         success:true,
@@ -700,13 +749,49 @@ public async GET_EMPROLE(ctx:HttpContextContract){
         },
       })
     }
-    }
     return ctx.response.send({
       success:false,
       msg:'Machine Not Found',
       data:''
     })
     }
+
+  // public async MACHINE_LOGIN(ctx:HttpContextContract){
+  //   var data=ctx.request.input('data')
+  //   var company_username=data.company_username;
+  //   var machine_code=data.machine_code;
+  //   var getCompany=await Company.query().where('email',company_username).orWhere('phone',company_username).first()
+  //   if(!_.isEmpty(getCompany)){
+  //   var company_id=getCompany?.id
+  //   var getMachine=await Machine.query().where('company_id',company_id).where('code',machine_code).first()
+  //   if(!_.isEmpty(getMachine)){
+  //     var getBreaks=await Break.query().where('company_id',company_id).andWhere('group',getMachine.group)
+  //     var getShift=await Shift.query().where('company_id',company_id).andWhere('group',getMachine.group)
+  //     var getDownTime=await Downtime.query().where('company_id',company_id).andWhere('group',getMachine.group)
+
+  //     return ctx.response.send({
+  //       success:true,
+  //       msg:'Successfully Logged',
+  //       data:{
+  //         machine:getMachine,
+  //         breaks:getBreaks,
+  //         shift:getShift,
+  //         down_time:getDownTime,
+  //         company:{
+  //           id:company_id,
+  //           name:getCompany?.name,
+  //           email:getCompany?.email
+  //         }
+  //       },
+  //     })
+  //   }
+  //   }
+  //   return ctx.response.send({
+  //     success:false,
+  //     msg:'Machine Not Found',
+  //     data:''
+  //   })
+  //   }
 
     public async REMOVE_BRANCH(ctx:HttpContextContract){
       var data=ctx.request.input('data')
@@ -867,6 +952,29 @@ try {
               }
 
 
+
+
+              public async REMOVE_MACHINE_PRE_PLANNING(ctx:HttpContextContract){
+                var data=ctx.request.input('data')
+                var id=data.id;
+          try {
+            const result = await MachinePrePlanning.findOrFail(id)
+            await result.delete()
+
+            return ctx.response.send({
+              success:true,
+              msg:'Successfully Deleted',
+              data:'',
+            })
+          } catch (error) {
+            return ctx.response.send({
+              success:false,
+              msg:'Failed to Delete',
+              data:'',
+            })
+          }
+
+                }
 
               public async REMOVE_BREAK(ctx:HttpContextContract){
                 var data=ctx.request.input('data')

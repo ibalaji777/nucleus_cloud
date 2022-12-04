@@ -50,6 +50,7 @@ node ace make:model Machine_activity -cm
 node ace make:model Machine_activity_part_no -cm
 node ace make:model Machine_activity_main -cm
 
+node ace make:model Machine_pre_planning -cm
 
 CREATED FILES FOR ABOVE COMMANDS ARE
 ----------------------------------------------------------------

@@ -11,7 +11,8 @@ export default class extends BaseSchema {
       table.string('name').defaultTo('')
       table.string('description').defaultTo('')
       table.string('group').defaultTo('')
-      table.string('type').defaultTo('')
+      table.string('branch').defaultTo('')
+      // table.string('type').defaultTo('')
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */

@@ -63,6 +63,9 @@ return new  MainsController().CREATE_GROUP(ctx)
 Route.post('/create_emprole',(ctx)=>{
 return new  MainsController().CREATE_EMPROLE(ctx)
 })
+Route.post('/create_machine_pre_planning',(ctx)=>{
+  return new  MainsController().CREATE_MACHINE_PLANNING(ctx)
+  })
 Route.post('/create_down_time',(ctx)=>{
   return new  MainsController().CREATE_DOWNTIME(ctx)
   })
@@ -73,6 +76,10 @@ Route.post('/create_down_time',(ctx)=>{
   Route.post('/get_machine',(ctx)=>{
     return new  MainsController().GET_MACHINES(ctx)
     })
+    Route.post('/get_machine_pre_planning',(ctx)=>{
+      return new  MainsController().GET_MACHINE_PRE_PLANNING(ctx)
+      })
+
 Route.post('/get_branch',(ctx)=>{
 return new  MainsController().GET_BRANCHES(ctx)
 })
@@ -138,6 +145,10 @@ return new  MainsController().REMOVE_SHIFT(ctx)
 Route.post('/remove_break',(ctx)=>{
   return new  MainsController().REMOVE_BREAK(ctx)
   })
+  Route.post('/remove_machine_pre_planning',(ctx)=>{
+    return new  MainsController().REMOVE_MACHINE_PRE_PLANNING(ctx)
+    })
+
 
   Route.post('/get_machines_main_status_by_date',(ctx)=>{
     return new  MachinesController().GET_MACHINE_STATUS_BY_DATE(ctx)

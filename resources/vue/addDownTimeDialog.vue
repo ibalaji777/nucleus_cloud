@@ -14,14 +14,14 @@
         <v-card-text>
   <v-text-field v-model="downtime.name" label="Name(*)"></v-text-field>
   <v-text-field v-model="downtime.description" label="description"></v-text-field>
-  <v-select
+  <!-- <v-select
           :items="types"
           item-text="title"
           item-value="value"
           :v-model="downtime.type"
           label="type"
           dense
-        ></v-select>
+        ></v-select> -->
 
           <small>*indicates required field</small>
         </v-card-text>

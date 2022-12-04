@@ -23,6 +23,8 @@ public machine_active_status: String
   @column()
   public machine_time: DateTime
   @column()
+  public machine_date_time: String
+  @column()
   public break_type: String
   @column()
   public break_reason: String

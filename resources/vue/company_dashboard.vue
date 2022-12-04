@@ -10,124 +10,35 @@
 <div style="height:20px;background:white"></div>
 
 <div v-if="defaultMenuBar=='dashboard'">
-    <div style="display: flex; flex-wrap: wrap">
+    <div style="display: flex; flex-wrap: wrap;padding:10px">
       <div
         @click="
           $store.commit('dialog', { key: 'addBranchDialog', value: true })
         "
-        class="nucleus_widget"
+        class="nucleus_widget gradient2"
       >
         Branches
       </div>
-      <div @click="$router.push({ name: 'main_users' })" class="nucleus_widget">
-        Users
-      </div>
-      <!-- <div @click="$store.commit('dialog',{key:'addEmployeeDialog',value:true})"  class="nucleus_widget">
-Users
-</div> -->
-      <div
-        @click="
-          $store.commit('dialog', { key: 'addMachineDialog', value: true })
-        "
-        class="nucleus_widget"
-      >
-        Machines
-      </div>
-      <div
-        @click="
-          $store.commit('dialog', { key: 'addBreaksDialog', value: true })
-        "
-        class="nucleus_widget"
-      >
-        Break Times
-      </div>
-      <div
-        @click="
-          $store.commit('dialog', { key: 'addDownTimeDialog', value: true })
-        "
-        class="nucleus_widget"
-      >
-        DownTime
-      </div>
-      <!-- <div
-        @click="$store.commit('dialog', { key: 'addGroupDialog', value: true })"
-        class="nucleus_widget"
-      >
-        Group
-      </div> -->
-      <div
-        @click="
-          $store.commit('dialog', { key: 'addProductsDialog', value: true })
-        "
-        class="nucleus_widget"
-      >
-        Products
-      </div>
 
-      <div
-        @click="$store.commit('dialog', { key: 'addShiftDialog', value: true })"
-        class="nucleus_widget"
-      >
-        Shifts
-      </div>
 
-      <!-- <div @click="$store.commit('dialog',{key:'addEmpRoleDialog',value:true})"  class="nucleus_widget">
-Emp Role
-</div> -->
+
+
     </div>
 
     <!-- {{$store.state.db}} -->
     <h2 style="padding: 10px">Branches</h2>
-    <div style="display: flex">
+    <div style="display: flex;padding:10px">
       <div
         v-for="(item, index) in $store.state.db.branches"
         :key="'branch' + index"
-        class="nucleus_widget"
+        class="nucleus_widget gradient2"
+        @click="selectBranch(item.name)"
       >
         {{ item.name }}
       </div>
     </div>
-
-    <!-- <h2 style="padding: 10px">Group</h2>
-    <div style="display: flex">
-      <div
-        @click="
-          $router.push({ name: 'groupdashboard', params: { group: item.name } })
-        "
-        v-for="(item, index) in $store.state.db.groups"
-        :key="'branch' + index"
-        class="nucleus_widget"
-      >
-        {{ item.name }}
-        <div style="margin-top: 10px">{{ item.group }}</div>
-      </div>
-    </div> -->
-    <h2 style="padding: 10px">Machine</h2>
-    <div style="display: flex">
-      <div
-        @click="machineDialog(item)"
-        v-for="(item, index) in $store.state.db.machines"
-        :key="'branch' + index"
-        class="nucleus_widget"
-      >
-        {{ item.name }}
-      </div>
-    </div>
-    </div>
-
-    <div v-if="defaultMenuBar=='branch'">
-          <main-branch></main-branch>
-    </div>
-    <div v-if="defaultMenuBar=='machine'">
-          <main-machine></main-machine>
-    </div>
-    <div v-if="defaultMenuBar=='product'">
-          <main-product></main-product>
-    </div>
-    <div v-if="defaultMenuBar=='group'">
-          <main-group></main-group>
-    </div>
-  </div>
+</div>
+     </div>
 </template>
 
 <script>
@@ -142,20 +53,20 @@ export default {
         name:'dashboard'
       },
 
-{
-        title:'Branch',
-        name:'branch'
-      },
-            {
-        title:'Machine',
-        name:'machine'
+// {
+//         title:'Branch',
+//         name:'branch'
+//       },
+//             {
+//         title:'Machine',
+//         name:'machine'
 
-      },
-      {
-        title:'Product',
-        name:'product'
+//       },
+//       {
+//         title:'Product',
+//         name:'product'
 
-      },
+//       },
       // {
       //   title:'Group',
       //   name:'group'
@@ -178,6 +89,11 @@ export default {
     $vm.$store.dispatch("GET_PRODUCTS");
   },
   methods: {
+    selectBranch(branch){
+var $vm=this;
+$vm.$store.commit('SELECTED_BRANCH',branch)
+$vm.$router.push({name:'branch_dashboard'})
+    },
     machineDialog(data) {
       var $vm = this;
 
@@ -210,7 +126,7 @@ export default {
 .menubar{
   display:flex;
   // padding:2px;
-  background: lightgrey;
+  background: #F5FAFE;
 }
 .menubar div{
 padding: 10px 11px;

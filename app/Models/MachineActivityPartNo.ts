@@ -43,7 +43,8 @@ export default class MachineActivityPartNo extends BaseModel {
 
   @column()
   public machine_time: String
-
+  @column()
+  public machine_date_time: String
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

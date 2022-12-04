@@ -27,6 +27,7 @@ db:{
   employees:[],
   emprole:[],
   products:[],
+  machinePrePlanning:[]
 
 },
 //while clicked in ui then it display
@@ -37,7 +38,9 @@ eventMachineDetail:{
   name:'',
   group:'',
   hours:'',
-  description:''
+  description:'',
+  username:'',
+  password:''
 
 },
 setup:{

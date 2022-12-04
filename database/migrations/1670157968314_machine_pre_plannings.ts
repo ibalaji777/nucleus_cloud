@@ -1,18 +1,15 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'shifts'
+  protected tableName = 'machine_pre_plannings'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-
-      table.integer('company_id').defaultTo(0)
-      table.string('name').defaultTo('')
-      table.string('group').defaultTo('')
-      table.string('branch').defaultTo('')
-      table.time('start_time')
-      table.time('end_time')
+      table.integer('company_id')
+      table.integer('machine_id')
+      table.string('subject')
+      table.string('description')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

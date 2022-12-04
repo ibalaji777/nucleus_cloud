@@ -11,6 +11,9 @@ export default class Break extends BaseModel {
   @column()
   public group: String
   @column()
+  public branch: String
+
+  @column()
   public description: String
 
   @column()

@@ -1,7 +1,7 @@
 <template>
   <div class="bgGradient" style="position:relative">
 
-<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:10px;width:350px;background:white;text-align:center">
+<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:10px;width:350px;background:white;text-align:center;  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
 
 <h2 style="padding:10px;text-align:center">Signup</h2>
 <v-text-field v-model="company.name" dense outlined label="Name(*)" ></v-text-field>
@@ -15,7 +15,7 @@ Signup
 </v-btn>
 <br>
 
-<h5 @click="$router.push('company_signin')" style="margin-top:15px">I already have a account</h5>
+<h5 @click="$router.push('company_signin')" style="margin-top:15px;cursor:pointer">I already have a account</h5>
 
 
 </div>

@@ -20,6 +20,7 @@ export default class extends BaseSchema {
       table.double('ideal_cycle').defaultTo(0)
       table.date('machine_date')
       table.time('machine_time')
+      table.dateTime('machine_date_time')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

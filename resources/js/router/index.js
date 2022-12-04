@@ -5,10 +5,13 @@ import  Home from '../../vue/Home.vue'
 import  company_signup from '../../vue/company_signup.vue'
 import  company_signin from '../../vue/company_signin'
 import  company_dashboard from '../../vue/company_dashboard.vue'
+import  branch_dashboard from '../../vue/branch_dashboard.vue'
 import  groupDashboard from '../../vue/groupDashboard.vue'
 import mainUsers from '../../vue/main_users.vue'
 import store from '../store/index.js'
 import updateEmployee from '../../vue/updateEmployee.vue'
+
+import mainMachinePrePlanning from '../../vue/mainMachinePrePlanning.vue'
 Vue.use(VueRouter)
 
 const  routes= [
@@ -17,6 +20,24 @@ const  routes= [
       path: '/',
       name: 'index',
       component: company_dashboard,
+      meta: {
+        auth: true
+        }
+    },
+    {
+
+      path: '/mainMachinePrePlanning',
+      name: 'mainMachinePrePlanning',
+      component: mainMachinePrePlanning,
+      meta: {
+        auth: true
+        }
+    },
+    {
+
+      path: '/branch_dashboard',
+      name: 'branch_dashboard',
+      component: branch_dashboard,
       meta: {
         auth: true
         }

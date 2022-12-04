@@ -1,24 +1,21 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Downtime extends BaseModel {
+export default class MachinePrePlanning extends BaseModel {
   @column({ isPrimary: true })
   public id: number
-
-  @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
-
   @column()
   company_id:Number
   @column()
-  name:String
+  public machine_id:Number
   @column()
-  description: Number
+  public subject:String
   @column()
-  group:String
-  @column()
-  branch:String
+  public description:String
 
+
+  @column.dateTime({ autoCreate: true })
+  public createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime

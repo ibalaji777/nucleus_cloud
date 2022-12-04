@@ -10,10 +10,18 @@
           <span class="text-h5">MACHINE DETAIL</span>
         </v-card-title>
         <v-card-text>
-
-Login Info <br>
-<div class="flex"><h4>USERNAME</h4>:<h4>{{$store.state.setup.selected_company.email}}</h4></div>
+          <v-btn color="primary" @click="$router.push({name:'mainMachinePrePlanning'})">Create Pre Planning</v-btn>
+          <br>
+          <br>
+<!-- {{$store.state.eventMachineDetail}} -->
+<h2> Login Info</h2> <br>
+<!-- <div class="flex"><h4>USERNAME</h4>:<h4>{{$store.state.setup.selected_company.email}}</h4></div> -->
 <div class="flex"><h4>MACHINE CODE</h4>:<h4>{{$store.state.eventMachineDetail.code}}</h4></div>
+
+
+<div class="flex"><h4>USERNAME</h4>:<h4>{{$store.state.eventMachineDetail.username}}</h4></div>
+<div class="flex"><h4>PASSWORD</h4>:<h4>{{$store.state.eventMachineDetail.password}}</h4></div>
+
 
         </v-card-text>
         <v-card-actions>

@@ -3,10 +3,12 @@
 <span class="text-h5">Product</span>
 <v-text-field v-model="product.name" label="Name(*)"></v-text-field>
 <v-text-field v-model="product.part_no" label="Part No(*)"></v-text-field>
-<v-text-field v-model="product.customer_name" label="customer Name(Optional)"></v-text-field>
+<v-text-field type="number" v-model="product.production_per_stroke" label="Production Per Stroke(*)"></v-text-field>
+<v-text-field v-model="product.ideal_cyle_time" label="Ideal Cylcle Time(*)"></v-text-field>
+<v-text-field v-model="product.target_oee" label="Target OEE %(*)"></v-text-field>
+<v-text-field v-model="product.customer_name" label="Customer Name(Optional)"></v-text-field>
 <v-text-field v-model="product.vendor_name" label="Vendor Name(Optional)"></v-text-field>
 <v-text-field v-model="product.other_detail" label="Other Detail(Optional)"></v-text-field>
-<v-text-field v-model="product.ideal_cyle_time" label="Ideal Cylcle Time(*)"></v-text-field>
 
           <v-btn
             color="blue darken-1"
@@ -32,7 +34,9 @@ name:'',
 part_no:'',
 customer_name:'',
 vendor_name:'',
+production_per_stroke:1,
 ideal_cyle_time:1,
+target_oee:65,
 other_detail:'',
 
 }
@@ -58,6 +62,17 @@ if($vm.product.part_no=='')
 if($vm.product.ideal_cyle_time=='')
 {
   $vm.$alert("Please Enter the Ideal Cyle Time")
+  return ;
+}
+if($vm.product.production_per_stroke=='')
+{
+  $vm.$alert("Please Enter the Production Per stroke")
+  return ;
+}
+
+if($vm.product.target_oee=='')
+{
+  $vm.$alert("Please Enter the Target OEE")
   return ;
 }
 

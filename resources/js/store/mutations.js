@@ -61,6 +61,8 @@ state.eventMachineDetail.name=result.name||""
 state.eventMachineDetail.group=result.group||""
 state.eventMachineDetail.hours=result.hours||""
 state.eventMachineDetail.description=result.description||""
+state.eventMachineDetail.username=result.username||""
+state.eventMachineDetail.password=result.password||""
 },
 GET_PRODUCTS(state,payload){
 if(Array.isArray(payload))
@@ -68,6 +70,9 @@ if(Array.isArray(payload))
 },
 SELECTED_BRANCH(state,payload){
  state.setup.selected_branch=payload;
+},
+MACHINE_PRE_PLANNING(state,payload){
+  state.db.machinePrePlanning=payload
 }
 
 }

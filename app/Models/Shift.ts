@@ -11,6 +11,9 @@ export default class Shift extends BaseModel {
   @column()
   public group: String
   @column()
+  public branch: String
+
+  @column()
   public start_time: String
   @column()
   public end_time: String

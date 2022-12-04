@@ -1,13 +1,20 @@
 
 
 export const headers={
+  machinePrePlanning:[
+    { text: 'SUBJECT', value: 'subject' },
+    { text: 'DESCRIPTION', value: 'description' },
+    { text: 'Action', value: 'action' },
 
+      ],
   machines:[
   { text: 'Code', value: 'code' },
   { text: 'Name', value: 'name' },
-  { text: 'Hours', value: 'hours' },
+  { text: 'Branch', value: 'branch' },
   { text: 'Description', value: 'description' },
   { text: 'other', value: 'other' },
+  { text: 'Username', value: 'username' },
+  { text: 'Password', value: 'password' },
   { text: 'Action', value: 'action' },
     ]
 ,

@@ -10,6 +10,7 @@ export default class extends BaseSchema {
       table.integer('company_id').defaultTo(0)
       table.string('name').defaultTo('')
       table.string('group').defaultTo('')
+      table.string('branch').defaultTo('')
       table.string('description').defaultTo('')
       table.time('start_time')
       table.time('end_time')

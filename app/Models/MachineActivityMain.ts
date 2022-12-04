@@ -22,6 +22,9 @@ export default class MachineActivityMain extends BaseModel {
   @column()
   public machine_time: String
   @column()
+  public machine_date_time: String
+
+  @column()
   public is_closed: Boolean
 
   @column.dateTime({ autoCreate: true })

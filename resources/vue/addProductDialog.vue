@@ -15,10 +15,12 @@
 
 <v-text-field v-model="product.name" label="Name(*)"></v-text-field>
 <v-text-field v-model="product.part_no" label="Part No(*)"></v-text-field>
-<v-text-field v-model="product.customer_name" label="customer Name(Optional)"></v-text-field>
+<v-text-field type="number" v-model="product.production_per_stroke" label="Production Per Stroke(*)"></v-text-field>
+<v-text-field v-model="product.ideal_cyle_time" label="Ideal Cylcle Time(*)"></v-text-field>
+<v-text-field v-model="product.target_oee" label="Target OEE %(*)"></v-text-field>
+<v-text-field v-model="product.customer_name" label="Customer Name(Optional)"></v-text-field>
 <v-text-field v-model="product.vendor_name" label="Vendor Name(Optional)"></v-text-field>
 <v-text-field v-model="product.other_detail" label="Other Detail(Optional)"></v-text-field>
-<v-text-field v-model="product.ideal_cyle_time" label="Ideal Cylcle Time(*)"></v-text-field>
 
           <small>*indicates required field</small>
         </v-card-text>
@@ -56,10 +58,11 @@ company_id:'',
 branch:'',
 name:'',
 part_no:'',
-// material_code:'',
 customer_name:'',
 vendor_name:'',
+production_per_stroke:1,
 ideal_cyle_time:1,
+target_oee:65,
 other_detail:'',
 
 }
@@ -87,6 +90,18 @@ if($vm.product.ideal_cyle_time=='')
   $vm.$alert("Please Enter the Ideal Cyle Time")
   return ;
 }
+if($vm.product.production_per_stroke=='')
+{
+  $vm.$alert("Please Enter the Production Per stroke")
+  return ;
+}
+
+if($vm.product.target_oee=='')
+{
+  $vm.$alert("Please Enter the Target OEE")
+  return ;
+}
+
 var prepare={...this.product,
 company_id:$vm.$store.state.setup.selected_company.id
 }

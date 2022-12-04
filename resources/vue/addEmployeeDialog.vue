@@ -13,7 +13,7 @@
         <v-card-text>
 
   <v-text-field v-model="employee.name" label="Name(*)"></v-text-field>
-  <v-select label="Branch" item-text="name" item-value="value"  v-model="employee.branch" :items="$store.state.db.branches"></v-select>
+  <!-- <v-select label="Branch" item-text="name" item-value="value"  v-model="employee.branch" :items="$store.state.db.branches"></v-select> -->
   <v-text-field v-model="employee.email" label="Email(*)"></v-text-field>
   <v-text-field v-model="employee.dialcode" label="Dialcode(*)"></v-text-field>
   <v-text-field v-model="employee.phone" label="Phone(*)"></v-text-field>
@@ -50,7 +50,7 @@
 <script>
 function initialState(){
   return {
-employeeRole:['SUPERVISOR','OPERATOR','LOADER'],
+employeeRole:['TOOL-INCHARGE','SUPERVISOR','OPERATOR','LOADER'],
 employee:{
   company_id:'',
   branch:'',

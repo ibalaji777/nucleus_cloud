@@ -9,3 +9,33 @@ background: #F5F7FB;
   min-height: 75vh;width:47vw;background:white;
       box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     }
+
+
+
+    .gradient1{
+      background:linear-gradient(135deg, #13f1fc 0%,#61c3c9 100%);
+      color:white;
+    }
+    .gradient2{
+      background:linear-gradient(135deg, #1bcedf 0%,#295f64 100%);
+      color:white;
+
+    }
+    .gradient3{
+      background:linear-gradient(135deg, #7d7cb9 0%,#692058  100%);
+      color:white;
+
+    }
+    .gradient4{
+      background:linear-gradient(135deg, #ea6060 0%,#aa4343 100%);
+      color:white;
+
+    }
+    .gradient5{
+      background:linear-gradient(135deg, #fad961 0%,#f76b1c 100%);
+      color:white;
+
+    }
+    .gradient6{
+      background:linear-gradient(135deg, #36f870 0%,#d3a527 100%);
+    }
