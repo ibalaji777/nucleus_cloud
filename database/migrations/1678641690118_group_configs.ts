@@ -1,16 +1,14 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'emproles'
+  protected tableName = 'group_configs'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-
-
-      table.string('name').defaultTo('')
-      table.string('type').defaultTo('')
-      table.string('description').defaultTo('')
+      table.integer('machine_id').defaultTo('')
+      table.string('task').defaultTo('')//breaks,downtimes,shedules,
+      table.string('group').defaultTo('')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

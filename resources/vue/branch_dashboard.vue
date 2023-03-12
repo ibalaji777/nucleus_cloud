@@ -18,12 +18,10 @@ Selected Branch:{{$store.state.setup.selected_branch}}
 <div v-if="defaultMenuBar=='dashboard'">
     <div style="display: flex; flex-wrap: wrap">
       <div
-        @click="
-          $store.commit('dialog', { key: 'addBranchDialog', value: true })
-        "
+        @click="$router.push({name:'main_shedule'})"
         class="nucleus_widget gradient1"
       >
-        Branches
+        Sheduled time
       </div>
       <div   @click="$router.push({ name: 'main_users' })" class="nucleus_widget gradient2">
         Users
@@ -206,6 +204,7 @@ export default {
     $vm.$store.dispatch("GET_BRANCHES");
     $vm.$store.dispatch("GET_EMPROLE")
     $vm.$store.dispatch("GET_PRODUCTS");
+    $vm.$store.dispatch("GET_SHEDULE");
   },
   computed:{
 
@@ -266,7 +265,7 @@ return   _.filter($vm.$store.state.db.machines,(machine)=>machine.branch==$vm.$s
     height: 110px;
     margin-top:5px;
     background: white;
-    border-radius: 9%;
+
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
     overflow: hidden;
     transition: 0.3s;

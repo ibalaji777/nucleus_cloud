@@ -7,7 +7,6 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
 
-      table.integer('company_id').defaultTo(0)
       table.string('name').defaultTo('')
       table.string('description').defaultTo('')
       table.string('group').defaultTo('')

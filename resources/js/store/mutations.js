@@ -4,6 +4,11 @@ const mutations={
  dialog(state,payload){
  Vue.set(state.dialog,payload.key,payload.value)
  },
+
+ GET_SHEDULE(state,result){
+  if(Array.isArray(result))
+   state.db.shedule=result
+    },
  GET_MACHINES(state,result){
 if(Array.isArray(result))
  state.db.machines=result

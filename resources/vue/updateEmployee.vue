@@ -91,7 +91,6 @@ data(){
     data:{},
   employeeRole:['SUPERVISOR','OPERATOR'],
 employee:{
-  company_id:'',
   branch:'',
   name:'',
   email:'',
@@ -144,7 +143,7 @@ if($vm.employee.password=='')
 }
 
 var prepare={
-...this.employee,company_id:$vm.$store.state.setup.selected_company.id}
+...this.employee}
 prepare['config']["machines"]=$vm.machines
 
 var result=await $vm.$store.dispatch('UPDATE_EMPLOYEE',prepare)

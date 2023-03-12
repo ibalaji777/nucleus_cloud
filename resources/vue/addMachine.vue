@@ -22,7 +22,7 @@
 
 function initialState(){
 return {
-company_id:'',
+
 branch:'',
 machine:{
 code:'',
@@ -66,7 +66,7 @@ if($vm.machine.password=='')
 // this.machine.group=$vm.$route.params.group||"";
 var prepare={
 ...this.machine,
-company_id:$vm.$store.state.setup.selected_company.id
+
 }
 var result=await $vm.$store.dispatch('CREATE_MACHINE',prepare)
 if(result.data.success){

@@ -5,8 +5,6 @@ export default class Break extends BaseModel {
   @column({ isPrimary: true })
   public id: number
   @column()
-  public company_id: number
-  @column()
   public name: String
   @column()
   public group: String

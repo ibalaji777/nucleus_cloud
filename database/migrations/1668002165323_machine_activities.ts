@@ -8,7 +8,7 @@ export default class extends BaseSchema {
 
       table.increments('id')
       //company
-      table.integer('company_id').defaultTo(0)
+
       //shift
       table.integer('shift_id').defaultTo(0)
       table.string('shift_name').defaultTo("")

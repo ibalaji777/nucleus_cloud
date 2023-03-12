@@ -10,6 +10,7 @@ import  groupDashboard from '../../vue/groupDashboard.vue'
 import mainUsers from '../../vue/main_users.vue'
 import store from '../store/index.js'
 import updateEmployee from '../../vue/updateEmployee.vue'
+import main_shedule  from '../../vue/mainShedule.vue'
 
 import mainMachinePrePlanning from '../../vue/mainMachinePrePlanning.vue'
 Vue.use(VueRouter)
@@ -24,6 +25,16 @@ const  routes= [
         auth: true
         }
     },
+    {
+
+      path: '/main_shedule',
+      name: 'main_shedule',
+      component: main_shedule,
+      meta: {
+        auth: true
+        }
+    },
+
     {
 
       path: '/mainMachinePrePlanning',

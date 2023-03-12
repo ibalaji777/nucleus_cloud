@@ -54,7 +54,7 @@ function initialState(){
 
 
 product:{
-company_id:'',
+
 branch:'',
 name:'',
 part_no:'',
@@ -103,7 +103,7 @@ if($vm.product.target_oee=='')
 }
 
 var prepare={...this.product,
-company_id:$vm.$store.state.setup.selected_company.id
+
 }
 var result=await $vm.$store.dispatch('CREATE_PRODUCT',prepare)
 

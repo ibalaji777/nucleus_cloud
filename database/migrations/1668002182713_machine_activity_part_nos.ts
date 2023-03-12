@@ -8,7 +8,6 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('part_no').defaultTo("")//main tracking
       table.integer('product_id').defaultTo(0)//main tracking
-      table.string('company_id').defaultTo(0)//main tracking
       table.string('shift_id').defaultTo(0)//main tracking
       table.string('emp_id').defaultTo(0)//main tracking
       table.string('machine_client_id').defaultTo("")//main tracking

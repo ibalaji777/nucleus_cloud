@@ -7,8 +7,6 @@ export default class Group extends BaseModel {
 
 
   @column()
-  public company_id:Number
-  @column()
   public name:String
   @column()
   public description:String

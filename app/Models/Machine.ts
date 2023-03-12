@@ -6,8 +6,6 @@ export default class Machine extends BaseModel {
   public id: number
 
   @column()
-  public company_id: number
-  @column()
   public code: String
   @column()
   public branch: String

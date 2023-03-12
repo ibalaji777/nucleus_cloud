@@ -46,7 +46,6 @@
 function initialState(){
   return {
 branch:{
-  company_id:'',
   name:''
 }
   }
@@ -59,7 +58,7 @@ methods:{
  async submit(){
     var $vm=this;
     console.log("create branch")
-var prepare={...$vm.branch,company_id:$vm.$store.state.setup.selected_company.id}
+var prepare={...$vm.branch}
 var result=await $vm.$store.dispatch('CREATE_BRANCH',prepare)
 
 if(result.data.success){

@@ -1,16 +1,16 @@
 {
   "assets/app.css": "http://localhost:8080/assets/app.css",
   "assets/app.js": "http://localhost:8080/assets/app.js",
-  "assets/fonts/fa-solid-900.ttf": "http://localhost:8080/assets/fonts/fa-solid-900.b48ad290.ttf",
+  "assets/fonts/fa-solid-900.ttf": "http://localhost:8080/assets/fonts/fa-solid-900.2877d54f.ttf",
   "assets/fonts/MaterialIcons-Regular.ttf": "http://localhost:8080/assets/fonts/MaterialIcons-Regular.698bd855.ttf",
-  "assets/fonts/fa-brands-400.ttf": "http://localhost:8080/assets/fonts/fa-brands-400.f9ee61fa.ttf",
+  "assets/fonts/fa-brands-400.ttf": "http://localhost:8080/assets/fonts/fa-brands-400.13e40630.ttf",
   "assets/fonts/MaterialIcons-Regular.woff": "http://localhost:8080/assets/fonts/MaterialIcons-Regular.08cefa1b.woff",
-  "assets/fonts/fa-solid-900.woff2": "http://localhost:8080/assets/fonts/fa-solid-900.66104b76.woff2",
+  "assets/fonts/fa-solid-900.woff2": "http://localhost:8080/assets/fonts/fa-solid-900.bdb9e232.woff2",
   "assets/fonts/MaterialIcons-Regular.eot": "http://localhost:8080/assets/fonts/MaterialIcons-Regular.af9a28e7.eot",
   "assets/fonts/MaterialIcons-Regular.woff2": "http://localhost:8080/assets/fonts/MaterialIcons-Regular.2d801748.woff2",
-  "assets/fonts/fa-brands-400.woff2": "http://localhost:8080/assets/fonts/fa-brands-400.e1a247a5.woff2",
-  "assets/fonts/fa-regular-400.ttf": "http://localhost:8080/assets/fonts/fa-regular-400.abf801b7.ttf",
-  "assets/fonts/fa-regular-400.woff2": "http://localhost:8080/assets/fonts/fa-regular-400.639d2000.woff2",
-  "assets/fonts/fa-v4compatibility.ttf": "http://localhost:8080/assets/fonts/fa-v4compatibility.f601162a.ttf",
-  "assets/fonts/fa-v4compatibility.woff2": "http://localhost:8080/assets/fonts/fa-v4compatibility.745989aa.woff2"
+  "assets/fonts/fa-brands-400.woff2": "http://localhost:8080/assets/fonts/fa-brands-400.7be2266f.woff2",
+  "assets/fonts/fa-regular-400.ttf": "http://localhost:8080/assets/fonts/fa-regular-400.14640490.ttf",
+  "assets/fonts/fa-regular-400.woff2": "http://localhost:8080/assets/fonts/fa-regular-400.8bedd7cf.woff2",
+  "assets/fonts/fa-v4compatibility.ttf": "http://localhost:8080/assets/fonts/fa-v4compatibility.6c0a7b77.ttf",
+  "assets/fonts/fa-v4compatibility.woff2": "http://localhost:8080/assets/fonts/fa-v4compatibility.497d5350.woff2"
 }

@@ -5,9 +5,9 @@ export default class Product extends BaseModel {
   @column({ isPrimary: true })
   public id: number
   @column()
-  public company_id:number
-  @column()
   public branch:string
+  @column()
+  public group:string
   @column()
   public name:string
   @column()

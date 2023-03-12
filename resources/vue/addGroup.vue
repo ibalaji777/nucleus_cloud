@@ -20,7 +20,7 @@ import moment  from  'moment'
 function initialState($vm){
   return {
 group:{
-company_id:'',
+
 name:'',
 description:'',
 }
@@ -40,7 +40,7 @@ if($vm.group.name=='')
 }
 
 var prepare={...this.group,
-company_id:$vm.$store.state.setup.selected_company.id
+
 }
 var result=await $vm.$store.dispatch('CREATE_GROUP',prepare)
 if(result.data.success){

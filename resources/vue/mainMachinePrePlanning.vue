@@ -92,10 +92,9 @@ $vm.$store.dispatch("REMOVE_MACHIEN_PRE_PLANNING",item.id)
 async submit(){
   var $vm=this;
 var machine_id=$vm.$store.state.eventMachineDetail.id;
-var company_id=$vm.$store.state.setup.selected_company.id
+
 var prepare={
   machine_id,
-  company_id,
   ...$vm.planning
 }
 var result=await  $vm.$store.dispatch('CREATE_MACHINE_PRE_PLANNING',prepare)

@@ -4,6 +4,9 @@ import Machine from 'App/Models/Machine'
 import MachineActivity from 'App/Models/MachineActivity'
 import MachineActivityMain from 'App/Models/MachineActivityMain';
 import MachineActivityPartNo from 'App/Models/MachineActivityPartNo';
+
+import MachineLog from 'App/Models/MachineLog';
+import MachineHistory from 'App/Models/MachineHistory';
 import moment from 'moment';
 import _ from 'lodash'
 import Database from "@ioc:Adonis/Lucid/Database";
@@ -11,6 +14,208 @@ let Validator = require('validatorjs');
 
 
 export default class MachinesController {
+
+
+public async machineDetail(machine_id,uq){
+
+
+// SELECT
+// ms.machine_id,
+// ms.uq,
+// SUM(CASE WHEN ms.action = 'start' THEN ms.duration ELSE 0 END) AS start_duration,
+// SUM(CASE WHEN ms.action = 'stop' THEN ms.duration ELSE 0 END) AS stop_duration,
+// mlog.duration as overall_duration
+// FROM
+// machine_histories ms
+// LEFT JOIN machine_logs mlog ON ms.machine_id = mlog.machine_id AND ms.uq = mlog.uq
+// WHERE
+// ms.machine_id = '1'
+// AND
+// ms.uq = '11'
+// GROUP BY
+// ms.machine_id,
+// ms.uq,
+// mlog.duration;
+
+const result = await Database
+  .from('machine_histories as ms')
+  .leftJoin('machine_logs as mlog', function () {
+    this.on('ms.machine_id', '=', 'mlog.machine_id').andOn('ms.uq', '=', 'mlog.uq')
+  })
+  .select('ms.machine_id', 'ms.uq')
+  .select(Database.raw("SUM(CASE WHEN ms.action = 'start' THEN ms.duration ELSE 0 END) AS start_duration"))
+  .select(Database.raw("SUM(CASE WHEN ms.action = 'stop' THEN ms.duration ELSE 0 END) AS stop_duration"))
+  .select('mlog.duration as overall_duration')
+  .where('ms.machine_id', '=', '1')
+  .where('ms.uq', '=', '11')
+  .groupBy('ms.machine_id', 'ms.uq', 'mlog.duration')
+  .first();
+
+console.log(result)
+return result;
+}
+
+public async MACHINE_HISTORY(request,eTime)
+{
+  let data={
+    operation:request.body().data.operation || '',
+    op_id:request.body().data.op_id || '',
+    op_name:request.body().data.op_name || '',
+    op_desc:request.body().data.op_desc || '',
+    op_min:request.body().data.op_min || '',
+    message:request.body().data.message || '',
+    start_time:request.body().data.time || '',
+    end_time:null,
+    //duration
+    machine_id:request.body().data.machine_id || '',
+    product_id:request.body().data.product_id || '',
+    uq:request.body().data.uq || '',
+    emp_id:request.body().data.emp_id || '',
+    shift:request.body().data.shift || '',
+    type:request.body().data.type || '',
+    action:request.body().data.action || '',
+    machine_status:request.body().data.machine_status || '',
+    stroke:request.body().data.stroke || '',
+    reason:request.body().data.reason || '',
+    remarks:request.body().data.remarks || ''
+  }
+
+const { uq,machine_id } = data
+
+//tracking history
+const mHistory = await MachineHistory.query()
+  .where('uq', uq)
+  .whereNull('end_time')
+  .where('machine_id', machine_id)
+  .orderBy('id', 'desc')
+  .first();
+
+if (mHistory) {
+  //find duration
+  const startTime = new Date(mHistory.start_time);
+    const endTime = new Date(eTime);
+    const durationInMilliseconds = endTime.getTime() - startTime.getTime();
+    const durationInSeconds = Math.floor((durationInMilliseconds) / 1000);
+
+  //update end time
+  mHistory.merge({end_time:eTime,duration:durationInSeconds})
+  await mHistory.save()
+  //condition for logout
+  if(data.operation!='force'&&data.action!='stop')
+  await   MachineHistory.create({...data,start_time:eTime})
+
+
+} else {
+  //first time createing history
+ await MachineHistory.create(data)
+}
+
+
+let machineDetail=await this.machineDetail(machine_id,uq);
+let history = await MachineHistory.query()
+  .where('uq', uq)
+  .whereNotNull('end_time')
+  .where('machine_id', machine_id)
+  .orderBy('id', 'desc');
+  return {
+    machineDetail,
+    history
+  };
+
+}
+
+
+public async  getMachineLogs({request,response}){
+  const page = request.input('page', 1)
+  const machine_id = request.input('machine_id',0);
+  const limit = 10
+  const log = await Database.from('machine_logs').where('machine_id',machine_id).orderBy('id', 'desc').paginate(page, limit)
+  return response.ok(log);
+}
+
+
+public async  MACHINE_UPDATE({ctx,request}){
+
+  let  data={
+    uq:request.body().uq || '',
+    machine_id:request.body().data.machine_id || 0,
+    actual_count:request.body().data.actual_count || 0,
+    rejected_count:request.body().data.rejected_count || 0,
+    pieces_per_min:request.body().data.pieces_per_min || 0,
+
+  }
+
+    const { uq,machine_id,...newdata } = data;
+    const mLog = await MachineLog.query()
+  .where('machine_id', machine_id)
+  .where('uq', uq)
+  .orderBy('id', 'desc')
+  .first();
+
+if (mLog) {
+
+  mLog.merge(newdata)
+  await mLog.save()
+
+}
+
+}
+
+
+
+public async  MACHINELOG({ctx,request})
+{
+let  data={
+    start_time:request.body().data.time || '',
+    end_time:null,
+    //duration
+    machine_id:request.body().data.machine_id || '',
+    product_id:request.body().data.product_id || '',
+    uq:request.body().data.uq || '',
+    emp_id:request.body().data.emp_id || '',
+    shift:request.body().data.shift || '',
+    stroke:request.body().data.stroke || 0,
+    actual_count:request.body().data.actual_count || 0,
+    rejected_count:request.body().data.rejected_count || 0,
+    pieces_per_min:request.body().data.pieces_per_min || 0,
+
+  }
+
+    const { uq,machine_id } = request.body().data;
+    const mLog = await MachineLog.query()
+  .where('machine_id', machine_id)
+  .where('uq', uq)
+  .orderBy('id', 'desc')
+  .first();
+
+if (mLog) {
+
+  let eTime=request.body().data.time;
+    // Convert the datetime strings into JavaScript Date objects
+    const startTime = new Date(mLog.start_time);
+    const endTime = new Date(eTime);
+    // Calculate the duration between start_time and end_time
+    const durationInMilliseconds = endTime.getTime() - startTime.getTime();
+    const durationInSeconds = Math.floor((durationInMilliseconds) / 1000);
+
+
+  mLog.merge({end_time:eTime,duration:durationInSeconds})
+  await mLog.save()
+  let history=await this.MACHINE_HISTORY(request,eTime)
+  return history;
+} else {
+await MachineLog.create(data)
+let history=await  this.MACHINE_HISTORY(request,null)
+console.log(history);
+return   ctx.response.status(200).json(history)
+
+}
+
+  }
+
+
+
+
 
   public async CLOSE_SHIFT(ctx:HttpContextContract)
   {

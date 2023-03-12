@@ -67,7 +67,7 @@ start_time_modal:'',
 
 
 downtime:{
-company_id:'',
+
 name:'',
 group:'',
 description:'',
@@ -96,7 +96,7 @@ if($vm.downtime.type=='')
 this.downtime.group=$vm.$route.params.group||"";
 var prepare={
 ...this.downtime,
-company_id:$vm.$store.state.setup.selected_company.id
+
 }
 var result=await $vm.$store.dispatch('CREATE_DOWN_TIME',prepare)
 if(result.data.success){

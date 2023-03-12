@@ -130,7 +130,7 @@ function initialState($vm){
 end_time_modal:'',
 start_time_modal:'',
 breaks:{
-company_id:'',
+
 name:'',
 group:'',
 description:'',
@@ -164,7 +164,6 @@ if($vm.breaks.hours=='')
 this.breaks.group=$vm.$route.params.group||'';
 var prepare={
 ...this.breaks,
-company_id:$vm.$store.state.setup.selected_company.id
 }
 var result=await $vm.$store.dispatch('CREATE_BREAK',prepare)
 if(result.data.success){

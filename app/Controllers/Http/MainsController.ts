@@ -13,6 +13,7 @@ import _ from 'lodash'
 // import Mail from '@ioc:Adonis/Addons/Mail'
 import Ws from 'App/Services/Ws'
 import MachinePrePlanning from 'App/Models/MachinePrePlanning';
+import MachineSheduler from 'App/Models/MachineSheduler';
 // import { WITH_CTX } from '@vue/compiler-core';
 
 export default class MainsController {
@@ -27,9 +28,8 @@ console.log("socket1 trigeered")
   }
 
   public async isGroupFound(data){
-    var company_id=data.company_id;
     var name=data.name;
-    var isFound=await Group.query().where('company_id',company_id).andWhere('name',name)
+    var isFound=await Group.query().andWhere('name',name)
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -38,9 +38,8 @@ console.log("socket1 trigeered")
 
 
   public async isEmpRoleFound(data){
-    var company_id=data.company_id;
     var name=data.name;
-    var isFound=await Emprole.query().where('company_id',company_id).andWhere('name',name)
+    var isFound=await Emprole.query().where('name',name)
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -48,9 +47,8 @@ console.log("socket1 trigeered")
   }
 
   public async isDownTimeFound(data){
-    var company_id=data.company_id;
     var name=data.name;
-    var isFound=await Downtime.query().where('company_id',company_id).andWhere('name',name)
+    var isFound=await Downtime.query().where('name',name)
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -59,9 +57,8 @@ console.log("socket1 trigeered")
 
 
   public async isBranchFound(data){
-    var company_id=data.company_id;
     var name=data.name;
-    var isFound=await Branch.query().where('company_id',company_id).andWhere('name',name)
+    var isFound=await Branch.query().where('name',name)
     if(_.isEmpty(isFound)){
     return false;
     }
@@ -80,11 +77,10 @@ console.log("socket1 trigeered")
 
 
   public async isBreakFound(data){
-    var company_id=data.company_id;
     var name=data.name;
     var group=data.group
 
-    var isFound=await Break.query().where('company_id',company_id).andWhere('name',name)
+    var isFound=await Break.query().where('name',name)
     .andWhere('group',group)
 
     if(_.isEmpty(isFound)){
@@ -95,11 +91,10 @@ console.log("socket1 trigeered")
 
 
   public async isShiftFound(data){
-    var company_id=data.company_id;
     var name=data.name;
     var group=data.group
 
-    var isFound=await Shift.query().where('company_id',company_id).andWhere('name',name)
+    var isFound=await Shift.query().where('name',name)
     .andWhere('group',group)
     if(_.isEmpty(isFound)){
     return false;
@@ -119,41 +114,79 @@ console.log("socket1 trigeered")
   }
 
   public async isProductFound(data){
-    var company_id=data.company_id;
     var part_no=data.part_no;
 
 
-    var isFound=await Product.query().where('company_id',company_id).andWhere('part_no',part_no);
+    var isFound=await Product.query().where('part_no',part_no);
     if(_.isEmpty(isFound)){
     return false;
     }
     return true;
   }
   public async isMachinFound(data){
-    var company_id=data.company_id;
+
     var name=data.name;
     var username=data.username;
-    var isFound=await Machine.query().where('company_id',company_id).andWhere('name',name)
-    .orWhere('company_id',company_id).andWhere('username',username)
+    var isFound=await Machine.query().where('name',name)
+    .andWhere('username',username)
     if(_.isEmpty(isFound)){
     return false;
     }
     return true;
   }
+  public async isSheduleFound(data){
 
+    var name=data.name;
+    var branch=data.branch;
+    var isFound=await MachineSheduler.query().where('name',name)
+    .andWhere('branch',branch);
+    if(_.isEmpty(isFound)){
+    return true;
+    }
+    return false;
+  }
+
+
+  public async CREATE_SHEDULE(ctx:HttpContextContract){
+    var data=ctx.request.input('data')
+    var name=data.name;
+    var description=data.description;
+    var group=data.group;//works condition
+    var minutes=data.minutes;//works condition
+
+    var result=await   MachineSheduler.create({
+      name,
+      description,
+      group,
+      minutes
+    })
+
+    if(result.$isPersisted)
+    return ctx.response.send({
+      success:true,
+      msg:'Created Successfully',
+      data:result
+    })
+
+    return ctx.response.send({
+      success:false,
+      msg:'Something Wrong',
+      data:''
+    })
+    }
 
   public async CREATE_BREAK(ctx:HttpContextContract){
     var data=ctx.request.input('data')
-    var company_id=data.company_id;
+
     var name=data.name;
     var description=data.description;
     var start_time=data.start_time;
     var end_time=data.end_time;
     var group=data.group;
     var branch=data.branch;
-    if(!await this.isBreakFound({company_id,name,group})){
+    if(!await this.isBreakFound({name,group})){
     var result=await   Break.create({
-      company_id,
+
       name,
       group,
       description,
@@ -178,15 +211,15 @@ console.log("socket1 trigeered")
 
   public async CREATE_SHIFT(ctx:HttpContextContract){
     var data=ctx.request.input('data')
-    var company_id=data.company_id;
+
     var name=data.name;
     var start_time=data.start_time;
     var end_time=data.end_time;
     var group=data.group;
     var branch=data.branch;
-    if(!await this.isShiftFound({company_id,name,group})){
+    if(!await this.isShiftFound({name,group})){
     var result=await   Shift.create({
-      company_id,
+
       name,
       group,
       start_time,
@@ -211,11 +244,11 @@ console.log("socket1 trigeered")
 
  public async CREATE_BRANCH(ctx:HttpContextContract){
 var data=ctx.request.input('data')
-var company_id=data.company_id;
+
 var name=data.name;
-if(!await this.isBranchFound({company_id,name})){
+if(!await this.isBranchFound({name})){
 var result=await   Branch.create({
-  company_id,
+
   name
 })
 
@@ -277,7 +310,7 @@ public async CREATE_COMPANY(ctx:HttpContextContract){
     var data=ctx.request.input('data')
     var id=data.id;
 
-    var company_id=data.company_id;
+
     var branch=data.branch;
     var name=data.name;
     var email=data.email;
@@ -292,7 +325,7 @@ public async CREATE_COMPANY(ctx:HttpContextContract){
     if(!_.isEmpty(emp)){
 var result=await emp.
     merge({
-      company_id,
+
       branch,
       name,
       email,
@@ -371,7 +404,7 @@ var emp=await Employee.query()
               }
   public async CREATE_EMPLOYEE(ctx:HttpContextContract){
     var data=ctx.request.input('data')
-    var company_id=data.company_id;
+
     var branch=data.branch;
     var name=data.name;
     var email=data.email;
@@ -384,7 +417,7 @@ var emp=await Employee.query()
     var config=data.config;
     if(!await this.isEmployeeFound({phone,email})){
 var result=await   Employee.create({
-company_id,
+
 branch,
 name,
 email,
@@ -413,12 +446,12 @@ config
 
       public async CREATE_MACHINE_PLANNING(ctx:HttpContextContract){
         var data=ctx.request.input('data')
-        var company_id=data.company_id;
+
         var machine_id=data.machine_id;
         var subject=data.subject;
         var description=data.description;
     var result=await  MachinePrePlanning.create({
-    company_id,
+
     machine_id,
     subject,
     description
@@ -437,7 +470,7 @@ config
 
     public async CREATE_PRODUCT(ctx:HttpContextContract){
       var data=ctx.request.input('data')
-      var company_id=data.company_id;
+
       var branch=data.branch;
       var name=data.name;
       var part_no=data.part_no;
@@ -447,9 +480,9 @@ config
       var ideal_cyle_time=data.ideal_cyle_time;
       var target_oee=data.target_oee;
       var production_per_stroke=data.production_per_stroke;
-      if(!await this.isProductFound({company_id,part_no})){
+      if(!await this.isProductFound({part_no})){
   var result=await   Product.create({
-  company_id,
+
   branch,
   name,
 part_no,
@@ -479,7 +512,7 @@ production_per_stroke
 
       public async CREATE_MACHINE(ctx:HttpContextContract){
         var data=ctx.request.input('data')
-        var company_id=data.company_id;
+
         var branch=data.branch;
         var code=data.code;
         var name=data.name;
@@ -488,9 +521,9 @@ production_per_stroke
         var other=data.other;
         var username=data.username;
         var password=data.password;
-    if(!await this.isMachinFound({company_id,name,username})){
+    if(!await this.isMachinFound({name,username})){
     var result=await   Machine.create({
-    company_id,
+
     code,
     branch,
     name,
@@ -518,12 +551,11 @@ production_per_stroke
 
         public async CREATE_GROUP(ctx:HttpContextContract){
           var data=ctx.request.input('data')
-var company_id=data.company_id;
 var name=data.name;
           var description=data.description;
-          if(!await this.isGroupFound({company_id,name})){
+          if(!await this.isGroupFound({name})){
       var result=await   Group.create({
-      company_id,
+
       name,
       description
       })
@@ -544,13 +576,12 @@ var name=data.name;
 
           public async CREATE_EMPROLE(ctx:HttpContextContract){
             var data=ctx.request.input('data')
-            var company_id=data.company_id;
             var name=data.name;
             var type=data.type;
             var description=data.description;
-            if(!await this.isEmpRoleFound({company_id,name})){
+            if(!await this.isEmpRoleFound({name})){
         var result=await   Emprole.create({
-        company_id,
+
         type,
         name,
         description,
@@ -573,15 +604,13 @@ var name=data.name;
 
             public async CREATE_DOWNTIME(ctx:HttpContextContract){
               var data=ctx.request.input('data')
-              var company_id=data.company_id;
               var name=data.name;
               var description=data.description;
               var group=data.group;
               // var type=data.type;
               var branch=data.branch;
-              if(!await this.isDownTimeFound({company_id,name})){
+              if(!await this.isDownTimeFound({name})){
           var result=await   Downtime.create({
-          company_id,
           name,
           description,
           group,
@@ -608,62 +637,61 @@ var name=data.name;
 public async GET_MACHINES(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Machine.query().where('company_id',company_id);
+var get=await Machine.query();
   return ctx.response.send(get)
 }
 public async GET_BRANCHES(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Branch.query().where('company_id',company_id);
+var get=await Branch.query();
   return ctx.response.send(get)
 }
 public async GET_GROUPS(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Group.query().where('company_id',company_id);
+var get=await Group.query();
   return ctx.response.send(get)
 }
 
 public async GET_MACHINE_PRE_PLANNING(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
 var machine_id=data.machine_id;
-var get=await MachinePrePlanning.query().where('company_id',company_id).where('machine_id',machine_id);
+var get=await MachinePrePlanning.query().where('machine_id',machine_id);
   return ctx.response.send(get)
 }
 
 public async GET_BREAK(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Break.query().where('company_id',company_id);
+var get=await Break.query();
+  return ctx.response.send(get)
+}
+
+public async GET_SHEDULE(ctx:HttpContextContract)
+{
+var data=ctx.request.input('data')
+var get=await MachineSheduler.query();
   return ctx.response.send(get)
 }
 
 public async GET_DOWNTIME(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Downtime.query().where('company_id',company_id);
+var get=await Downtime.query();
   return ctx.response.send(get)
 }
 
 public async GET_SHIFT(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Shift.query().where('company_id',company_id);
+var get=await Shift.query();
   return ctx.response.send(get)
 }
 public async GET_PRODUCTS(ctx:HttpContextContract)
 {
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var get=await Product.query().where('company_id',company_id);
+var get=await Product.query();
   return ctx.response.send(get)
 }
 
@@ -675,12 +703,11 @@ public async GET_SINGLE_MACHINE(ctx:HttpContextContract){
   var getCompany=await Company.query().where('email',email).orWhere('phone',data.phone).first();
 if(!_.isEmpty(getCompany))
 {
-  var company_id=getCompany?.id
-  var machine=await Machine.query().where('company_id',company_id).andWhere('code',code);
+  var machine=await Machine.query().where('code',code);
   if(!_.isEmpty(machine))
-{ var shifts_rt=await Shift.query().where('company_id',company_id).andWhere('group',machine.group)
-  var breaks_rt=await Break.query().where('company_id',company_id).andWhere('group',machine.group)
-  var downtime_rt=await Downtime.query().where('company_id',company_id).andWhere('group',machine.group)
+{ var shifts_rt=await Shift.query().where('group',machine.group)
+  var breaks_rt=await Break.query().where('group',machine.group)
+  var downtime_rt=await Downtime.query().where('group',machine.group)
 }
 return ctx.response.send({
   machine,
@@ -705,16 +732,14 @@ return ctx.response.send({
 
 public async GET_EMPLOYEES(ctx:HttpContextContract){
 var data=ctx.request.input('data')
-var company_id=data.company_id;
-var employee=await Employee.query().where('company_id',company_id);
+var employee=await Employee.query();
 return ctx.response.send(employee)
 }
 
 
 public async GET_EMPROLE(ctx:HttpContextContract){
   var data=ctx.request.input('data')
-  var company_id=data.company_id;
-  var emprole=await Emprole.query().where('company_id',company_id);
+  var emprole=await Emprole.query();
   return ctx.response.send(emprole)
   }
 
@@ -725,13 +750,19 @@ public async GET_EMPROLE(ctx:HttpContextContract){
 
     var getMachine=await Machine.query().where('username',username).where('password',password).first()
      if(!_.isEmpty(getMachine)){
-      var company_id=getMachine?.company_id;
       var branch=getMachine?.branch;
-      var getCompany=await Company.query().where('id',company_id).first()
 
-      var getBreaks=await Break.query().where('company_id',company_id).andWhere('branch',branch)
-      var getShift=await Shift.query().where('company_id',company_id).andWhere('branch',branch)
-      var getDownTime=await Downtime.query().where('company_id',company_id).andWhere('branch',branch)
+      var groupForBreak="";
+      var groupForShift="";
+      var groupForDownTime="";
+      var groupForSheduler="";
+
+
+      var getBreaks=await Break.query().where('group',groupForBreak).andWhere('branch',branch)
+      var getShift=await Shift.query().where('group',groupForShift).andWhere('branch',branch)
+      var getDownTime=await Downtime.query().where('group',groupForDownTime).andWhere('branch',branch)
+      var getShedule=await MachineSheduler.query().where('group',groupForSheduler).where('branch',branch)
+
 
       return ctx.response.send({
         success:true,
@@ -741,11 +772,7 @@ public async GET_EMPROLE(ctx:HttpContextContract){
           breaks:getBreaks,
           shift:getShift,
           down_time:getDownTime,
-          company:{
-            id:company_id,
-            name:getCompany?.name,
-            email:getCompany?.email
-          }
+          shedule:getShedule,
         },
       })
     }
@@ -755,43 +782,6 @@ public async GET_EMPROLE(ctx:HttpContextContract){
       data:''
     })
     }
-
-  // public async MACHINE_LOGIN(ctx:HttpContextContract){
-  //   var data=ctx.request.input('data')
-  //   var company_username=data.company_username;
-  //   var machine_code=data.machine_code;
-  //   var getCompany=await Company.query().where('email',company_username).orWhere('phone',company_username).first()
-  //   if(!_.isEmpty(getCompany)){
-  //   var company_id=getCompany?.id
-  //   var getMachine=await Machine.query().where('company_id',company_id).where('code',machine_code).first()
-  //   if(!_.isEmpty(getMachine)){
-  //     var getBreaks=await Break.query().where('company_id',company_id).andWhere('group',getMachine.group)
-  //     var getShift=await Shift.query().where('company_id',company_id).andWhere('group',getMachine.group)
-  //     var getDownTime=await Downtime.query().where('company_id',company_id).andWhere('group',getMachine.group)
-
-  //     return ctx.response.send({
-  //       success:true,
-  //       msg:'Successfully Logged',
-  //       data:{
-  //         machine:getMachine,
-  //         breaks:getBreaks,
-  //         shift:getShift,
-  //         down_time:getDownTime,
-  //         company:{
-  //           id:company_id,
-  //           name:getCompany?.name,
-  //           email:getCompany?.email
-  //         }
-  //       },
-  //     })
-  //   }
-  //   }
-  //   return ctx.response.send({
-  //     success:false,
-  //     msg:'Machine Not Found',
-  //     data:''
-  //   })
-  //   }
 
     public async REMOVE_BRANCH(ctx:HttpContextContract){
       var data=ctx.request.input('data')

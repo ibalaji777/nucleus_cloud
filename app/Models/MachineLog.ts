@@ -1,30 +1,36 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Employee extends BaseModel {
+export default class MachineLog extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
   @column()
-  public branch:string
+  public start_time: any
   @column()
-  public name:string
+  public end_time: any
   @column()
-  public email:string
+  public duration: number
   @column()
-  public dialcode:string
+  public machine_id: number
   @column()
-  public phone:string
+  public product_id: number
   @column()
-  public password:string
+  public uq: string
   @column()
-  public role:string
+  public emp_id: number
   @column()
-  public idcard:string
+  public shift: String
   @column()
-  public other:string
+  public stroke: String
   @column()
-  public config:JSON
+  public actual_count: String
+  @column()
+  public rejected_count: String
+  @column()
+  public pieces_per_min: String
+
+
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

@@ -14,6 +14,9 @@ import addMachineDialog from '../vue/addMachineDialog.vue'
 import addDownTimeDialog from '../vue/addDownTimeDialog.vue'
 import addProductDialog from '../vue/addProductDialog.vue'
 import addEmpRoleDialog from '../vue/addEmpRoleDialog.vue'
+
+import addEmployee from '../vue/addEmployee.vue'
+
 import machinesWidget from '../vue/machinesWidget.vue'
 import addBranch from '../vue/addBranch.vue'
 import machinDetailDialog from '../vue/machinDetailDialog.vue'
@@ -26,11 +29,14 @@ import mainBranch from '../vue/mainBranch.vue'
 import addMachine from '../vue/addMachine.vue'
 import addProduct from '../vue/addProduct.vue'
 import addGroup from '../vue/addGroup.vue'
+import addShedule from '../vue/addShedule.vue'
 
 import addGroupDialog from '../vue/addGroupDialog.vue'
 import VueSimpleAlert from "vue-simple-alert";
 Vue.use(VueSimpleAlert);
 
+Vue.component('addEmployee',addEmployee)
+Vue.component('addShedule',addShedule)
 Vue.component('addBranch',addBranch)
 Vue.component('addMachine',addMachine)
 Vue.component('addProduct',addProduct)

@@ -18,6 +18,14 @@ import Mail from '@ioc:Adonis/Addons/Mail'
 //machine main  k
 //machine part no k
 
+Route.get('/machineLog',(ctx)=>{
+  return new  MachinesController().MACHINELOG(ctx)
+  })
+
+
+
+
+
 Route.get('/mail',async (ctx)=>{
   await Mail.send((message) => {
     message
@@ -28,6 +36,17 @@ Route.get('/mail',async (ctx)=>{
   })
   })
 Route.group(() => {
+
+
+
+  Route.post('/machine-logs',(ctx)=>{
+    return new  MachinesController().getMachineLogs(ctx)
+    });
+
+
+  Route.post('/watch-machine',(ctx)=>{
+    return new  MachinesController().MACHINELOG(ctx)
+    });
 
   Route.get('/socket1',(ctx)=>{
     return new  MainsController().socket_one(ctx)
@@ -166,6 +185,15 @@ Route.post('/remove_break',(ctx)=>{
   Route.post('/close_shift',(ctx)=>{
     return new  MachinesController().CLOSE_SHIFT(ctx)
   })
+  Route.post('/create_shedule',(ctx)=>{
+    return new  MainsController().CREATE_SHEDULE(ctx)
+  })
+  Route.post('/get_shedule',(ctx)=>{
+    return new  MainsController().GET_SHEDULE(ctx)
+  })
+
+
+
 }).prefix('/api')
 Route.get('/',  ({ view }) => {
   return view.render('index',{name:'hello world',hello:'hello'})

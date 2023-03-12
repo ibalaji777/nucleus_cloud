@@ -5,8 +5,7 @@ export default class Branch extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
-  public company_id:Number
+
 
   @column()
   public name:String

@@ -51,7 +51,7 @@ data(){
   return {
 employeeType:['OPERATOR','SUPERVISOR'],
 empRole:{
-company_id:'',
+
 name:'',
 description:'',
 type:'OPERATOR'
@@ -68,7 +68,7 @@ if($vm.empRole.name=='')
 }
 
 var prepare={...this.empRole,
-company_id:$vm.$store.state.setup.selected_company.id
+
 }
 var result=await $vm.$store.dispatch('CREATE_EMP_ROLE',prepare)
  $vm.$alert(result.data.msg)

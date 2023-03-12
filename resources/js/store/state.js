@@ -17,6 +17,7 @@ dialog:{
 
 db:{
 //ok
+shedule:[],
   machines:[],
   branches:[],
   groups:[],

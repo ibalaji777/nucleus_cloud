@@ -6,8 +6,6 @@ export default class Emprole extends BaseModel {
   public id: number
 
   @column()
-  public company_id:Number
-  @column()
   public name:String
   @column()
   public type:String

@@ -129,7 +129,7 @@ import moment  from  'moment'
 end_time_modal:'',
 start_time_modal:'',
 shifts:{
-company_id:'',
+
 name:'',
 group:'',
 start_time:moment().format($vm.$store.state.setup.bgTimeFormat),
@@ -153,7 +153,7 @@ if($vm.shifts.name=='')
 this.shifts.group=$vm.$route.params.group||"";
 var prepare={
 ...this.shifts,
-company_id:$vm.$store.state.setup.selected_company.id
+
 }
 var result=await $vm.$store.dispatch('CREATE_SHIFT',prepare)
  if(result.data.success){

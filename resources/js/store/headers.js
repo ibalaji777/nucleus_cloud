@@ -60,7 +60,17 @@ export const headers={
           { text: 'Other Detail', value: 'other_detail' },
           { text: 'Action', value: 'action' },
 
+        ],
+        shedule:[
+
+          { text: 'Name', value: 'name' },
+          { text: 'Minutes', value: 'minutes' },
+          { text: 'Descritption', value: 'description' },
+          { text: 'Action', value: 'action' },
+
         ]
+
+
 
 
 
