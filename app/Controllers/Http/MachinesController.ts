@@ -59,23 +59,23 @@ public async MACHINE_HISTORY(request,eTime)
 {
   let data={
     operation:request.body().data.operation || '',
-    op_id:request.body().data.op_id || '',
+    op_id:request.body().data.op_id || 0,
     op_name:request.body().data.op_name || '',
     op_desc:request.body().data.op_desc || '',
-    op_min:request.body().data.op_min || '',
+    op_min:request.body().data.op_min || 0,
     message:request.body().data.message || '',
     start_time:request.body().data.time || '',
     end_time:null,
     //duration
-    machine_id:request.body().data.machine_id || '',
-    product_id:request.body().data.product_id || '',
+    machine_id:request.body().data.machine_id || 0,
+    product_id:request.body().data.product_id || 0,
     uq:request.body().data.uq || '',
-    emp_id:request.body().data.emp_id || '',
+    emp_id:request.body().data.emp_id || 0,
     shift:request.body().data.shift || '',
     type:request.body().data.type || '',
     action:request.body().data.action || '',
     machine_status:request.body().data.machine_status || '',
-    stroke:request.body().data.stroke || '',
+    stroke:request.body().data.stroke || 0,
     reason:request.body().data.reason || '',
     remarks:request.body().data.remarks || ''
   }
@@ -124,6 +124,22 @@ let history = await MachineHistory.query()
 
 }
 
+public async getLiveMachineData(request){
+
+ let  uq=request.body().data.uq || '';
+ let  machine_id=request.body().data.machine_id || 0;
+
+  const machineLog = await Database.from('machine_logs').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc');
+  const machineHisotry = await Database.from('machine_histories').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc').whereNotNull('end_time');
+  const currentHistory = await Database.from('machine_histories').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc').first();
+
+
+  return {
+    machineLog,
+    machineHisotry,
+    currentHistory
+  }
+}
 
 public async  getMachineLogs({request,response}){
   const page = request.input('page', 1)
@@ -131,6 +147,39 @@ public async  getMachineLogs({request,response}){
   const limit = 10
   const log = await Database.from('machine_logs').where('machine_id',machine_id).orderBy('id', 'desc').paginate(page, limit)
   return response.ok(log);
+}
+
+
+public async  markDownTimeHistoryReason(ctx){
+ const {request}=ctx;
+  let  data={
+    id:request.body().data.id || '',
+    operation : request.body().data.operation ,
+    op_id : request.body().data.op_id,
+    op_name : request.body().data.op_name,
+    op_desc : request.body().data.op_desc,
+    message : request.body().data.message,
+    reason : request.body().data.reason,
+    type : request.body().data.type,
+    action :request.body().data.action
+
+  }
+
+    const { id,...newdata } = data;
+    const mLog = await MachineHistory.query()
+  .where('id', id)
+  .first();
+
+if (mLog) {
+
+  mLog.merge(newdata)
+  await mLog.save()
+
+}
+
+let liveData=await this.getLiveMachineData(request)
+
+return liveData;
 }
 
 
@@ -163,7 +212,7 @@ if (mLog) {
 
 
 
-public async  MACHINELOG({ctx,request})
+public async  MACHINELOG({request})
 {
 let  data={
     start_time:request.body().data.time || '',
@@ -198,19 +247,22 @@ if (mLog) {
     const durationInMilliseconds = endTime.getTime() - startTime.getTime();
     const durationInSeconds = Math.floor((durationInMilliseconds) / 1000);
 
-
-  mLog.merge({end_time:eTime,duration:durationInSeconds})
+    mLog.merge({end_time:eTime,duration:durationInSeconds})
   await mLog.save()
   let history=await this.MACHINE_HISTORY(request,eTime)
-  return history;
+
+  let rtdata= await this.getLiveMachineData(request)
+  return rtdata;
+  // return history;
 } else {
 await MachineLog.create(data)
 let history=await  this.MACHINE_HISTORY(request,null)
-console.log(history);
-return   ctx.response.status(200).json(history)
+// console.log(history);
+// return   ctx.response.status(200).json(history)
 
 }
-
+let rtdata= await this.getLiveMachineData(request)
+return rtdata;
   }
 
 
@@ -383,7 +435,7 @@ return false;
   {
     var part_no=data.part_no;
     var product_id=data.product_id;
-    var company_id=data.company_id
+
     var shift_id=data.shift_id;
     var emp_id=data.emp_id;
     var machine_client_id=data.machine_client_id
@@ -403,7 +455,7 @@ if(check){
       ideal_cycle,
 part_no,
 product_id,
-company_id,
+
 shift_id,
 emp_id,
 machine_client_id,
@@ -424,7 +476,7 @@ return result
   public async FN_INSERT_MACHINE_MAIN(data)
   {
 
-    var company_id=data.company_id
+
     var shift_id=data.shift_id;
     var machine_id=data.machine_id;
     var emp_id=data.emp_id;
@@ -439,7 +491,7 @@ return result
    console.log("machine status",check)
     if(!check){
     var result=await MachineActivityMain.create({
-company_id,
+
 shift_id,
 machine_id,
 emp_id,
@@ -455,7 +507,7 @@ return result
   public async FN_INSERT_MACHINE_ACTIVITY(data)
   {
 
-    var company_id=data.company_id
+
     var shift_id=data.shift_id
     var shift_name=data.shift_name
     var machine_id=data.machine_id
@@ -463,7 +515,7 @@ return result
     var machine_client_id=data.machine_client_id
     var machine_date=data.machine_date
     var machine_time=data.machine_time
-    var company_id=data.company_id
+
     var break_type=data.break_type
     var break_reason=data.break_reason
     var product_id=data.product_id
@@ -476,7 +528,7 @@ return result
 
 
   var result=await MachineActivity.create({
-      company_id,
+
       shift_id,
       shift_name,
       machine_id,
@@ -505,7 +557,7 @@ public async insert(ctx:HttpContextContract)
 
 
 
-  var company_id=data.company_id
+
   var shift_id=data.shift_id
   var shift_name=data.shift_name
   var machine_id=data.machine_id
@@ -516,7 +568,7 @@ public async insert(ctx:HttpContextContract)
   var machine_date_time=data.machine_date_time
 
   var machine_active_status=data.machine_active_status
-  var company_id=data.company_id
+
   var break_type=data.break_type
   var break_reason=data.break_reason
   var product_id=data.product_id
@@ -526,7 +578,7 @@ public async insert(ctx:HttpContextContract)
   var stroke=data.stroke
 
 var id=await MachineActivity.create({
-    company_id,
+
     shift_id,
     shift_name,
     machine_id,

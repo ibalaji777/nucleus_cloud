@@ -5,8 +5,6 @@ export default class MachineActivity extends BaseModel {
   @column({ isPrimary: true })
   public id: number
   @column()
-  public company_id: number
-  @column()
   public shift_id: number
   @column()
   public shift_name: String

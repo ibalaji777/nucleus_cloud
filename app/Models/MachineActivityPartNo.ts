@@ -11,8 +11,6 @@ export default class MachineActivityPartNo extends BaseModel {
   @column()
   public product_id: Number
 
-  @column()
-  public company_id: String
 
   @column()
   public shift_id: Number

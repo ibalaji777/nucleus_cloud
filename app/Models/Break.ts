@@ -14,11 +14,6 @@ export default class Break extends BaseModel {
   @column()
   public description: String
 
-  @column()
-  public start_time: String
-  @column()
-  public end_time: String
-
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

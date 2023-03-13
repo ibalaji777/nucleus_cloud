@@ -48,8 +48,8 @@ var apiGetShedule = api + "get_shedule"; //
 
 const actions = {
   async apiCreateCompany(context, payload) {
-    const { company_id, name } = payload;
-    return await axios.post(apiCreateCompany, { data: { company_id, name } });
+    const { name } = payload;
+    return await axios.post(apiCreateCompany, { data: { name } });
   },
 
   async CREATE_BRANCH(context, payload) {
@@ -109,7 +109,11 @@ const actions = {
   },
 
   async CREATE_SHEDULE(context, payload) {
-    var result = await axios.post(apiCreateShedule, { data: { ...payload } });
+    var branch = context.state.setup.selected_branch;
+
+    var result = await axios.post(apiCreateShedule, {
+      data: { ...payload, branch },
+    });
     actions.GET_SHEDULE(context);
     return result;
   },
@@ -147,9 +151,8 @@ const actions = {
   },
   GET_MACHINES(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetMachine, { data: { company_id } })
+        .post(apiGetMachine)
         .then((data) => {
           context.commit("GET_MACHINES", data.data);
           resolve(data.data);
@@ -160,9 +163,8 @@ const actions = {
 
   GET_EMPROLE(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetEmpRole, { data: { company_id } })
+        .post(apiGetEmpRole)
         .then((data) => {
           context.commit("GET_EMPROLE", data.data);
           resolve(data.data);
@@ -173,9 +175,8 @@ const actions = {
 
   GET_BRANCHES(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetBranches, { data: { company_id } })
+        .post(apiGetBranches)
         .then((data) => {
           context.commit("GET_BRANCHES", data.data);
           resolve(data.data);
@@ -185,9 +186,8 @@ const actions = {
   },
   GET_GROUPS(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetGroup, { data: { company_id } })
+        .post(apiGetGroup)
         .then((data) => {
           context.commit("GET_GROUPS", data.data);
           resolve(data.data);
@@ -198,10 +198,9 @@ const actions = {
   },
   GET_MACHINE_PRE_PLANNING(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       var machine_id = context.state.eventMachineDetail.id;
       return axios
-        .post(apiGetMachinePrePlanning, { data: { company_id, machine_id } })
+        .post(apiGetMachinePrePlanning, { data: { machine_id } })
         .then((data) => {
           context.commit("MACHINE_PRE_PLANNING", data.data);
           resolve(data.data);
@@ -211,10 +210,9 @@ const actions = {
   },
   GET_SHEDULE(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       var branch = context.state.setup.selected_branch;
       return axios
-        .post(apiGetShedule, { data: { company_id, branch } })
+        .post(apiGetShedule, { data: { branch } })
         .then((data) => {
           context.commit("GET_SHEDULE", data.data);
           resolve(data.data);
@@ -225,9 +223,8 @@ const actions = {
 
   GET_BREAK(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetBreak, { data: { company_id } })
+        .post(apiGetBreak)
         .then((data) => {
           context.commit("GET_BREAK", data.data);
           resolve(data.data);
@@ -237,9 +234,8 @@ const actions = {
   },
   GET_DOWNTIME(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetDownTime, { data: { company_id } })
+        .post(apiGetDownTime)
         .then((data) => {
           context.commit("GET_DOWNTIME", data.data);
           resolve(data.data);
@@ -249,9 +245,8 @@ const actions = {
   },
   GET_SHIFT(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetShift, { data: { company_id } })
+        .post(apiGetShift)
         .then((data) => {
           context.commit("GET_SHIFT", data.data);
           resolve(data.data);
@@ -268,9 +263,8 @@ const actions = {
 
   GET_EMPLOYEE(context) {
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetEmployee, { data: { company_id } })
+        .post(apiGetEmployee)
         .then((data) => {
           context.commit("GET_EMPLOYEE", data.data);
           resolve(data.data);
@@ -281,9 +275,8 @@ const actions = {
   GET_PRODUCTS(context) {
     //MUTATION IS PENDING
     return new Promise((resolve, reject) => {
-      var company_id = context.state.setup.selected_company.id;
       return axios
-        .post(apiGetProducts, { data: { company_id } })
+        .post(apiGetProducts)
         .then((data) => {
           context.commit("GET_PRODUCTS", data.data);
           resolve(data.data);

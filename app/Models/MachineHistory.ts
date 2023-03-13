@@ -13,6 +13,8 @@ export default class MachineHistory extends BaseModel {
   @column()
   public op_desc: any
   @column()
+  public op_min: any
+  @column()
   public op_time: any
 
   @column()

@@ -5,8 +5,6 @@ export default class MachinePrePlanning extends BaseModel {
   @column({ isPrimary: true })
   public id: number
   @column()
-  company_id:Number
-  @column()
   public machine_id:Number
   @column()
   public subject:String

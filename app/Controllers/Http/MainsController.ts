@@ -153,12 +153,14 @@ console.log("socket1 trigeered")
     var description=data.description;
     var group=data.group;//works condition
     var minutes=data.minutes;//works condition
+    var branch=data.branch;//works condition
 
     var result=await   MachineSheduler.create({
       name,
       description,
       group,
-      minutes
+      minutes,
+      branch
     })
 
     if(result.$isPersisted)
@@ -180,19 +182,15 @@ console.log("socket1 trigeered")
 
     var name=data.name;
     var description=data.description;
-    var start_time=data.start_time;
-    var end_time=data.end_time;
     var group=data.group;
     var branch=data.branch;
     if(!await this.isBreakFound({name,group})){
     var result=await   Break.create({
 
-      name,
+      branch,
       group,
+      name,
       description,
-      start_time,
-      end_time,
-      branch
     })
 
     if(result.$isPersisted)
@@ -744,6 +742,7 @@ public async GET_EMPROLE(ctx:HttpContextContract){
   }
 
   public async MACHINE_LOGIN(ctx:HttpContextContract){
+
     var data=ctx.request.input('data')
     var username=data.username;
     var password=data.password;
@@ -761,9 +760,10 @@ public async GET_EMPROLE(ctx:HttpContextContract){
       var getBreaks=await Break.query().where('group',groupForBreak).andWhere('branch',branch)
       var getShift=await Shift.query().where('group',groupForShift).andWhere('branch',branch)
       var getDownTime=await Downtime.query().where('group',groupForDownTime).andWhere('branch',branch)
-      var getShedule=await MachineSheduler.query().where('group',groupForSheduler).where('branch',branch)
+      var getShedule=await MachineSheduler.query().where('group',groupForSheduler).andWhere('branch',branch)
 
-
+      console.log("getshedule")
+console.log(getShedule)
       return ctx.response.send({
         success:true,
         msg:'Successfully Logged',
