@@ -123,13 +123,18 @@ let history = await MachineHistory.query()
   };
 
 }
+public async getMachineData({request}){
+
+  let rt= await this.getLiveMachineData(request);
+return rt;
+}
 
 public async getLiveMachineData(request){
 
  let  uq=request.body().data.uq || '';
  let  machine_id=request.body().data.machine_id || 0;
 
-  const machineLog = await Database.from('machine_logs').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc');
+  const machineLog = await Database.from('machine_logs').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc').first();
   const machineHisotry = await Database.from('machine_histories').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc').whereNotNull('end_time');
   const currentHistory = await Database.from('machine_histories').where('machine_id',machine_id).andWhere('uq',uq).orderBy('id', 'desc').first();
 
@@ -183,17 +188,17 @@ return liveData;
 }
 
 
-public async  MACHINE_UPDATE({ctx,request}){
+public async  MACHINE_LOG_UPDATE({request}){
 
   let  data={
-    uq:request.body().uq || '',
+    uq:request.body().data.uq || '',
     machine_id:request.body().data.machine_id || 0,
     actual_count:request.body().data.actual_count || 0,
     rejected_count:request.body().data.rejected_count || 0,
     pieces_per_min:request.body().data.pieces_per_min || 0,
 
   }
-
+console.log(data)
     const { uq,machine_id,...newdata } = data;
     const mLog = await MachineLog.query()
   .where('machine_id', machine_id)
@@ -205,8 +210,13 @@ if (mLog) {
 
   mLog.merge(newdata)
   await mLog.save()
+  let liveData=await this.getLiveMachineData(request)
+  return liveData;
 
 }
+let liveData=await this.getLiveMachineData(request)
+
+return liveData;
 
 }
 

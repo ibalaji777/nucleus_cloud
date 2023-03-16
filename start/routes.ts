@@ -42,6 +42,10 @@ Route.group(() => {
   Route.post('/mark-downtime',(ctx)=>{
     return new  MachinesController().markDownTimeHistoryReason(ctx)
     });
+    Route.post('/mark-oee-info',(ctx)=>{
+      return new  MachinesController().MACHINE_LOG_UPDATE(ctx)
+      });
+
 
 
   Route.post('/machine-logs',(ctx)=>{
@@ -184,6 +188,12 @@ Route.post('/remove_break',(ctx)=>{
   Route.post('/get_machine_running_main',(ctx)=>{
     return new  MachinesController().GET_MACHINE_RUNNING_MAIN(ctx)
   })
+  Route.post('/get-machine-data',(ctx)=>{
+    return new  MachinesController().getMachineData(ctx)
+  })
+
+
+
   Route.post('/get_machine_running_activity',(ctx)=>{
     return new  MachinesController().GET_MACHINE_RUNNING_ACTIVITY(ctx)
   })
