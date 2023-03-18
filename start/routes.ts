@@ -38,6 +38,9 @@ Route.get('/mail',async (ctx)=>{
 Route.group(() => {
 
 
+  Route.post('/machine-logs',(ctx)=>{
+    return new  MachinesController().getMachineLogs(ctx)
+    });
 
   Route.post('/mark-downtime',(ctx)=>{
     return new  MachinesController().markDownTimeHistoryReason(ctx)
@@ -48,9 +51,6 @@ Route.group(() => {
 
 
 
-  Route.post('/machine-logs',(ctx)=>{
-    return new  MachinesController().getMachineLogs(ctx)
-    });
 
 
   Route.post('/watch-machine',(ctx)=>{

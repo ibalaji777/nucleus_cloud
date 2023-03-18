@@ -16,6 +16,9 @@ let Validator = require('validatorjs');
 export default class MachinesController {
 
 
+
+
+
 public async machineDetail(machine_id,uq){
 
 
@@ -147,11 +150,17 @@ public async getLiveMachineData(request){
 }
 
 public async  getMachineLogs({request,response}){
-  const page = request.input('page', 1)
-  const machine_id = request.input('machine_id',0);
-  const limit = 10
-  const log = await Database.from('machine_logs').where('machine_id',machine_id).orderBy('id', 'desc').paginate(page, limit)
-  return response.ok(log);
+ let machine_id= request.body().data.machine_id
+  const logs = await Database
+  .from('machine_logs')
+  .select('machine_logs.*', 'employees.name as employee_name', 'products.name as product_name')
+  .leftJoin('employees', 'machine_logs.emp_id', 'employees.id')
+  .leftJoin('products', 'machine_logs.product_id', 'products.id')
+  .where('machine_logs.machine_id', machine_id)
+  .whereNotNull("end_time")
+  .orderBy('machine_logs.id', 'desc')
+
+  return response.ok(logs);
 }
 
 
