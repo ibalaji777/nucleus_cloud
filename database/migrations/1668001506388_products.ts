@@ -8,14 +8,10 @@ export default class extends BaseSchema {
       table.increments('id')
 
       table.string('branch').defaultTo('')
+      table.string('group').defaultTo('')
       table.string('name').defaultTo('')
       table.string('part_no').defaultTo('')
-      table.string('customer_name').defaultTo('')
-      table.string('vendor_name').defaultTo('')
-      table.string('other_detail').defaultTo('')
-      table.string('ideal_cyle_time').defaultTo('')
-      table.string('target_oee').defaultTo('')
-      table.string('production_per_stroke').defaultTo('')
+      table.string('description').defaultTo('')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

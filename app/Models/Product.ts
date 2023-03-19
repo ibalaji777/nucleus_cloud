@@ -13,17 +13,7 @@ export default class Product extends BaseModel {
   @column()
   public part_no:string
   @column()
-  public  customer_name:string
-  @column()
-  public  vendor_name:string
-  @column()
-  public other_detail:string
-  @column()
-  public production_per_stroke:Number
-  @column()
-  public ideal_cyle_time:string
-  @column()
-  public target_oee:String
+  public description:string
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

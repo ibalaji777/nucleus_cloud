@@ -34,6 +34,8 @@ export default class MachineHistory extends BaseModel {
   @column()
   public uq: string
   @column()
+  public ruq: string
+  @column()
   public emp_id: number
   @column()
   public shift: String

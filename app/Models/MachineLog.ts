@@ -18,6 +18,8 @@ export default class MachineLog extends BaseModel {
   @column()
   public uq: string
   @column()
+  public ruq: string
+  @column()
   public emp_id: number
   @column()
   public shift: String
@@ -29,6 +31,16 @@ export default class MachineLog extends BaseModel {
   public rejected_count: String
   @column()
   public pieces_per_min: String
+  @column()
+  public pieces_per_stroke: String
+  @column()
+  public emp_remarks: String
+  @column()
+  public shift_start_time:any
+  @column()
+  public shift_end_time:any
+  @column()
+  public is_delete:any
 
 
   @column.dateTime({ autoCreate: true })

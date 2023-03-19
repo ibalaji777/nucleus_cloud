@@ -20,6 +20,8 @@ export default class extends BaseSchema {
       table.integer('machine_id').defaultTo(0)
       table.integer('product_id').defaultTo(0)
       table.string('uq').defaultTo('')
+      table.string('ruq').defaultTo('')
+
       table.integer('emp_id').defaultTo(0)
       table.string('shift').defaultTo('')
       table.string('type').defaultTo('') //manual or automate

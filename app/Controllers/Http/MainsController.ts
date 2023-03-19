@@ -470,27 +470,18 @@ config
       var data=ctx.request.input('data')
 
       var branch=data.branch;
+      var group=data.group;
       var name=data.name;
       var part_no=data.part_no;
-      var customer_name=data.customer_name;
-      var vendor_name=data.vendor_name;
-      var other_detail=data.other_detail;
-      var ideal_cyle_time=data.ideal_cyle_time;
-      var target_oee=data.target_oee;
-      var production_per_stroke=data.production_per_stroke;
+      var description=data.description;
+
       if(!await this.isProductFound({part_no})){
   var result=await   Product.create({
-
   branch,
   name,
-part_no,
-customer_name,
-vendor_name,
-other_detail,
-ideal_cyle_time,
-target_oee,
-production_per_stroke
-
+  part_no,
+  group,
+  description
   })
 
       if(result.$isPersisted)

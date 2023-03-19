@@ -8,6 +8,7 @@ import MachineActivityPartNo from 'App/Models/MachineActivityPartNo';
 import MachineLog from 'App/Models/MachineLog';
 import MachineHistory from 'App/Models/MachineHistory';
 import moment from 'moment';
+import Oee from 'App/Models/Oee'
 import _ from 'lodash'
 import Database from "@ioc:Adonis/Lucid/Database";
 let Validator = require('validatorjs');
@@ -16,7 +17,26 @@ let Validator = require('validatorjs');
 export default class MachinesController {
 
 
+public async updateOee(ctx){
 
+
+
+  const data = {
+    machine_id: 123,
+    uq: 'abc123',
+    quality: 90,
+    availability: 80,
+    performance: 95,
+    oee: 70
+  }
+
+  await Oee.updateOrCreate(
+    { machine_id: data.machine_id, uq: data.uq },
+    { quality: data.quality, availability: data.availability, performance: data.performance, oee: data.oee }
+  )
+
+
+}
 
 
 public async machineDetail(machine_id,uq){
@@ -151,15 +171,26 @@ public async getLiveMachineData(request){
 
 public async  getMachineLogs({request,response}){
  let machine_id= request.body().data.machine_id
-  const logs = await Database
-  .from('machine_logs')
-  .select('machine_logs.*', 'employees.name as employee_name', 'products.name as product_name')
-  .leftJoin('employees', 'machine_logs.emp_id', 'employees.id')
-  .leftJoin('products', 'machine_logs.product_id', 'products.id')
-  .where('machine_logs.machine_id', machine_id)
-  .whereNotNull("end_time")
-  .orderBy('machine_logs.id', 'desc')
-
+ const logs = await Database
+ .from('machine_logs')
+ .select(
+   'machine_logs.*',
+   'employees.name as employee_name',
+   'products.name as product_name',
+   'oees.quality as quality',
+   'oees.performance as performance',
+   'oees.availability as availability',
+   'oees.oee as oee'
+ )
+ .leftJoin('employees', 'machine_logs.emp_id', 'employees.id')
+ .leftJoin('products', 'machine_logs.product_id', 'products.id')
+ .leftJoin('oees', function () {
+   this.on('machine_logs.machine_id', '=', 'oees.machine_id')
+       .andOn('machine_logs.uq', '=', 'oees.uq')
+ })
+ .where('machine_logs.machine_id', machine_id)
+ .whereNotNull("end_time")
+ .orderBy('machine_logs.id', 'desc');
   return response.ok(logs);
 }
 
@@ -205,6 +236,10 @@ public async  MACHINE_LOG_UPDATE({request}){
     actual_count:request.body().data.actual_count || 0,
     rejected_count:request.body().data.rejected_count || 0,
     pieces_per_min:request.body().data.pieces_per_min || 0,
+    pieces_per_stroke:request.body().data.pieces_per_stroke || 0,
+    emp_remarks:request.body().data.emp_remarks || 0,
+
+
 
   }
 console.log(data)
@@ -242,10 +277,13 @@ let  data={
     uq:request.body().data.uq || '',
     emp_id:request.body().data.emp_id || '',
     shift:request.body().data.shift || '',
+    shift_start_time:request.body().data.shift_start_time || '',
+    shift_end_time:request.body().data.shift_end_time || '',
     stroke:request.body().data.stroke || 0,
     actual_count:request.body().data.actual_count || 0,
     rejected_count:request.body().data.rejected_count || 0,
     pieces_per_min:request.body().data.pieces_per_min || 0,
+
 
   }
 
