@@ -64,6 +64,12 @@ Route.group(() => {
       return new  MainsController().MACHINE_LOGIN(ctx)
       })
 
+      Route.post('/update-oee',(ctx)=>{
+        return new  MachinesController().updateOee(ctx)
+        })
+
+
+
   Route.post('/create_machine',(ctx)=>{
     return new  MainsController().CREATE_MACHINE(ctx)
     })

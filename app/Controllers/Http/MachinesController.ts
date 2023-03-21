@@ -19,15 +19,15 @@ export default class MachinesController {
 
 public async updateOee(ctx){
 
-
+let request =ctx.request;
 
   const data = {
-    machine_id: 123,
-    uq: 'abc123',
-    quality: 90,
-    availability: 80,
-    performance: 95,
-    oee: 70
+    machine_id: request.body().data.machine_id || 0,
+    uq: request.body().data.uq || 0,
+    quality: request.body().data.quality || 0,
+    availability: request.body().data.availability || 0,
+    performance: request.body().data.performance || 0,
+    oee: request.body().data.oee || 0
   }
 
   await Oee.updateOrCreate(
@@ -266,8 +266,9 @@ return liveData;
 
 
 
-public async  MACHINELOG({request})
+public async  MACHINELOG(ctx)
 {
+  let request=ctx.request;
 let  data={
     start_time:request.body().data.time || '',
     end_time:null,
@@ -286,6 +287,14 @@ let  data={
 
 
   }
+let  operation=request.body().data.operation || ''
+ let action=request.body().data.action || ''
+
+  if(operation=='force'&&action=='stop')
+{
+  console.log(request.body())
+   this.updateOee(ctx)
+}
 
     const { uq,machine_id } = request.body().data;
     const mLog = await MachineLog.query()
@@ -306,6 +315,9 @@ if (mLog) {
 
     mLog.merge({end_time:eTime,duration:durationInSeconds})
   await mLog.save()
+
+
+
   let history=await this.MACHINE_HISTORY(request,eTime)
 
   let rtdata= await this.getLiveMachineData(request)
@@ -408,7 +420,7 @@ var machine_client_id=data.machine_client_id;
 var machine_id=data.machine_id;
 var result=await Database
 .from('machine_activity_part_nos')
- .select("machine_activity_part_nos.*","products.name as product_name","products.part_no as part_no","products.vendor_name as vendor_name","products.customer_name as customer_name","products.other_detail as other_detail")
+ .select("machine_activity_part_nos.*","products.name as product_name","products.part_no as part_no")
  .where('machine_activity_part_nos.machine_id',machine_id)//new branch
  .where('machine_activity_part_nos.machine_client_id',machine_client_id)//new branch
  .leftJoin('products','products.id','=','machine_activity_part_nos.product_id')
