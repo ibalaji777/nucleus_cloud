@@ -206,6 +206,10 @@ export default {
           title: "Product",
           name: "product",
         },
+        {
+          title: "History",
+          name: "history",
+        },
         // {
         //   title:'Group',
         //   name:'group'

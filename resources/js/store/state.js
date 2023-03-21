@@ -2,6 +2,12 @@ import * as header from "./headers";
 const state = {
   headers: header.headers,
 
+  machineData: {
+    machineLog: {},
+    machineHisotry: [],
+    currentHistory: {},
+  },
+
   dialog: {
     addBranchDialog: false,
     addEmployeeDialog: false,
