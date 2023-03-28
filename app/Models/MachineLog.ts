@@ -4,6 +4,11 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 export default class MachineLog extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+  @column()
+  public operation: any
+  @column()
+  public action: any
+
 
   @column()
   public start_time: any
@@ -24,13 +29,16 @@ export default class MachineLog extends BaseModel {
   @column()
   public shift: String
   @column()
-  public stroke: String
+  public start_stroke: any
+  @column()
+  public end_stroke: any
+  @column()
+  public actual_stroke: any
+
   @column()
   public actual_count: String
   @column()
   public rejected_count: String
-  @column()
-  public pieces_per_min: String
   @column()
   public pieces_per_stroke: String
   @column()

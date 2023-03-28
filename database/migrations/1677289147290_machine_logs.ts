@@ -6,22 +6,26 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
+      table.string('operation').defaultTo(null)
+      table.string('action').defaultTo('')// start or stop
+
       table.dateTime('start_time').defaultTo(null)
       table.dateTime('end_time').defaultTo(null)
       table.integer('duration').defaultTo(null)
       table.integer('machine_id').defaultTo(0)
       table.integer('product_id').defaultTo(0)
       table.string('uq').defaultTo('')//for group
-      table.string('ruq').defaultTo('')//new
       table.integer('emp_id').defaultTo(0)
       table.string('shift').defaultTo('')
       table.string('shift_start_time').defaultTo('')//new
       table.string('shift_end_time').defaultTo('')//new
 
-      table.integer('stroke').defaultTo(0)
+      table.integer('start_stroke').defaultTo(0)
+      table.integer('end_stroke').defaultTo(0)
+      table.integer('actual_stroke').defaultTo(0)
+
       table.integer('actual_count').defaultTo(0)
       table.integer('rejected_count').defaultTo(0)
-      table.integer('pieces_per_min').defaultTo(0)
       table.integer('pieces_per_stroke').defaultTo(1)//new
       table.string('emp_remarks').defaultTo('')
       table.integer('is_delete').defaultTo(0)

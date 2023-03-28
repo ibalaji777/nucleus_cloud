@@ -27,7 +27,11 @@ export default class extends BaseSchema {
       table.string('type').defaultTo('') //manual or automate
       table.string('action').defaultTo('')// start or stop
       table.string('machine_status').defaultTo('')// start or stop
-      table.integer('stroke').defaultTo(0)//
+
+      table.integer('start_stroke').defaultTo(0)
+      table.integer('end_stroke').defaultTo(0)
+      table.integer('actual_stroke').defaultTo(0)
+
       table.string('reason').defaultTo('') //planned or unplanned
       table.string('remarks').defaultTo('')
 

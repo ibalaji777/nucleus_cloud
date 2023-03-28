@@ -62,10 +62,6 @@ export default {
           value: "rejected_count",
         },
         {
-          text: "Pieces Per Minute",
-          value: "pieces_per_min",
-        },
-        {
           text: "Quality",
           value: "quality",
         },

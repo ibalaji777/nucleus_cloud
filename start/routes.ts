@@ -18,9 +18,12 @@ import Mail from '@ioc:Adonis/Addons/Mail'
 //machine main  k
 //machine part no k
 
-Route.get('/machineLog',(ctx)=>{
-  return new  MachinesController().MACHINELOG(ctx)
-  })
+// Route.get('/machineLog',(ctx)=>{
+//   return new  MachinesController().MACHINELOG(ctx)
+//   })
+
+
+
 
 
 
@@ -36,7 +39,9 @@ Route.get('/mail',async (ctx)=>{
   })
   })
 Route.group(() => {
-
+  Route.post('log-datafeed',(ctx)=>{
+    return new  MachinesController().MACHINE_LOG_DATAFEED(ctx)
+    })
 
   Route.post('/machine-logs',(ctx)=>{
     return new  MachinesController().getMachineLogs(ctx)
@@ -54,8 +59,12 @@ Route.group(() => {
 
 
   Route.post('/watch-machine',(ctx)=>{
-    return new  MachinesController().MACHINELOG(ctx)
+    return new  MachinesController().MACHINE_WATCH(ctx)
     });
+    Route.post('/save-machine',(ctx)=>{
+      return new  MachinesController().SAVE_MACHINE(ctx)
+      });
+
 
   Route.get('/socket1',(ctx)=>{
     return new  MainsController().socket_one(ctx)

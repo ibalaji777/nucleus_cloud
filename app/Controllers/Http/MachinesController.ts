@@ -227,15 +227,44 @@ let liveData=await this.getLiveMachineData(request)
 return liveData;
 }
 
+public async  MACHINE_LOG_DATAFEED(ctx){
 
+  let request=ctx.request;
+  let  data={
+    id:request.body().data.id || '',
+    actual_count:request.body().data.actual_count || 0,
+    rejected_count:request.body().data.rejected_count || 0,
+    pieces_per_stroke:request.body().data.pieces_per_stroke || 0,
+    emp_remarks:request.body().data.emp_remarks || 0,
+
+
+
+  }
+  const {id,...other}=data;
+    const mLog = await MachineLog.query()
+  .where('id', id)
+   .first();
+
+if (mLog) {
+
+  mLog.merge(other)
+  await mLog.save()
+
+}
+return ctx.response.send({
+  status:"success"
+});
+}
 public async  MACHINE_LOG_UPDATE({request}){
 
   let  data={
+        uq:request.body().data.uq || '',
+
     uq:request.body().data.uq || '',
     machine_id:request.body().data.machine_id || 0,
     actual_count:request.body().data.actual_count || 0,
     rejected_count:request.body().data.rejected_count || 0,
-    pieces_per_min:request.body().data.pieces_per_min || 0,
+    // pieces_per_min:request.body().data.pieces_per_min || 0,
     pieces_per_stroke:request.body().data.pieces_per_stroke || 0,
     emp_remarks:request.body().data.emp_remarks || 0,
 
@@ -264,75 +293,269 @@ return liveData;
 
 }
 
-
-
-public async  MACHINELOG(ctx)
+public async  MACHINE_WATCH(ctx)
 {
   let request=ctx.request;
-let  data={
-    start_time:request.body().data.time || '',
-    end_time:null,
+
+let machineLog=request.body().data.machineLog;
+
+const searchPayload = {
+    machine_id:machineLog.machine_id || 0,
+    uq:machineLog.uq || '',
+ }
+  const persistancePayload ={
+    operation:machineLog.operation || '',
+    action:machineLog.action || '',
+    start_time:machineLog.start_time || '',
+    end_time:machineLog.end_time || '',
+    duration:machineLog.duration || '',
+    machine_id:machineLog.machine_id || 0,
+    product_id:machineLog.product_id || 0,
+    uq:machineLog.uq || '',
+    emp_id:machineLog.emp_id || 0,
+
+    shift:machineLog.shift || '',
+    shift_start_time:machineLog.shift_start_time || '',
+    shift_end_time:machineLog.shift_end_time || '',
+
+    start_stroke:machineLog.start_stroke || 0,
+    end_stroke:machineLog.end_stroke || 0,
+    actual_stroke:machineLog.actual_stroke || 0,
+
+    actual_count:machineLog.actual_count || 0,
+    rejected_count:machineLog.rejected_count || 0,
+    pieces_per_stroke:machineLog.pieces_per_stroke || 0,
+
+    emp_remarks:machineLog.emp_remarks || '',
+    is_delete:machineLog.is_delete || 0,
+
+
+  }
+
+
+await MachineLog.updateOrCreate(searchPayload, persistancePayload)
+
+
+let history= ctx.request.body().data.machineHisotry||[];
+history.forEach(async historyData => {
+
+  const searchPayload = {
+    machine_id:historyData.machine_id || 0,
+    uq:historyData.uq || '',
+    ruq:historyData.ruq || '',
+ }
+  const persistancePayload ={
+    operation:historyData.operation || '',
+    op_id:historyData.op_id || 0,
+    op_name:historyData.op_name || '',
+    op_desc:historyData.op_desc || '',
+    op_min:historyData.op_min || 0,
+    message:historyData.message || '',
+    start_time:historyData.start_time ,
+    end_time:historyData.end_time ,
+    duration:historyData.duration || 0,
     //duration
-    machine_id:request.body().data.machine_id || '',
-    product_id:request.body().data.product_id || '',
-    uq:request.body().data.uq || '',
-    emp_id:request.body().data.emp_id || '',
-    shift:request.body().data.shift || '',
-    shift_start_time:request.body().data.shift_start_time || '',
-    shift_end_time:request.body().data.shift_end_time || '',
-    stroke:request.body().data.stroke || 0,
-    actual_count:request.body().data.actual_count || 0,
-    rejected_count:request.body().data.rejected_count || 0,
-    pieces_per_min:request.body().data.pieces_per_min || 0,
+    machine_id:historyData.machine_id || 0,
+    product_id:historyData.product_id || 0,
+    uq:historyData.uq || '',
+    ruq:historyData.ruq || '',
+    emp_id:historyData.emp_id || 0,
+    shift:historyData.shift || '',
+    type:historyData.type || '',
+    action:historyData.action || '',
+    machine_status:historyData.machine_status || '',
 
+    start_stroke:historyData.start_stroke || 0,
+    end_stroke:historyData.end_stroke || 0,
+    actual_stroke:historyData.actual_stroke || 0,
 
+    reason:historyData.reason || '',
+    remarks:historyData.remarks || ''
   }
-let  operation=request.body().data.operation || ''
- let action=request.body().data.action || ''
 
-  if(operation=='force'&&action=='stop')
-{
+
+  await MachineHistory.updateOrCreate(searchPayload, persistancePayload)
+
+
+});
+
+
+
+
   console.log(request.body())
-   this.updateOee(ctx)
-}
-
-    const { uq,machine_id } = request.body().data;
-    const mLog = await MachineLog.query()
-  .where('machine_id', machine_id)
-  .where('uq', uq)
-  .orderBy('id', 'desc')
-  .first();
-
-if (mLog) {
-
-  let eTime=request.body().data.time;
-    // Convert the datetime strings into JavaScript Date objects
-    const startTime = new Date(mLog.start_time);
-    const endTime = new Date(eTime);
-    // Calculate the duration between start_time and end_time
-    const durationInMilliseconds = endTime.getTime() - startTime.getTime();
-    const durationInSeconds = Math.floor((durationInMilliseconds) / 1000);
-
-    mLog.merge({end_time:eTime,duration:durationInSeconds})
-  await mLog.save()
-
-
-
-  let history=await this.MACHINE_HISTORY(request,eTime)
-
-  let rtdata= await this.getLiveMachineData(request)
-  return rtdata;
-  // return history;
-} else {
-await MachineLog.create(data)
-let history=await  this.MACHINE_HISTORY(request,null)
-// console.log(history);
-// return   ctx.response.status(200).json(history)
 
 }
-let rtdata= await this.getLiveMachineData(request)
-return rtdata;
+
+public async  SAVE_MACHINE(ctx)
+{
+  let request=ctx.request;
+
+let machineLog=request.body().data.machineLog;
+
+const searchPayload = {
+    machine_id:machineLog.machine_id || 0,
+    uq:machineLog.uq || '',
+ }
+  const persistancePayload ={
+    operation:machineLog.operation || '',
+    action:machineLog.action || '',
+    start_time:machineLog.start_time || '',
+    end_time:machineLog.end_time || '',
+    duration:machineLog.duration || '',
+    machine_id:machineLog.machine_id || 0,
+    product_id:machineLog.product_id || 0,
+    uq:machineLog.uq || '',
+    emp_id:machineLog.emp_id || 0,
+
+    shift:machineLog.shift || '',
+    shift_start_time:machineLog.shift_start_time || '',
+    shift_end_time:machineLog.shift_end_time || '',
+
+    start_stroke:machineLog.start_stroke || 0,
+    end_stroke:machineLog.end_stroke || 0,
+    actual_stroke:machineLog.actual_stroke || 0,
+
+    actual_count:machineLog.actual_count || 0,
+    rejected_count:machineLog.rejected_count || 0,
+    pieces_per_stroke:machineLog.pieces_per_stroke || 0,
+
+    emp_remarks:machineLog.emp_remarks || '',
+    is_delete:machineLog.is_delete || 0,
+
+
   }
+
+
+await MachineLog.updateOrCreate(searchPayload, persistancePayload)
+
+
+let history= ctx.request.body().data.machineHisotry||[];
+history.forEach(async historyData => {
+
+  const searchPayload = {
+    machine_id:historyData.machine_id || 0,
+    uq:historyData.uq || '',
+    ruq:historyData.ruq || '',
+ }
+  const persistancePayload ={
+    operation:historyData.operation || '',
+    op_id:historyData.op_id || 0,
+    op_name:historyData.op_name || '',
+    op_desc:historyData.op_desc || '',
+    op_min:historyData.op_min || 0,
+    message:historyData.message || '',
+    start_time:historyData.start_time ,
+    end_time:historyData.end_time ,
+    duration:historyData.duration || 0,
+    //duration
+    machine_id:historyData.machine_id || 0,
+    product_id:historyData.product_id || 0,
+    uq:historyData.uq || '',
+    ruq:historyData.ruq || '',
+    emp_id:historyData.emp_id || 0,
+    shift:historyData.shift || '',
+    type:historyData.type || '',
+    action:historyData.action || '',
+    machine_status:historyData.machine_status || '',
+
+    start_stroke:historyData.start_stroke || 0,
+    end_stroke:historyData.end_stroke || 0,
+    actual_stroke:historyData.actual_stroke || 0,
+
+    reason:historyData.reason || '',
+    remarks:historyData.remarks || ''
+  }
+
+
+  await MachineHistory.updateOrCreate(searchPayload, persistancePayload)
+
+
+});
+
+
+const mLog = await MachineLog.query()
+.where('machine_id', machineLog.machine_id)
+.where('operation', 'force')
+.where('action', "stop")
+.orderBy('id', 'desc')
+.first();
+
+ return ctx.response.send({
+  success:true,
+  msg:'',
+  data:mLog,
+  })
+
+}
+
+
+// public async  MACHINELOG(ctx)
+// {
+//   let request=ctx.request;
+// let  data={
+//     start_time:request.body().data.time || '',
+//     end_time:null,
+//     //duration
+//     machine_id:request.body().data.machine_id || '',
+//     product_id:request.body().data.product_id || '',
+//     uq:request.body().data.uq || '',
+//     emp_id:request.body().data.emp_id || '',
+//     shift:request.body().data.shift || '',
+//     shift_start_time:request.body().data.shift_start_time || '',
+//     shift_end_time:request.body().data.shift_end_time || '',
+//     stroke:request.body().data.stroke || 0,
+//     actual_count:request.body().data.actual_count || 0,
+//     rejected_count:request.body().data.rejected_count || 0,
+//     pieces_per_min:request.body().data.pieces_per_min || 0,
+
+
+//   }
+// let  operation=request.body().data.operation || ''
+//  let action=request.body().data.action || ''
+
+//   if(operation=='force'&&action=='stop')
+// {
+//   console.log(request.body())
+//    this.updateOee(ctx)
+// }
+
+//     const { uq,machine_id } = request.body().data;
+//     const mLog = await MachineLog.query()
+//   .where('machine_id', machine_id)
+//   .where('uq', uq)
+//   .orderBy('id', 'desc')
+//   .first();
+
+// if (mLog) {
+
+//   let eTime=request.body().data.time;
+//     // Convert the datetime strings into JavaScript Date objects
+//     const startTime = new Date(mLog.start_time);
+//     const endTime = new Date(eTime);
+//     // Calculate the duration between start_time and end_time
+//     const durationInMilliseconds = endTime.getTime() - startTime.getTime();
+//     const durationInSeconds = Math.floor((durationInMilliseconds) / 1000);
+
+//     mLog.merge({end_time:eTime,duration:durationInSeconds})
+//   await mLog.save()
+
+
+
+//   let history=await this.MACHINE_HISTORY(request,eTime)
+
+//   let rtdata= await this.getLiveMachineData(request)
+//   return rtdata;
+//   // return history;
+// } else {
+// await MachineLog.create(data)
+// let history=await  this.MACHINE_HISTORY(request,null)
+// // console.log(history);
+// // return   ctx.response.status(200).json(history)
+
+// }
+// let rtdata= await this.getLiveMachineData(request)
+// return rtdata;
+//   }
 
 
 

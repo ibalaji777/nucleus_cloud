@@ -46,7 +46,11 @@ export default class MachineHistory extends BaseModel {
   @column()
   public machine_status: any
   @column()
-  public stroke: any
+  public start_stroke: any
+  @column()
+  public end_stroke: any
+  @column()
+  public actual_stroke: any
 
   @column()
   public reason: String
