@@ -46,6 +46,12 @@ Route.group(() => {
   Route.post('/machine-logs',(ctx)=>{
     return new  MachinesController().getMachineLogs(ctx)
     });
+    Route.post('/machine-history',(ctx)=>{
+      return new  MachinesController().getMachineHistory(ctx)
+      });
+      Route.post('/log-delete',(ctx)=>{
+        return new  MachinesController().machineDelete(ctx)
+        });
 
   Route.post('/mark-downtime',(ctx)=>{
     return new  MachinesController().markDownTimeHistoryReason(ctx)

@@ -28,6 +28,14 @@ export default class extends BaseSchema {
       table.integer('rejected_count').defaultTo(0)
       table.integer('pieces_per_stroke').defaultTo(1)//new
       table.string('emp_remarks').defaultTo('')
+
+      table.double('quality').defaultTo(0)//new
+      table.double('performance').defaultTo(0)//new
+      table.double('availability').defaultTo(0)//new
+      table.double('oee').defaultTo(0)//new
+
+
+
       table.integer('is_delete').defaultTo(0)
 
 

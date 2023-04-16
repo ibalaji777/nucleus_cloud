@@ -168,30 +168,85 @@ public async getLiveMachineData(request){
     currentHistory
   }
 }
+public async machineDelete({request,response}){
+
+  let id= request.body().data.id;
+
+  const mLog = await MachineLog.query()
+  .where('id', id)
+  .first();
+
+if (mLog) {
+  mLog.merge({is_delete:1})
+  await mLog.save()
+}
+return response.ok({
+  success:mLog ? true:false,
+  msg:mLog ? "Deleted":"Not Found",
+})
+
+}
+
+public async getMachineHistory({request,response}){
+  let machine_id= request.body().data.machine_id;
+  let uq= request.body().data.uq
+
+  const history = await Database
+  .from('machine_histories')
+  .where('machine_histories.machine_id', machine_id)
+  .where('machine_histories.uq', uq)
+  .whereNotNull("end_time")
+  .orderBy('machine_histories.id', 'desc');
+
+
+    return response.ok(history);
+}
 
 public async  getMachineLogs({request,response}){
  let machine_id= request.body().data.machine_id
- const logs = await Database
- .from('machine_logs')
- .select(
-   'machine_logs.*',
-   'employees.name as employee_name',
-   'products.name as product_name',
-   'oees.quality as quality',
-   'oees.performance as performance',
-   'oees.availability as availability',
-   'oees.oee as oee'
- )
- .leftJoin('employees', 'machine_logs.emp_id', 'employees.id')
- .leftJoin('products', 'machine_logs.product_id', 'products.id')
- .leftJoin('oees', function () {
-   this.on('machine_logs.machine_id', '=', 'oees.machine_id')
-       .andOn('machine_logs.uq', '=', 'oees.uq')
- })
- .where('machine_logs.machine_id', machine_id)
- .whereNotNull("end_time")
- .orderBy('machine_logs.id', 'desc');
-  return response.ok(logs);
+//  const logs = await Database
+//  .from('machine_logs')
+//  .select(
+//    'machine_logs.*',
+//    'employees.name as employee_name',
+//    'products.name as product_name',
+//    'oees.quality as quality',
+//    'oees.performance as performance',
+//    'oees.availability as availability',
+//    'oees.oee as oee'
+//  )
+//  .leftJoin('employees', 'machine_logs.emp_id', 'employees.id')
+//  .leftJoin('products', 'machine_logs.product_id', 'products.id')
+//  .leftJoin('oees', function () {
+//    this.on('machine_logs.machine_id', '=', 'oees.machine_id')
+//        .andOn('machine_logs.uq', '=', 'oees.uq')
+//  })
+//  .where('machine_logs.machine_id', machine_id)
+//  .whereNotNull("end_time")
+//  .orderBy('machine_logs.id', 'desc');
+
+const logs = await Database
+  .from('machine_logs')
+  .where('machine_logs.machine_id', machine_id)
+  .where('is_delete', 0)
+  .whereNotNull("end_time")
+  .orderBy('machine_logs.id', 'desc');
+
+let new_logs:any[] = [];
+
+for (const element of logs) {
+  const history = await Database
+    .from('machine_histories')
+    .where('machine_histories.machine_id', element.machine_id)
+    .where('machine_histories.uq', element.uq)
+
+  element['history'] = history;
+  new_logs.push(element);
+}
+
+return new_logs;
+
+  return response.ok(new_logs);
 }
 
 
@@ -229,6 +284,7 @@ return liveData;
 
 public async  MACHINE_LOG_DATAFEED(ctx){
 
+
   let request=ctx.request;
   let  data={
     id:request.body().data.id || '',
@@ -236,6 +292,11 @@ public async  MACHINE_LOG_DATAFEED(ctx){
     rejected_count:request.body().data.rejected_count || 0,
     pieces_per_stroke:request.body().data.pieces_per_stroke || 0,
     emp_remarks:request.body().data.emp_remarks || 0,
+
+    quality:request.body().data.quality || 0,
+    performance:request.body().data.performance || 0,
+    availability:request.body().data.availability || 0,
+    oee:request.body().data.oee || 0,
 
 
 
@@ -260,7 +321,6 @@ public async  MACHINE_LOG_UPDATE({request}){
   let  data={
         uq:request.body().data.uq || '',
 
-    uq:request.body().data.uq || '',
     machine_id:request.body().data.machine_id || 0,
     actual_count:request.body().data.actual_count || 0,
     rejected_count:request.body().data.rejected_count || 0,
@@ -480,10 +540,19 @@ const mLog = await MachineLog.query()
 .orderBy('id', 'desc')
 .first();
 
- return ctx.response.send({
+const historyData= await MachineHistory.query()
+.where('machine_id', machineLog.machine_id)
+.where('uq', mLog?.uq)
+
+
+
+return ctx.response.send({
   success:true,
   msg:'',
-  data:mLog,
+  data:{
+    machineLog:mLog,
+    history:historyData
+  },
   })
 
 }

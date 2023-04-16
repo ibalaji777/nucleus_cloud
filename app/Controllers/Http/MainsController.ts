@@ -48,11 +48,10 @@ console.log("socket1 trigeered")
 
   public async isDownTimeFound(data){
     var name=data.name;
-    var isFound=await Downtime.query().where('name',name)
-    if(_.isEmpty(isFound)){
-    return false;
-    }
-    return true;
+    var branch=data.branch;
+    var isFound=await Downtime.query().where('name',name).where('branch',branch)
+    return  _.isEmpty(isFound) ? false :true;
+
   }
 
 
@@ -598,13 +597,11 @@ var name=data.name;
               var group=data.group;
               // var type=data.type;
               var branch=data.branch;
-              if(!await this.isDownTimeFound({name})){
-          var result=await   Downtime.create({
-          name,
+              if(!await this.isDownTimeFound({name,branch})){
+          var result=await Downtime.create({name,
           description,
           group,
           branch
-          // type
          })
 
               if(result.$isPersisted)
@@ -753,8 +750,7 @@ public async GET_EMPROLE(ctx:HttpContextContract){
       var getDownTime=await Downtime.query().where('group',groupForDownTime).andWhere('branch',branch)
       var getShedule=await MachineSheduler.query().where('group',groupForSheduler).andWhere('branch',branch)
 
-      console.log("getshedule")
-console.log(getShedule)
+
       return ctx.response.send({
         success:true,
         msg:'Successfully Logged',

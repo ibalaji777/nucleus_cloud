@@ -48,6 +48,14 @@ export default class MachineLog extends BaseModel {
   @column()
   public shift_end_time:any
   @column()
+  public quality:any
+  @column()
+  public performance:any
+  @column()
+  public availability:any
+  @column()
+  public oee:any
+  @column()
   public is_delete:any
 
 
