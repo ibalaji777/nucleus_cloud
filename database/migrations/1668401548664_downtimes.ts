@@ -9,6 +9,8 @@ export default class extends BaseSchema {
 
       table.string('name').defaultTo('')
       table.string('description').defaultTo('')
+      table.integer('type').defaultTo(0)//0 is downtime makr and 1 is shedule downtime
+      table.integer('minutes').defaultTo(0)//0 is downtime makr and 1 is shedule downtime
       table.string('group').defaultTo('')
       table.string('branch').defaultTo('')
       // table.string('type').defaultTo('')

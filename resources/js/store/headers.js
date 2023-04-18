@@ -40,9 +40,9 @@ export const headers = {
   ],
   downtime: [
     { text: "Name", value: "name" },
-    { text: "Group", value: "group" },
+    // { text: "Minutes", value: "minutes" },
     { text: "Description", value: "description" },
-    { text: "type", value: "type" },
+    // { text: "type", value: "type" },
     { text: "Action", value: "action" },
   ],
   products: [
@@ -52,7 +52,7 @@ export const headers = {
 
     { text: "Action", value: "action" },
   ],
-  shedule: [
+  sheduleDowntime: [
     { text: "Name", value: "name" },
     { text: "Minutes", value: "minutes" },
     { text: "Descritption", value: "description" },

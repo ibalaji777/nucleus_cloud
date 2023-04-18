@@ -4,7 +4,7 @@
     <div style="display: flex; margin-top: 20px">
       <div style="width: 50vw; display: flex; justify-content: center">
         <div class="cardRow" style="padding: 15px">
-          <add-shedule-downtime></add-shedule-downtime>
+          <!-- <add-shedule-downtime></add-shedule-downtime> -->
         </div>
       </div>
       <div style="width: 50vw; display: flex; justify-content: center">
@@ -30,7 +30,7 @@
                 dense
                 height="45vh"
                 fixed-header
-                :headers="$store.state.headers.sheduleDowntime"
+                :headers="$store.state.headers.downtime"
                 :items="downtime"
                 :search="search"
               >
@@ -64,7 +64,7 @@ export default {
   computed: {
     downtime() {
       var $vm = this;
-      return _.filter($vm.$store.state.db.downtime, (x) => x.type == 1);
+      return _.filter($vm.$store.state.db.downtime, (x) => x.type == 0);
     },
   },
 };

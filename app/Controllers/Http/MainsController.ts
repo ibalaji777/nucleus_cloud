@@ -595,13 +595,16 @@ var name=data.name;
               var name=data.name;
               var description=data.description;
               var group=data.group;
-              // var type=data.type;
+              var type=data.type;
+              var minutes=data.minutes;
               var branch=data.branch;
               if(!await this.isDownTimeFound({name,branch})){
           var result=await Downtime.create({name,
           description,
           group,
-          branch
+          branch,
+          type,
+          minutes
          })
 
               if(result.$isPersisted)

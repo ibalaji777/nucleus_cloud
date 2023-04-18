@@ -136,6 +136,9 @@ Emp Role
         <div v-if="defaultMenuBar == 'group'">
           <main-group></main-group>
         </div>
+        <div v-if="defaultMenuBar == 'downtime'">
+          <main-downtime></main-downtime>
+        </div>
       </div>
       <div style="padding: 10px; background: white">
         <div class="side_nav_widget">
@@ -207,8 +210,8 @@ export default {
           name: "product",
         },
         {
-          title: "History",
-          name: "history",
+          title: "downtime",
+          name: "downtime",
         },
         // {
         //   title:'Group',

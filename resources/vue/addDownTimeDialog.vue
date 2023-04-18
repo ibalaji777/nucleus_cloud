@@ -60,7 +60,8 @@ function initialState($vm) {
       name: "",
       group: "",
       description: "",
-      type: "default",
+      type: 0,
+      minutes: 0,
     },
   };
 }
