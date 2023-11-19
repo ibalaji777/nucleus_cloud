@@ -11,16 +11,9 @@ export default class Downtime extends BaseModel {
   @column()
   name:String
   @column()
-  description: Number
-  @column()
-  group:String
-  @column()
-  branch:String
+  user_id: Number
   @column()
   type:Number
-  @column()
-  minutes:Number
-
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime

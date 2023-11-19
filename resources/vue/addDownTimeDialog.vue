@@ -7,14 +7,14 @@
     >
       <v-card>
         <v-card-title>
-          <span class="text-h5">DOWN TIME</span>
+          <span class="text-h5">UNPLANNED DOWNTIME</span>
         </v-card-title>
         <v-card-text>
           <v-text-field v-model="downtime.name" label="Name(*)"></v-text-field>
-          <v-text-field
+          <!-- <v-text-field
             v-model="downtime.description"
             label="description"
-          ></v-text-field>
+          ></v-text-field> -->
 
           <small>*indicates required field</small>
         </v-card-text>

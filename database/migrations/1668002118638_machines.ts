@@ -6,16 +6,10 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('branch').defaultTo('')
-      table.string('name').defaultTo('')
-      table.string('group').defaultTo('')
-      table.string('code').defaultTo('')
-      // table.integer('hours').defaultTo(0)
-      table.string('description').defaultTo('')
-      table.string('other').defaultTo('')
-      table.string('username').defaultTo('')
-      table.string('password').defaultTo('')
-      /**
+      table.integer('user_id')
+      table.string('name')
+      table.string('access_code')
+      table.tinyint('status')      /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
       table.timestamp('created_at', { useTz: true })

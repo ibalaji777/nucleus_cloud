@@ -1,17 +1,27 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Shift extends BaseModel {
+export default class User extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+
   @column()
-  public user_id: number
+  public phone: string
+
   @column()
-  public name: String
+  public email: string
+
   @column()
-  public start_time: String
+  public password: string
+
   @column()
-  public end_time: String
+  public company_name: string
+
+  @column()
+  public role: number
+
+  @column()
+  public status: number
 
 
   @column.dateTime({ autoCreate: true })

@@ -12,8 +12,8 @@
         </v-card-title>
         <v-card-text>
   <v-text-field v-model="breaks.name" label="Name(*)"></v-text-field>
-  <v-text-field v-model="breaks.description" label="description"></v-text-field>
-  <v-text-field v-model="breaks.other" label="other"></v-text-field>
+  <v-text-field v-model="breaks.description" label="Description"></v-text-field>
+  <v-text-field type="number" v-model="breaks.minutes" label="Minutes"></v-text-field>
 
 
           <small>*indicates required field</small>

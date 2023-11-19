@@ -1,18 +1,13 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Shift extends BaseModel {
+export default class UnplannedDowntime extends BaseModel {
   @column({ isPrimary: true })
   public id: number
   @column()
-  public user_id: number
+  name:String
   @column()
-  public name: String
-  @column()
-  public start_time: String
-  @column()
-  public end_time: String
-
+  user_id: Number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

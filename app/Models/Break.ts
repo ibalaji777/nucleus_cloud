@@ -7,12 +7,12 @@ export default class Break extends BaseModel {
   @column()
   public name: String
   @column()
-  public group: String
-  @column()
-  public branch: String
-
+  public user_id: number
   @column()
   public description: String
+  @column()
+  public minutes: number
+
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

@@ -1,90 +1,136 @@
 <template>
-  <div class="bgGradient" style="position:relative">
-
-<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);padding:10px;width:350px;background:white;text-align:center;  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
-
+  <section>
+  <div class="box">
+    
+    <div class="square" style="--i:0;"></div>
+    <div class="square" style="--i:1;"></div>
+    <div class="square" style="--i:2;"></div>
+    <div class="square" style="--i:3;"></div>
+    <div class="square" style="--i:4;"></div>
+    <div class="square" style="--i:5;"></div>
+    
+   <div class="container"> 
+    <div class="form"> 
 <h2 style="padding:10px;text-align:center">Signup</h2>
-<v-text-field v-model="company.name" dense outlined label="Name(*)" ></v-text-field>
-<v-text-field type="number" v-model="company.dialcode" dense outlined label="DialCode(*)" ></v-text-field>
-<v-text-field type="number" v-model="company.phone" dense outlined label="Phone(*)" ></v-text-field>
-<v-text-field v-model="company.email" dense outlined label="Email(*)" ></v-text-field>
-<v-text-field  v-model="company.company_name" dense outlined label="Company Name(*)"></v-text-field>
-<v-text-field type="password" v-model="company.password" dense outlined label="password(*)"></v-text-field>
-<v-btn @click="submit" color="primary">
-Signup
-</v-btn>
+<v-form @submit.prevent="submitForm" ref="form">
+    <v-text-field
+      v-model="company.company_name"
+      :rules="nameRules"
+      dense outlined
+      label="Company Name(*)"
+    ></v-text-field>
+
+    <v-text-field
+      type="number"
+      v-model="company.phone"
+      :rules="phoneRules"
+      dense outlined
+      label="Phone(*)"
+    ></v-text-field>
+
+    <v-text-field
+      v-model="company.email"
+      :rules="emailRules"
+      dense outlined
+      label="Email(*)"
+    ></v-text-field>
+
+    <v-text-field
+      type="password"
+      v-model="company.password"
+      :rules="passwordRules"
+      dense outlined
+      label="Password(*)"
+    ></v-text-field>
+
+    <v-text-field
+      type="password"
+      v-model="company.confirm_password"
+      :rules="confirmPasswordRules"
+      dense outlined
+      label="Confirm Password(*)"
+    ></v-text-field>
+
+    <v-btn type="submit">Submit</v-btn>
+  </v-form>
+  <!-- <v-btn @click="submit" color="primary">Signup</v-btn> -->
 <br>
 
 <h5 @click="$router.push('company_signin')" style="margin-top:15px;cursor:pointer">I already have a account</h5>
-
-
-</div>
-
-
   </div>
+  </div>
+  </div>
+</section>
 </template>
 
 <script>
 export default {
   data(){
-    return{
-company:{
-name:'',
-dialcode:91,
-phone:'',
-email:'',
-company_name:'',
-password:'',
-}
-
-    }
+    return {
+      company: {
+        company_name: '',
+        phone: '',
+        email: '',
+        password: '',
+        confirm_password: '',
+      },
+    };
   },
-
 methods:{
-async  submit(){
-var $vm=this;
-if($vm.company.name==''){
-$vm.$alert("Your Name is Empty,Please Fill")
+async submitForm() {
+  var $vm=this;    
+  if (this.$refs.form.validate()) {
+        // Form is valid, submit the data
+        var result=await $vm.$store.dispatch('SIGNUP_COMPANY',this.company)
+      if(result.data.success)
+      {
+        $vm.$router.push({name:"company_signin"})
+      }
+          $vm.$alert(result.data.msg)
 
-  return ;
-}
-if($vm.company.dialcode==''){
-$vm.$alert("Your DialCode is Empty,Please Fill")
+      } else {
+        // Form is invalid
+        $vm.$alert('Form is invalid. Please correct the errors.');
+      }
+    },
 
-  return ;
-}
-if($vm.company.phone==''){
-$vm.$alert("Your Phone is Empty,Please Fill")
-
-  return ;
-}
-if($vm.company.password==''){
-$vm.$alert("Your Password is Empty,Please Fill")
-
-  return ;
-}
-if($vm.company.email==''){
-$vm.$alert("Your Email is Empty,Please Fill")
-  return ;
-}
-if($vm.company.company_name==''){
-$vm.$alert("Your Company Name is Empty,Please Fill")
-
-  return ;
-}
-
-var result=await $vm.$store.dispatch('SIGNUP_COMPANY',this.company)
-
-if(result.data.success)
-{
-  $vm.$router.push({name:"company_signin"})
-}
-$vm.$alert(result.data.msg)
-  }
-}
+},
+computed: {
+    nameRules() {
+      return [
+        v => !!v || 'Company Name is required',
+        v => (v && v.length <= 50) || 'Company Name must be less than 50 characters',
+      ];
+    },
+    phoneRules() {
+      return [
+        v => !!v || 'Phone is required',
+        v => (v && /^\d{10}$/.test(v)) || 'Phone must be a valid 10-digit number',
+      ];
+    },
+    emailRules() {
+      return [
+        v => !!v || 'Email is required',
+        v => /.+@.+\..+/.test(v) || 'Email must be valid',
+      ];
+    },
+    passwordRules() {
+      return [
+        v => !!v || 'Password is required',
+        v => (v && v.length >= 6) || 'Password must be at least 6 characters',
+      ];
+    },
+    confirmPasswordRules() {
+      return [
+        v => !!v || 'Confirm Password is required',
+        v => v === this.company.password || 'Passwords do not match',
+      ];
+    },
+  },
 
 }
 </script>
 <style lang="scss">
+@import url("../css/login.css");
 
 </style>

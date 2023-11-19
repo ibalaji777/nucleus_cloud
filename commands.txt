@@ -31,6 +31,18 @@ c=>controller
 m=>model
 
 
+*************************New Database ****************************
+node ace make:model User -cm
+node ace make:model Branch -cm//exist
+node ace make:model Break -cm//exist
+node ace make:model Shift -cm//exist
+node ace make:model PlannedDowntime -cm
+node ace make:model EmployeeRoles -cm
+node ace make:model Employee -cm//exist
+node ace make:model Machine -cm//exist 
+node ace make:model UnplannedDowntime -cm
+
+
 ************************** PROJECT MODELS*************************
 
 node ace make:model Company -cm

@@ -27,7 +27,8 @@
     "@adonisjs/shield",
     "@adonisjs/lucid",
     "adonis-mix-asset",
-    "@adonisjs/mail"
+    "@adonisjs/mail",
+    "@adonisjs/auth"
   ],
   "metaFiles": [
     {

@@ -11,11 +11,6 @@
         </v-card-title>
         <v-card-text>
           <v-text-field v-model="shifts.name" label="Name(*)"></v-text-field>
-          <v-text-field
-            v-model="shifts.description"
-            label="description"
-          ></v-text-field>
-
           <v-dialog
             ref="start_time_dialog"
             v-model="start_time_modal"

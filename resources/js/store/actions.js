@@ -23,8 +23,8 @@ var apiGetDownTime = api + "get_downtime";
 var apiGetBreak = api + "get_break";
 var apiGetShift = api + "get_shift";
 var apiGetEmpRole = api + "get_emprole";
-var apiSignupCompany = api + "company_signup";
-var apiSigninCompany = api + "company_signin";
+var apiSignupCompany = api + "signup";
+var apiSigninCompany = api + "signin";
 var apiGetMachinePrePlanning = api + "get_machine_pre_planning";
 
 var apiRemoveBranch = api + "remove_branch";
